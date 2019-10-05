@@ -32,62 +32,85 @@ pub struct Solution {}
 //     }
 // }
 
-impl Solution {
-    pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        // take l1, l2
-        let mut box1 = l1.or(Some(Box::new(ListNode::new(0)))).unwrap();
-        let mut box2 = l2.or(Some(Box::new(ListNode::new(0)))).unwrap();
+// impl Solution {
+//     pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+//         // take l1, l2
+//         let mut box1 = l1.or(Some(Box::new(ListNode::new(0)))).unwrap();
+//         let mut box2 = l2.or(Some(Box::new(ListNode::new(0)))).unwrap();
         
-        // unwrap val1, val2: i32
-        let mut val1 = box1.val;
-        let mut val2 = box2.val;
+//         // unwrap val1, val2: i32
+//         let mut val1 = box1.val;
+//         let mut val2 = box2.val;
 
-        // make the first node and the head node
-        let mut node_and_carry = Solution::make_node(val1 + val2);
-        let mut headnode = ListNode::new(0);
+//         // make the first node and the head node
+//         let mut node_and_carry = Solution::make_node(val1 + val2);
+//         let mut headnode = ListNode::new(0);
 
-        // attach the firstnoe to the headnode
-        headnode.next = Some(Box::new(node_and_carry.0));
+//         // attach the firstnoe to the headnode
+//         headnode.next = Some(Box::new(node_and_carry.0));
 
-        // use cur_box to keep track
-        let mut cur_box = &mut headnode.next;
+//         // use cur_box to keep track
+//         let mut cur_box = &mut headnode.next;
 
-        while box1.next.is_some() || box2.next.is_some() {
-            box1 = box1.next.or(Some(Box::new(ListNode::new(0)))).unwrap();
-            box2 = box2.next.or(Some(Box::new(ListNode::new(0)))).unwrap();
+//         while box1.next.is_some() || box2.next.is_some() {
+//             box1 = box1.next.or(Some(Box::new(ListNode::new(0)))).unwrap();
+//             box2 = box2.next.or(Some(Box::new(ListNode::new(0)))).unwrap();
             
-            val1 = box1.val;
-            val2 = box2.val;
+//             val1 = box1.val;
+//             val2 = box2.val;
 
-            node_and_carry = Solution::make_node(val1 + val2 + node_and_carry.1);
+//             node_and_carry = Solution::make_node(val1 + val2 + node_and_carry.1);
 
-            // attach the next node to the end of cur_node
-            // cur_box.unwrap().next.get_or_insert(Box::new(node_and_carry.0));
-            // cur_box = &mut cur_box.unwrap().next;
-            cur_box.get_or_insert(Box::new(ListNode{val: 0, next: None}))
-                .next.get_or_insert(Box::new(node_and_carry.0));
-            cur_box = &mut cur_box.get_or_insert(Box::new(ListNode{val: 0, next: None}))
-                .next;
+//             // attach the next node to the end of cur_node
+//             // cur_box.unwrap().next.get_or_insert(Box::new(node_and_carry.0));
+//             // cur_box = &mut cur_box.unwrap().next;
+//             cur_box.get_or_insert(Box::new(ListNode{val: 0, next: None}))
+//                 .next.get_or_insert(Box::new(node_and_carry.0));
+//             cur_box = &mut cur_box.get_or_insert(Box::new(ListNode{val: 0, next: None}))
+//                 .next;
 
-        }
+//         }
 
-        if node_and_carry.1 != 0 {
-            // attach the final node
-            cur_box.get_or_insert(Box::new(ListNode{val: 0, next: None}))
-                .next.get_or_insert(Box::new(ListNode::new(node_and_carry.1)));
-        }
+//         if node_and_carry.1 != 0 {
+//             // attach the final node
+//             cur_box.get_or_insert(Box::new(ListNode{val: 0, next: None}))
+//                 .next.get_or_insert(Box::new(ListNode::new(node_and_carry.1)));
+//         }
         
-        headnode.next
+//         headnode.next
         
+//     }
+
+//     fn make_node(mut sum: i32) -> (ListNode, i32) {
+//         let mut carry = 0;
+//         if sum > 9 {
+//             sum -= 10;
+//             carry = 1;
+//         }
+//         (ListNode::new(sum), carry)
+//     }
+// }
+
+impl Solution {
+    fn add_two_numbers_recursive(l1: Option<&Box<ListNode>>, l2: Option<&Box<ListNode>>, carry: i32) -> Option<Box<ListNode>> {
+        match (l1, l2, carry) {
+            (Some(l1), Some(l2), carry) => {
+                let sum = l1.val + l2.val + carry;
+                Some(Box::new(ListNode { val: sum % 10, next: Self::add_two_numbers_recursive(l1.next.as_ref(), l2.next.as_ref(), sum / 10) }))
+            }
+            (Some(l), None, carry) | (None, Some(l), carry) => {
+                let sum = l.val + carry;
+                Some(Box::new(ListNode { val: sum % 10, next: Self::add_two_numbers_recursive(l.next.as_ref(), None, sum / 10) }))
+            }
+            (None, None, 1) => {
+                Some(Box::new(ListNode::new(1)))
+            }
+            _ => None
+        }
     }
 
-    fn make_node(mut sum: i32) -> (ListNode, i32) {
-        let mut carry = 0;
-        if sum > 9 {
-            sum -= 10;
-            carry = 1;
-        }
-        (ListNode::new(sum), carry)
+    pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        Self::add_two_numbers_recursive(l1.as_ref(), l2.as_ref(), 0)
     }
 }
 
