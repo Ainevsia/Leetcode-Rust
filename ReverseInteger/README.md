@@ -51,3 +51,7 @@ impl Solution {
 
 - use `i32::max_value()` to see the min `i32`
 - don't use rust as c/c++, they are different.
+
+## Performance
+
+![](../image/integer_reverse.png)
