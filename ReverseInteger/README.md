@@ -1,13 +1,29 @@
-fn main() {
-    println!("max i32: {}", i32::max_value());
-    println!("min i32: {}", i32::min_value());
-    println!("{}", -11 % 10);
-    print!("return value {}", 
-    Solution::reverse(1534236469));
-}
+# 7. Reverse Integer
 
-struct Solution {}
+## Description
 
+Given a 32-bit signed integer, reverse digits of an integer.
+
+## Example
+
+```text
+Input: 123
+Output: 321
+
+Input: -123
+Output: -321
+
+Input: 120
+Output: 21
+```
+
+## Note
+
+Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−231,  231 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+
+## Solution
+
+```rust
 impl Solution {
     pub fn reverse(x: i32) -> i32 {
         let mut c_value = x;
@@ -29,15 +45,9 @@ impl Solution {
         }
     }
 }
+```
 
-#[cfg(test)]
-mod test {
-    use super::*;
+## Thoughts
 
-    #[test]
-    fn basics() {
-        assert_eq!(Solution::reverse(123), 321);
-        assert_eq!(Solution::reverse(0), 0);
-        assert_eq!(Solution::reverse(1534236469), 0);
-    }
-}
+- use `i32::max_value()` to see the min `i32`
+- don't use rust as c/c++, they are different.
