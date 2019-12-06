@@ -1,11 +1,13 @@
 use std::collections::HashMap;
 
-fn main() {}
+fn main() {
+    Solution::length_of_longest_substring(String::from("tmmzuxt"));
+}
 
 pub struct Solution {}
 
 impl Solution {
-    pub fn length_of_longest_substring(s: String) -> i32 {
+    pub fn length_of_longest_substring_bad(s: String) -> i32 {
         let len = s.len();
         let mut max = 1;
         for i in 0..len {
@@ -28,6 +30,45 @@ impl Solution {
         }
         max
     }
+
+    pub fn length_of_longest_substring(s: String) -> i32 {
+        let mut check = Vec::with_capacity(128);
+        for _i in 0..128 {
+            check.push(0);
+        }
+        let mut max_len = 0;
+        let mut len: i32 = 0;
+        // let cidx = 0;
+        let mut string = Vec::new();
+        for c in s.chars() {
+            string.push(c);
+        }
+        for cidx in 0..string.len() {
+            let idx = (string[cidx] as u32 - ' ' as u32) as usize;
+            if check[idx] == 0 {
+                check[idx] = 1;
+                len += 1;
+                // println!("{} {} {} append", c, len, max_len);
+            } else {
+                if len > max_len {
+                    max_len = len;
+                }
+                // find the repeated character
+                while string[cidx - len as usize] != string[cidx] {
+                    // println!("{} comparaing {}", c, s.chars().nth(cidx - len as usize).unwrap());
+                    check[(s.chars().nth(cidx - len as usize).unwrap() as u32 - ' ' as u32 )as usize] = 0;
+                    len -= 1;
+                }
+                check[idx] = 1;
+                // println!("{} {} {}", string[cidx], len, max_len);
+            }
+        }
+        if len > max_len {
+            len
+        } else {
+            max_len
+        }
+    }
 }
 
 #[cfg(test)]
@@ -38,5 +79,8 @@ mod test {
     fn basics() {
         assert_eq!(Solution::length_of_longest_substring(String::from("sdf")), 3);
         assert_eq!(Solution::length_of_longest_substring(String::from("qwezxcvasdfqwe")), 11);
+        assert_eq!(Solution::length_of_longest_substring(String::from("pwwkew")), 3);
+        assert_eq!(Solution::length_of_longest_substring(String::from("dvdf")), 3);
+        assert_eq!(Solution::length_of_longest_substring(String::from("tmmzuxt")), 5);
     }
 }
