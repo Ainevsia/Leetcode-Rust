@@ -56,7 +56,7 @@ impl Solution {
                 // find the repeated character
                 while string[cidx - len as usize] != string[cidx] {
                     // println!("{} comparaing {}", c, s.chars().nth(cidx - len as usize).unwrap());
-                    check[(s.chars().nth(cidx - len as usize).unwrap() as u32 - ' ' as u32 )as usize] = 0;
+                    check[(string[cidx - len as usize] as u32 - ' ' as u32) as usize] = 0;
                     len -= 1;
                 }
                 check[idx] = 1;
