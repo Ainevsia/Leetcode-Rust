@@ -1,7 +1,8 @@
 fn main() {
     println!("Hello, world!");
-    let ret = Solution::my_atoi(String::from("  -0012a42"));
-    print!("{}", ret);
+    // let ret = Solution::my_atoi(String::from("  -0012a42"));
+    // print!("{}", ret);
+    println!("{:?}", (255 as u8).checked_mul(2).unwrap());
 }
 
 pub struct Solution {}
@@ -46,7 +47,15 @@ impl Solution {
                     return i32::min_value();
                 }
             }
-            sum = sum * 10 + d as i32;
+            sum *= 10;
+            if sum.checked_add(d as i32).is_none() {
+                if sign == 1 {
+                    return i32::max_value();
+                } else {
+                    return i32::min_value();
+                }
+            }
+            sum += d as i32;
         }
         // now num_start points to the start of the number
         println!("{}", sign);
