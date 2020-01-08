@@ -26,7 +26,6 @@ impl Solution {
         let mut up = false;
         let group = num_rows - 1;
         for c in s_iter {
-            // print!("{}", c);
             if cnt < num_rows {
                 vec.push(c.to_string());
             } else {
@@ -44,17 +43,13 @@ impl Solution {
                 } else if up {
                     vec[(cnt % group) as usize].push(c);
                 }
-                // println!("{:?}", up);
-                // println!("{:?}", vec);
             }
             cnt += 1;
         }
-        // println!("{:?}", vec);
         let mut ret = String::new();
         for i in 0..num_rows {
             ret.push_str(&vec[i as usize]);
         }
-        // println!("{}", ret);
         ret
     }
 }
