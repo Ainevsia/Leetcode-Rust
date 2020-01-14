@@ -1,0 +1,9 @@
+[package]
+name = "regular_expression_matching"
+version = "0.1.0"
+authors = ["Ainevsia <xuzhp0230@yeah.net>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
