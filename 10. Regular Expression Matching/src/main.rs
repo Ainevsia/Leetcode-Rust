@@ -1,11 +1,30 @@
 fn main() {
     println!("Hello, world!");
+    Solution::is_match(String::from(""), String::from("aa"));
 }
 
 struct Solution {}
 
 impl Solution {
     pub fn is_match(s: String, p: String) -> bool {
+        let (ls, lp) = (s.len(), p.len());
+        if ls == 0 || lp == 0 {
+            return false;
+        }
+        let b = p.chars();
+        let mut dp = vec![vec![false; lp]; ls];
+        dp[0][0] = true;
+        for j in 1..lp {
+            b.take(j);
+        }
+        let mut chars = "gravy train".chars().fuse();
+
+        while let Some(c) = chars.next() {
+            if c == 'x' {
+                chars.next(); // Skip the next one
+            }
+        }
+        true
         
     }
 }
