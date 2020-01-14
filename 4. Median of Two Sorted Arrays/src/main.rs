@@ -27,7 +27,6 @@ impl Solution {
                 return nums1[(l1 - 1) / 2] as f64;
             }
         }
-
         // main logic
         let mut i = 0;
         let mut j = 0;
@@ -52,7 +51,7 @@ impl Solution {
                 j += 1;
             }
             println!("i = {}, j = {}", i, j);
-        }
+        }  
         if l % 2 == 0 {  /* divide c and the next num */
             if i == l1 {
                 return (c + nums2[j]) as f64 / 2.0;
