@@ -41,6 +41,33 @@ impl Solution {
             }
         }
     }
+
+
+    pub fn letter_combinations_(digits: String) -> Vec<String> {
+        digits.chars().fold(
+            vec!["".to_string()],
+            |acc, digit| acc.iter().flat_map(
+                |item| Self::get_char(digit).chars().map(
+                    |c| format!("{}{}", item, c)
+                ).collect::<Vec<String>>()
+            ).collect()
+        )
+    }
+
+    fn get_char(c: char) -> String {
+        match c {
+            '2' => "abc",
+            '3' => "def",
+            '4' => "ghi",
+            '5' => "jkl",
+            '6' => "mno",
+            '7' => "pqrs",
+            '8' => "tuv",
+            '9' => "wxyz",
+            _   => "",
+        }.to_string()
+        // into vs to_string
+    }
 }
 
 
@@ -52,7 +79,7 @@ mod test {
     #[test]
     fn basic() {
         assert_eq!(
-            Solution::letter_combinations("23".to_string()),
+            Solution::letter_combinations_("23".to_string()),
             vec!["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].iter().map(|x| x.to_string()).collect::<Vec<String>>()
         )
     }
