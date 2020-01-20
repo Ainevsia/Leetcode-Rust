@@ -29,25 +29,6 @@ impl ListNode {
 
 impl Solution {
     pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-        let mut buf: Vec<Box<ListNode>> = Vec::with_capacity((n + 1) as usize);
-        let mut cnt = 0;
-        let mut p = &head;
-        let mut target = *loop {
-            match p {
-                None => { break buf[0].clone() }
-                Some(ptr) => {
-                    if cnt <= n { cnt += 1 }
-                    else { buf.remove(0); }
-                    buf.push(ptr.clone());
-                    p = &(*ptr).next;
-                }
-            }
-        };
-        // let x = target.next.unwrap();
-        println!("target = {:?}", target);
-        target.next = (*(target.next.unwrap())).next;
-        println!("target = {:?}", target);
-        println!("head = {:?}", head);
         head
     }
 }
