@@ -58,9 +58,9 @@ impl Solution {
                 *new_node = Some(Box::new(ListNode::new(buf.remove(0))));
                 new_node = &mut new_node.as_mut().unwrap().next;
             }
-            head = node.next.take();
+            head = node.next.take();    // head takes the ownership of the rest list
             buf.push(node.val);
-        }
+        }   // the owned node (1 struct ListNode) dropped here
         buf.remove(0);
         for i in buf {
             *new_node = Some(Box::new(ListNode::new(i)));
