@@ -5,7 +5,26 @@ fn main() {
     let n2 = ListNode { val: 2, next: Some(Box::new(n3)) };
     let n1 = ListNode { val: 1, next: Some(Box::new(n2)) };
     let head = Some(Box::new(n1));
-    Solution::remove_nth_from_end(head, 2);
+    // if let Some(mut b) = head {
+    //     head = b.next.take();
+    //     let x = b;
+    //     println!("x = {:#?}", x);
+    // }
+    // println!("head = {:#?}", head);
+    // let x = &mut head;
+    // // let y = x.unwrap();
+    // x.as_mut().unwrap().next.as_mut().unwrap().val = 4;
+    // println!("x = {:#?}", x);
+    let head = Solution::remove_nth_from_end(head, 2);
+    println!("head = {:#?}", head);
+    // let x = Box::new(vec![1,2,3]);
+    // let y = Some(x);
+    // match y {
+    //     None => {},
+    //     Some(ss) => {},
+    // };
+    // // println!("x = {:?}", x); // cannot do : x moved to y
+    // println!("y = {:?}", y);
 }
 
 struct Solution {}
@@ -28,8 +47,26 @@ impl ListNode {
 }
 
 impl Solution {
-    pub fn remove_nth_from_end(head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
-        head
+    pub fn remove_nth_from_end(mut head: Option<Box<ListNode>>, n: i32) -> Option<Box<ListNode>> {
+        let mut buf = Vec::with_capacity(n as usize);
+        let mut cnt = 0;
+        let mut new_head = None;
+        let mut new_node = &mut new_head;
+        while let Some(mut node) = head {  // node takes ownership of the box
+            if cnt < n { cnt += 1 }
+            else {
+                *new_node = Some(Box::new(ListNode::new(buf.remove(0))));
+                new_node = &mut new_node.as_mut().unwrap().next;
+            }
+            head = node.next.take();
+            buf.push(node.val);
+        }
+        buf.remove(0);
+        for i in buf {
+            *new_node = Some(Box::new(ListNode::new(i)));
+            new_node = &mut new_node.as_mut().unwrap().next;
+        }
+        new_head
     }
 }
 
