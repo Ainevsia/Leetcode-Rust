@@ -46,12 +46,6 @@ fn main() {
             )),
         ]
     );
-    let mut x = Some(2);
-    match x.as_mut() {
-        Some(v) => {*v = 1},
-        None => {},
-    }
-    assert_eq!(x, Some(1));
 }
 
 // Definition for singly-linked list.
@@ -73,30 +67,40 @@ impl ListNode {
 
 struct Solution {}
 
+use std::collections::BinaryHeap;
+use std::cmp::Ordering;
+
+impl PartialOrd<ListNode> for ListNode {
+    fn partial_cmp(&self, other: &ListNode) -> Option<Ordering> {
+        other.val.partial_cmp(&self.val)
+    }
+}
+
+impl Ord for ListNode {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.val.cmp(&self.val)
+    }
+}
+
 impl Solution {
     pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
-        let mut node_vals: Vec<i32> = lists.iter().map(Self::node2vec).flatten().collect();
-        node_vals.sort();
-        Self::vec2node(&node_vals)
-    }
-
-    fn node2vec(head: &Option<Box<ListNode>>) -> Vec<i32> {
-        let mut vec = vec![];
-        let mut nodeptr = head;
-        while let Some(node) = nodeptr {
-            vec.push(node.val);
-            nodeptr = &node.next;
+        let mut heap: BinaryHeap<Box<ListNode>> = BinaryHeap::new();
+        for mut node in lists { // move inside
+            if node.is_some() {
+                heap.push(node.take()?);
+            }
         }
-        vec
-    }
-
-    fn vec2node(vals: &[i32]) -> Option<Box<ListNode>> {
-        if vals.is_empty() { return None }
-        let mut nodeptr = ListNode::new(*vals.last().unwrap());
-        for i in (0..vals.len()-1).rev() {
-            nodeptr = ListNode { val: vals[i], next: Some(Box::new(nodeptr))}
+        // now all useful boxes' ownership are all in the heap
+        let mut head = heap.pop()?;
+        let mut ptr = &mut head;
+        while !heap.is_empty() {
+            if ptr.next.is_some() {
+                heap.push(ptr.next.take()?);
+            }
+            ptr.next = Some(heap.pop()?);
+            ptr = ptr.next.as_mut()?;
         }
-        Some(Box::new(nodeptr))
+        Some(head)
     }
 }
 
