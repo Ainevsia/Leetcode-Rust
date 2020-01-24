@@ -1,36 +1,30 @@
-const GLOBAL: i32 = 123;
-static mut s: i32 = 1;
-const X: My = My { x: 1, };
-
 fn main() {
-    let local = 123124;
-    println!("local\t = {:p}", &local);
-    // println!("global = {:p}", &GLOBAL);
-    let mut x = Some(123);
-    println!("x\t = {:p}", &x);
-    let y = x.take();
-    println!("x = {:#?}", x);
-    println!("x\t = {:p}", &x);
-    println!("y\t = {:p}", &y);
-
-    let mut stack = vec![];
-    println!("stack = {:#?}", stack);
-    println!("stack\t = {:p}", &stack);
-    stack.push(123);
-    println!("stack = {:#?}", stack);
-    println!("stack\t = {:p}", &stack);
-    let x = stack.pop();
-    println!("x = {:#?}", x);
-    println!("x\t = {:p}", &x);
-    println!("s = {:#?}", s);
-    s = 2;
-    println!("s = {:#?}", s);
-    
-    
+    Solution::remove_duplicates(&mut vec![1,1,2]);
 }
 
+struct Solution {}
 
-struct My {
-    x: i32,
+impl Solution {
+    pub fn remove_duplicates(nums: &mut Vec<i32>) -> i32 {
+        let mut vec = vec![];
+        for i in nums.iter() {
+            if Some(i) != vec.last() {
+                vec.push(*i);
+            }
+        }
+        for i in 0..vec.len() {
+            nums[i] = vec[i];
+        }
+        vec.len() as i32
+    }
 }
 
+#[cfg(test)]
+mod test {
+    use crate::*;
+
+    #[test]
+    fn basic() {
+        assert_eq!(Solution::remove_duplicates(&mut vec![1,1,2]), 2);
+    }
+}
