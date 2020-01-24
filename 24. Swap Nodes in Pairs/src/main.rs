@@ -5,9 +5,14 @@ fn main() {
     let n2 = ListNode { val: 2, next: Some(Box::new(n3)), };
     let n1 = ListNode { val: 1, next: Some(Box::new(n2)), };
     let head1 = Some(Box::new(n1));
-    Solution::swap_pairs(head1);
-    Solution::swap_pairs(None);
-
+    let mut head = head1.unwrap();
+    let n = (*head).next.take();
+    (*head).next = Some(Box::new(ListNode::new(55)));
+    println!("n = {:#?}", n);
+    println!("head = {:#?}", head);
+    // println!("head1 = {:#?}", head);
+    // // Solution::swap_pairs(head1);
+    // Solution::swap_pairs(None);
 }
 
 
