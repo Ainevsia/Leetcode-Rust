@@ -8,33 +8,25 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    pub fn divide(mut dividend: i32, divisor: i32) -> i32 {
-        if dividend == i32::min_value() && divisor == i32::min_value()
-            { return 1 }
-        if divisor == i32::min_value() { return 0 }
-        if dividend == i32::min_value() && i32::abs(divisor) == 1
-            { return if divisor == 1 { dividend } else { i32::max_value() } }
-        // now divisor cannot be i32::min_value()
-        // but dividend can be i32::min_value()
-        let mut ret = 0;
-        let mut negate = false;
-        if  dividend > 0 && divisor < 0 ||
-            dividend < 0 && divisor > 0
-        { negate = true }
-        if dividend == i32::min_value() {
-            dividend += i32::abs(divisor);
-            ret += 1;
+    pub fn divide(dividend: i32, divisor: i32) -> i32 {
+        // deal with the only overflow case
+        if dividend == i32::min_value() && divisor == -1
+            { return i32::max_value() }
+        let mut dvd = i64::abs(dividend as i64);
+        let dvs = i64::abs(divisor as i64);
+        let sign: i64 = if (dividend > 0) ^ (divisor > 0) { -1 } else { 1 };
+        let mut ans = 0;
+        while dvd >= dvs {
+            let mut tmp = dvs;
+            let mut shift: i64 = 1;
+            while dvd >= (tmp << 1) {
+                tmp <<= 1;
+                shift <<= 1;
+            }
+            dvd -= tmp;
+            ans += shift;
         }
-        let mut dividend = i32::abs(dividend);
-        let divisor = i32::abs(divisor);
-        // now both dividend & divisor cannot be i32::min_value()
-        if  dividend < divisor { return if negate { -ret } else { ret } }            
-        if divisor == 1 { return if negate { -dividend } else { dividend } }
-        while dividend >= divisor {
-            dividend -= divisor;
-            ret += 1;
-        }
-        if negate { -ret } else { ret }
+        (sign * ans) as i32
     }
 }
 
