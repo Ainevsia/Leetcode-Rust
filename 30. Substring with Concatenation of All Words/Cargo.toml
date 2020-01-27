@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 indicatif = "0.13.0"
+stopwatch= "0.0.7"
