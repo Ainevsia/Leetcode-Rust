@@ -10,30 +10,29 @@ impl Solution {
         while height.len() > 2 && height[0] <= height[1] { height.remove(0); }
         while height.len() > 2 && height[height.len()-1] <= height[height.len()-2] { height.pop(); }
         if height.len() <= 2 { return 0 }
-        let mut l_max_height = height[0];
-        let mut r_max_height = height[height.len() - 1];
-        let mut h = vec![];
-        for i in 0..height.len() {
-            if height[i] <= l_max_height {
-                h.push(l_max_height);
-            } else if height[i] > l_max_height {
-                h.push(l_max_height);
-                l_max_height = height[i];
+        let mut l = 0;
+        let mut r = height.len() - 1;
+        let mut lmax = 0;
+        let mut rmax = 0;
+        let mut water = 0;
+        while l <= r {
+            if height[l] <= height[r] {
+                if height[l] <= lmax {
+                    water += lmax - height[l];
+                } else {
+                    lmax = height[l];
+                }
+                l += 1;
+            } else {
+                if height[r] <= rmax {
+                    water += rmax - height[r];
+                } else {
+                    rmax = height[r];
+                }
+                r -= 1;
             }
         }
-        for i in (0..height.len()).rev() {
-            if height[i] <= r_max_height {
-                h[i] = std::cmp::min(h[i], r_max_height);
-            } else if height[i] > r_max_height {
-                h[i] = std::cmp::min(h[i], r_max_height);
-                r_max_height = height[i];
-            }
-        }
-        for i in 0..height.len() {
-            if height[i] >= h[i] { h[i] = 0 }
-            else if height[i] < h[i] { h[i] -= height[i] }
-        }
-        h.iter().fold(0, |acc, &x| acc + x)
+        water
     }
 }
 
