@@ -7,26 +7,33 @@ struct Solution {}
 
 impl Solution {
     pub fn trap(mut height: Vec<i32>) -> i32 {
-        while height.len() >= 2 && height[0] <= height[1] { height.remove(0); }
-        while height.len() >= 2 && height[height.len()-1] <= height[height.len()-2] { height.pop(); }
+        while height.len() > 2 && height[0] <= height[1] { height.remove(0); }
+        while height.len() > 2 && height[height.len()-1] <= height[height.len()-2] { height.pop(); }
         if height.len() <= 2 { return 0 }
-        let mut hidx = 0;
-        let mut h = height[hidx];
-        let mut water = 0;
-        for i in 2..height.len() {
-            let origin = height[i];
-            let target = std::cmp::min(h, height[i]);
-            for j in hidx+1..i {
-                if height[j] > target { continue }
-                water += target - height[j];
-                height[j] = target;
-            }
-            if origin >= h {
-                hidx = i;
-                if origin > h { h = height[hidx] }
+        let mut l_max_height = height[0];
+        let mut r_max_height = height[height.len() - 1];
+        let mut h = vec![];
+        for i in 0..height.len() {
+            if height[i] <= l_max_height {
+                h.push(l_max_height);
+            } else if height[i] > l_max_height {
+                h.push(l_max_height);
+                l_max_height = height[i];
             }
         }
-        water
+        for i in (0..height.len()).rev() {
+            if height[i] <= r_max_height {
+                h[i] = std::cmp::min(h[i], r_max_height);
+            } else if height[i] > r_max_height {
+                h[i] = std::cmp::min(h[i], r_max_height);
+                r_max_height = height[i];
+            }
+        }
+        for i in 0..height.len() {
+            if height[i] >= h[i] { h[i] = 0 }
+            else if height[i] < h[i] { h[i] -= height[i] }
+        }
+        h.iter().fold(0, |acc, &x| acc + x)
     }
 }
 
