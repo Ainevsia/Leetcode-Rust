@@ -29,7 +29,7 @@ impl Solution {
         ret
     }
 
-    pub fn is_match(s: String, p: String) -> bool {
+    pub fn is_match_g(s: String, p: String) -> bool {
         if s.is_empty() && p.is_empty() { return true }
         else if !s.is_empty() && p.is_empty() { return false }
         let s: Vec<char> = s.chars().collect();
@@ -63,6 +63,29 @@ impl Solution {
         if j == p.len() { true } else { false }
     }
 
+    pub fn is_match<S: AsRef<str>>(s: S, p: S) -> bool {
+        let (s, p) = (s.as_ref().as_bytes(), p.as_ref().as_bytes());
+        if s.is_empty() { return p.is_empty() || p.iter().all(|x| *x == b'*'); }
+        else if p.is_empty() { return false; }
+
+        let mut dp = vec![false; p.len()+1];
+        dp[0] = true;
+        for j in 1..dp.len() {
+            dp[j] = if p[j-1] == b'*' { dp[j-1] } else { break };
+        }
+        for i in 1..=s.len() {
+            let mut dp_i_1_j_1 = dp[0];
+            for j in 1..dp.len() {
+                let saved = dp[j];
+                dp[j] = if s[i-1] == p[j-1] || p[j-1] == b'?' { dp_i_1_j_1 }
+                else if p[j-1] == b'*' { dp[j] || dp[j-1] }
+                else { false };
+                dp_i_1_j_1 = saved;
+            }
+            if i == 1 { dp[0] = false; }
+        }
+        *dp.last().unwrap()
+    }
 }
 
 struct Dp<'a> {
