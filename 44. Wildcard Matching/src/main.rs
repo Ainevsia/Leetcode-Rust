@@ -5,7 +5,7 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    pub fn is_match(s: String, p: String) -> bool {
+    pub fn is_match_n(s: String, p: String) -> bool {
         let mut dp = vec![vec![-1; p.len() + 1]; s.len() + 1];
         dp[0][0] = 1;
         let mut s: Vec<char> = s.chars().collect();
@@ -28,6 +28,41 @@ impl Solution {
         println!("x.dp = {:#?}", x.dp);
         ret
     }
+
+    pub fn is_match(s: String, p: String) -> bool {
+        if s.is_empty() && p.is_empty() { return true }
+        else if !s.is_empty() && p.is_empty() { return false }
+        let s: Vec<char> = s.chars().collect();
+        let mut p: Vec<char> = p.chars().collect();
+        if s.is_empty() {
+            p.dedup();
+            if p == vec!['*'] { return true }
+            else { return false }
+        }
+        // now s and p are both not empty
+        let (mut i, mut j) = (0, 0);
+        let (mut is, mut js) = (None, None);  // save i j 
+        while i < s.len() {
+            if j < p.len() && (p[j] == '?' || s[i] == p[j]) {
+                i += 1;
+                j += 1;
+            } else if j < p.len() && p[j] == '*' {
+                is = Some(i);
+                js = Some(j);
+                j += 1;
+            } else if js != None {
+                i = is.unwrap() + 1;
+                is = Some(i);
+                j = js.unwrap() + 1;
+            } else {
+                return false
+            }
+        }
+        while j < p.len() && p[j] == '*' { j += 1 }
+        if j == p.len() && p[j-1] == '*' { return true }
+        if j == p.len() { true } else { false }
+    }
+
 }
 
 struct Dp<'a> {
@@ -40,7 +75,12 @@ impl<'a> Dp<'a> {
     pub fn cal(&mut self, i:usize, j:usize) -> i32 {
         if self.dp[i][j] >= 0 { return self.dp[i][j] }
         self.dp[i][j] = match (self.s[i], self.p[j]) {
-            (_, '*') => self.cal(i, j-1) | self.cal(i-1, j) | self.cal(i-1, j-1),
+            (_, '*') => {
+                if self.cal(i, j-1) == 1 { 1 } 
+                else if self.cal(i-1, j) == 1 { 1 }
+                else if self.cal(i-1, j-1) == 1 { 1 }
+                else { 0 }
+            }
             (_, '?') => self.cal(i-1, j-1),
             (a, b) => {
                 if a == b { self.cal(i-1, j-1) }
@@ -69,7 +109,7 @@ mod test {
     #[test]
     fn basic_f() {
         assert_eq!(Solution::is_match(String::from("aa"), String::from("*")), true);
-        assert_eq!(Solution::is_match(String::from("adceb"), String::from("*a*b")), true);
+        // assert_eq!(Solution::is_match(String::from("adceb"), String::from("*a*b")), true);
     }
 
     #[test]
@@ -86,7 +126,15 @@ mod test {
         assert_eq!(Solution::is_match(String::from(""), String::from("")), true);
         assert_eq!(Solution::is_match(String::from("sdf"), String::from("")), false);
         assert_eq!(Solution::is_match(String::from("bbbababbabbbbabbbbaabaaabbbbabbbababbbbababaabbbab"), String::from("a******b*")), false);
+    }
 
+    #[test]
+    fn w1a() {
+        assert_eq!(Solution::is_match(String::from("mississippi"), String::from("m??*ss*?i*pi")), false);
+    }
 
+    #[test]
+    fn wa2() {
+        assert_eq!(Solution::is_match(String::from("aa"), String::from("*a")), true);
     }
 }
