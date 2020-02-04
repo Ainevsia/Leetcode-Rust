@@ -6,14 +6,17 @@ struct Solution {}
 
 impl Solution {
     pub fn jump(nums: Vec<i32>) -> i32 {
-        Self::jump_cnt(&nums)
-    }
-
-    pub fn jump_cnt(nums: &[i32]) -> i32 {
-        if nums.len() == 1 { return 0 }
+        if nums.len() <= 1 { return 0 }
+        let mut cnt = vec![i32::max_value(); nums.len()];
+        cnt[0] = 0;
         for i in 0..nums.len() {
             if i + nums[i] as usize >= nums.len() - 1 {
-                return Self::jump_cnt(&nums[0..i+1]) + 1;
+                return cnt[i] + 1;
+            }
+            for idx in i+1..=i+nums[i] as usize {
+                if cnt[i] + 1 < cnt[idx] {
+                    cnt[idx] = cnt[i] + 1;
+                }
             }
         }
         unimplemented!()
