@@ -6,22 +6,20 @@ struct Solution {}
 
 impl Solution {
     /// do the same thing as powi(n): pub fn powi(self, n: i32) -> f64
-    pub fn my_pow(x: f64, mut n: i32) -> f64 {
+    pub fn my_pow(x: f64, n: i32) -> f64 {
         if n == 0 { return 1f64 }
-        let mut ret = 1f64;
-        if n > 0 {
-            while n > 0 {
-                ret *= x;
-                n -= 1;
+        else if n == 1 { return x }
+        else if n == -1 { return 1f64 / x }
+        else if n == i32::min_value() {
+            return Self::my_pow(x * x, n + 1)
+        } else if n < 0 {
+            return Self::my_pow(1f64 / x, -n);
+        } else {
+            if n % 2 == 0 {
+                return Self::my_pow(x * x, n / 2)
+            } else {
+                return x * Self::my_pow(x * x, (n - 1) / 2)
             }
-            return ret;
-        }
-        if n < 0 {
-            while n < 0 {
-                ret *= x;
-                n += 1;
-            }
-            return 1f64 / ret;
         }
         unimplemented!()
     }
