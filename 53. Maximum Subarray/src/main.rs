@@ -5,7 +5,26 @@ fn main() {
 struct Solution {}
 
 impl Solution {
+    /// divide and conquer
+    /// dp[i] means the maxsubarray[0..i]
     pub fn max_sub_array(nums: Vec<i32>) -> i32 {
+        let mut max_sum = nums[0];
+        let mut max_sum_before = 0;
+        for d in nums {
+            max_sum_before = if max_sum_before > 0 {
+                max_sum_before + d
+            } else {
+                d
+            };
+            if max_sum_before > max_sum {
+                max_sum = max_sum_before;
+            }
+        }
+        max_sum
+    }
+
+    /// linear O(n) search
+    pub fn max_sub_array_linear(nums: Vec<i32>) -> i32 {
         let mut max_sum = nums[0];
         let mut sum = 0;
         for d in nums {
