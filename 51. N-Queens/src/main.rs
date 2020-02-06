@@ -10,11 +10,7 @@ impl Solution {
         let n = n as usize;
         let mut board = vec![vec!['.'; n]; n];
         let mut ret = vec![];
-        for i in 0..n {
-            board[0][i] = 'Q';
-            Self::solve(&mut board, 1, &mut ret);
-            board[0][i] = '.';
-        }
+        Self::solve(&mut board, 0, &mut ret);
         ret
     }
 
