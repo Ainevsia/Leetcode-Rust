@@ -31,33 +31,34 @@ struct Solution {}
 impl Solution {
     pub fn rotate_right(mut head: Option<Box<ListNode>>, k: i32) -> Option<Box<ListNode>> {
         if head.is_none() || k <= 0 { return head }
-        let mut ptr = head.as_ref();
+        // Step 1 - loop the linked-list and count total length (Don't need mut)
+        let mut ptr: Option<&Box<ListNode>> = head.as_ref();
         let mut list_len = 0;
         while let Some(node) = ptr {
             ptr = node.next.as_ref();
             list_len += 1;
         }
+
+        // Step 2 - calculate the curoff place and reach that node using &mut Box
+        // because this time we want to mutate the list
         let cutoff_cnt = list_len - k % list_len;
         if cutoff_cnt == list_len { return head }
-        println!("list_len = {:#?}", list_len);
-        println!("cutoff_cnt = {:#?}", cutoff_cnt);
-        let mut ptr = head.as_mut().unwrap();
+        let mut ptr: &mut Box<ListNode> = head.as_mut().unwrap();
         let mut i = 1;
         while i < cutoff_cnt {
             ptr = ptr.next.as_mut().unwrap();
             i += 1;
         }
-        let mut new_head = ptr.next.take();
-        println!("new_head = {:#?}", new_head);
-        println!("head = {:#?}", head);
-        let mut ptr = new_head.as_mut();
+
+        // Step 3 - Split into two list and then concatenate
+        // head owns one list and new_head owns the other
+        let mut new_head: Option<Box<ListNode>> = ptr.next.take();  // split
+        let mut ptr: Option<&mut Box<ListNode>> = new_head.as_mut();
         while let Some(node) = ptr {
             if node.next.is_none() { ptr = Some(node); break }
             ptr = node.next.as_mut();
         }
-        println!("ptr = {:#?}", ptr);
-        ptr.unwrap().next = head;
-        println!("new_head = {:#?}", new_head);
+        ptr.unwrap().next = head; // concatenate
         new_head
     }
 }
