@@ -1,4 +1,6 @@
 use std::collections::HashMap;
+use std::collections::HashSet;
+        
 
 fn main() {
     Solution::length_of_longest_substring(String::from("tmmzuxt"));
@@ -31,7 +33,7 @@ impl Solution {
         max
     }
 
-    pub fn length_of_longest_substring(s: String) -> i32 {
+    pub fn length_of_longest_substring_ori(s: String) -> i32 {
         let mut check = Vec::with_capacity(128);
         for _i in 0..128 {
             check.push(0);
@@ -68,6 +70,25 @@ impl Solution {
         } else {
             max_len
         }
+    }
+
+    pub fn length_of_longest_substring(s: String) -> i32 {
+        let s: Vec<char> = s.chars().collect();
+        let mut map: HashSet<char> = HashSet::new();
+        let (mut start, mut end, mut res) = (0, 0, 0);
+        while end < s.len() {
+            let mut dup = false;
+            if map.contains(&s[end]) { dup = true }
+            else { map.insert(s[end]); }
+            end += 1;
+            while dup {
+                if s[start] == s[end - 1] { start += 1; break }
+                map.remove(&s[start]);
+                start += 1;
+            }
+            res = usize::max(end - start, res);
+        }
+        res as i32
     }
 }
 
