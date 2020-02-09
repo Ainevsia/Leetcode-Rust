@@ -8,7 +8,7 @@ impl Solution {
     pub fn total_fruit(tree: Vec<i32>) -> i32 {
         if tree.len() <= 1 { return tree.len() as i32 }
         use std::collections::HashMap;
-        let mut map: HashMap<i32, usize> = HashMap::new();
+        let mut map: HashMap<i32, usize> = HashMap::with_capacity(3);
         let (mut s, mut e, k) = (0, 0, 2);
         let mut max = 0;
         while e < tree.len() {
