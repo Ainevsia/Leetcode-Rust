@@ -59,16 +59,12 @@ impl Solution {
             if less.contains(&s[end]) {
                 res = i32::max(
                     Self::longest_substring_re(&s[start..end], k),
-                    res
-                );
+                    res);
                 start = end + 1;
             }
             end += 1;
         }
-        i32::max(
-            Self::longest_substring_re(&s[start..end], k),
-            res
-        )
+        i32::max(Self::longest_substring_re(&s[start..end], k), res)
     }
 
 }
