@@ -1,5 +1,5 @@
 [package]
-name = "linked_list_cycle_two"
+name = "circular_array_loop"
 version = "0.1.0"
 authors = ["Ainevsia <zhipengxu@sjtu.edu.cn>"]
 edition = "2018"
