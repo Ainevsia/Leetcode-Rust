@@ -5,7 +5,7 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    pub fn insert(mut intervals: Vec<Vec<i32>>, mut new_interval: Vec<i32>) -> Vec<Vec<i32>> {
+    pub fn insert_inplace(mut intervals: Vec<Vec<i32>>, mut new_interval: Vec<i32>) -> Vec<Vec<i32>> {
         let mut i = 0;
         while i < intervals.len() {
             if intervals[i][1] < new_interval[0] { i += 1; continue }
@@ -17,6 +17,22 @@ impl Solution {
         intervals.push(new_interval);
         intervals
     }
+
+    pub fn insert(mut intervals: Vec<Vec<i32>>, mut new_interval: Vec<i32>) -> Vec<Vec<i32>> {
+        let mut i = 0;
+        let mut res = vec![];
+        while i < intervals.len() {
+            if intervals[i][1] < new_interval[0] { res.push(intervals[i].to_owned()); i += 1; continue  }
+            if intervals[i][0] > new_interval[1] { break }
+            if intervals[i][0] < new_interval[0] { new_interval[0] = intervals[i][0]; }
+            if intervals[i][1] > new_interval[1] { new_interval[1] = intervals[i][1]; }
+            i += 1;
+        }
+        res.push(new_interval);
+        res.append(&mut intervals[i..].to_owned());
+        res
+    }
+
 }
 
 #[cfg(test)]
