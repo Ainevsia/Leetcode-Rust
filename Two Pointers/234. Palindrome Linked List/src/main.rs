@@ -26,7 +26,7 @@ impl ListNode {
 }
 
 impl Solution {
-    pub fn is_palindrome(head: Option<Box<ListNode>>) -> bool {
+    pub fn is_palindrome_(head: Option<Box<ListNode>>) -> bool {
         if head.is_none() { return true }
         let mut slow = head.as_ref();
         let mut fast = head.as_ref();
@@ -53,6 +53,41 @@ impl Solution {
         }
         true
     }
+
+    pub fn is_palindrome(mut head: Option<Box<ListNode>>) -> bool {
+        if head.is_none() { return true }
+        let mut slow = head.as_ref();
+        let mut fast = head.as_ref();
+        let mut odd = false;
+        let mut cnt = 0;
+        loop {
+            // fast should not be none
+            if let Some(node) = fast.unwrap().next.as_ref() {
+                if node.next.is_some() {
+                    fast = node.next.as_ref();
+                } else { break }
+            } else { odd = true; break }
+            slow = slow.unwrap().next.as_ref();
+            cnt += 1;
+        }
+        let mut ptr = head.as_mut();
+        while cnt > 0 { // move to the slow ptr using &mut
+            ptr = ptr.unwrap().next.as_mut();
+            cnt -= 1;
+        }
+        let mut val = 0;
+        if odd { val = ptr.as_ref().unwrap().val }
+        let mut tail = ptr.unwrap().next.take();
+        let mut headr = if odd { Some(Box::new(ListNode::new(val))) } else { None };
+        while let Some(mut node) = tail {   // reverse the list
+            let prev = node.next.take();
+            node.next = headr;
+            headr = Some(node);
+            tail = prev;
+        }
+        headr == head
+    }
+
 }
 
 #[cfg(test)]
