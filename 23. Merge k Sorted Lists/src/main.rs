@@ -70,6 +70,8 @@ struct Solution {}
 use std::collections::BinaryHeap;
 use std::cmp::Ordering;
 
+
+/// implement the PartialOrd and Ord trait reversely to make a min heap
 impl PartialOrd<ListNode> for ListNode {
     fn partial_cmp(&self, other: &ListNode) -> Option<Ordering> {
         other.val.partial_cmp(&self.val)
@@ -83,15 +85,17 @@ impl Ord for ListNode {
 }
 
 impl Solution {
+    /// this is not written by myself XD, refresh
     pub fn merge_k_lists(lists: Vec<Option<Box<ListNode>>>) -> Option<Box<ListNode>> {
         let mut heap: BinaryHeap<Box<ListNode>> = BinaryHeap::new();
         for mut node in lists { // move inside
             if node.is_some() {
                 heap.push(node.take()?);
+                // ? can be used when returning -> Option<Box<ListNode>>
             }
         }
         // now all useful boxes' ownership are all in the heap
-        let mut head = heap.pop()?;
+        let mut head = heap.pop()?; // min
         let mut ptr = &mut head;
         while !heap.is_empty() {
             if ptr.next.is_some() {
