@@ -12,39 +12,19 @@ use std::collections::BinaryHeap;
 use std::cmp::Reverse;
 
 impl Solution {
-    pub fn kth_smallest(matrix: Vec<Vec<i32>>, k: i32) -> i32 {
+    pub fn kth_smallest(mut matrix: Vec<Vec<i32>>, k: i32) -> i32 {
         let mut min_heap = BinaryHeap::new();
         let l = matrix.len();
-        let mut idxs = vec![0usize; l];
-        for i in 0..l {
-            min_heap.push(Reverse(matrix[i][idxs[i]]));
+        for _ in (0..l).rev() {
+            min_heap.push(Reverse(matrix.pop().unwrap()));
         }
         let mut cnt = 0;
         let mut res = 0;
-        while cnt < k as usize{
-            res = min_heap.pop().unwrap().0;
-            for i in 0..l {
-                if matrix[i][idxs[i]] == res {
-                    if idxs[i] == l - 1 {
-                        let mut largest = i32::max_value();
-                        let mut targeti = 0;
-                        for j in 0..l {
-                            if idxs[j] < l - 1 && matrix[j][idxs[j]] < largest {
-                                largest = matrix[j][idxs[j]];
-                                targeti = j;
-                            }
-                        }
-                        if largest != i32::max_value() {
-                            idxs[targeti] += 1;
-                            min_heap.push(Reverse(matrix[targeti][idxs[targeti]]))
-                        }
-                    } else {
-                        idxs[i] += 1;
-                        min_heap.push(Reverse(matrix[i][idxs[i]]));
-                    }
-                }
-            }
-            cnt += 1;
+        while cnt < k as usize {
+            let mut x = min_heap.pop().unwrap().0;
+            res = x.remove(0);
+            if !x.is_empty() { min_heap.push(Reverse(x)) }
+            cnt += 1
         }
         res
     }
