@@ -1,5 +1,5 @@
 fn main() {
-    println!("Hello, world!");
+    Solution::path_sum(None, 22);
 }
 
 struct Solution {}
