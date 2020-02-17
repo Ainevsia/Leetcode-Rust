@@ -45,19 +45,19 @@ impl Solution {
     }
 }
 
-#[derive(Hash)]
-// cannot put rc into map
-struct Robber {
-    map: HashMap<Option<Rc<RefCell<TreeNode>>>, i32>,
-}
+// #[derive(Hash)]
+// // cannot put rc into map
+// struct Robber {
+//     map: HashMap<Option<Rc<RefCell<TreeNode>>>, i32>,
+// }
 
-impl Robber {
-    pub fn new() -> Robber {
-        Robber {
-            map: HashMap::new(),
-        }
-    }
-}
+// impl Robber {
+//     pub fn new() -> Robber {
+//         Robber {
+//             map: HashMap::new(),
+//         }
+//     }
+// }
 
 #[cfg(test)]
 mod test {
