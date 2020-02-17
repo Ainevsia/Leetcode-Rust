@@ -5,7 +5,11 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    /// 1dp * 2 times
+    /// 1 dp * 2 times
+    /// equals to this question: the final result will only be one of the two following
+    /// situations:
+    ///     - first is not selected, then freely select in the following
+    ///     - last  is not selected, then freely select in the following
     pub fn rob(mut nums: Vec<i32>) -> i32 {
         if nums.len() < 1 { return 0 }
         if nums.len() == 1 { return nums[0] }
