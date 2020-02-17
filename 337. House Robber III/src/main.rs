@@ -27,59 +27,42 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 impl Solution {
-    /// false thought : only find the larget in a single path
+    /// slow solution : 1508 ms
     pub fn rob(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         if root.is_none() { return 0 }
         let root = root.unwrap();
-        let mut r = Robber::new(root.clone());
-        r.search();
-        r.get_gain()
-    }
-}
-
-struct Robber {
-    buf: Vec<Rc<RefCell<TreeNode>>>,
-    pre1: i32,
-    pre2: i32,
-    gain: i32,
-}
-
-impl Robber {
-    pub fn new(root: Rc<RefCell<TreeNode>>) -> Robber {
-        Robber {
-            buf: vec![root],
-            pre1: 0,
-            pre2: 0,
-            gain: 0,
+        let mut val = root.borrow().val;
+        if let Some(node) = root.borrow().left.as_ref() {
+            val += Self::robb(node.borrow().left.as_ref());
+            val += Self::robb(node.borrow().right.as_ref());
         }
-    }
-    
-    pub fn search(&mut self) {
-        if let Some(x) = self.buf.pop() {
-            let gain = std::cmp::max(self.pre1, self.pre2 + x.borrow().val);
-            println!("x.borrow().val = {:#?}", x.borrow().val);
-            println!("self.pre1 = {:#?}, self.pre2 = {:#?}", self.pre1, self.pre2);
-            if gain > self.gain { self.gain = gain }
-            let tmp = self.pre2;
-            self.pre2 = self.pre1;
-            self.pre1 = gain;
-            if let Some(y) = x.borrow().left.as_ref() {
-                self.buf.push(y.clone());
-                self.search();
-            }
-            if let Some(y) = x.borrow().right.as_ref() {
-                self.buf.push(y.clone());
-                self.search();
-            }
-            self.pre1 = self.pre2;
-            self.pre2 = tmp;
+        if let Some(node) = root.borrow().right.as_ref() {
+            val += Self::robb(node.borrow().left.as_ref());
+            val += Self::robb(node.borrow().right.as_ref());
         }
+        let res = std::cmp::max(val, Self::robb(root.borrow().left.as_ref()) + 
+                                     Self::robb(root.borrow().right.as_ref()));
+        res
     }
 
-    pub fn get_gain(&self) -> i32 {
-        self.gain
+    pub fn robb(root: Option<&Rc<RefCell<TreeNode>>>) -> i32 {
+        if root.is_none() { return 0 }
+        let root = root.unwrap();
+        let mut val = root.borrow().val;
+        if let Some(node) = root.borrow().left.as_ref() {
+            val += Self::robb(node.borrow().left.as_ref());
+            val += Self::robb(node.borrow().right.as_ref());
+        }
+        if let Some(node) = root.borrow().right.as_ref() {
+            val += Self::robb(node.borrow().left.as_ref());
+            val += Self::robb(node.borrow().right.as_ref());
+        }
+        let res = std::cmp::max(val, Self::robb(root.borrow().left.as_ref()) + 
+                                     Self::robb(root.borrow().right.as_ref()));
+        res
     }
 }
+
 
 
 #[cfg(test)]
