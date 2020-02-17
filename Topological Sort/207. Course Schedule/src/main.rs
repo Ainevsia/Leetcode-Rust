@@ -6,29 +6,29 @@ struct Solution {}
 
 impl Solution {
     pub fn can_finish(num_courses: i32, prerequisites: Vec<Vec<i32>>) -> bool {
-        let mut in_degrees = vec![vec![]; num_courses as usize];
+        let mut edges_from = vec![vec![]; num_courses as usize];
         let mut node_exist = vec![true; num_courses as usize];
+        let mut in_degrees = vec![0; num_courses as usize];
         for x in prerequisites {
-            in_degrees[x[0] as usize].push(x[1] as usize);
+            edges_from[x[1] as usize].push(x[0] as usize);
+            in_degrees[x[0] as usize] += 1;
         }
         let mut s = vec![];
         // prepare stack
-        for i in 0..in_degrees.len() {
-            if in_degrees[i].len() == 0 { s.push(i) }
+        for i in 0..edges_from.len() {
+            if in_degrees[i] == 0 { s.push(i) }
         }
         while !s.is_empty() {
             let src = s.pop().unwrap();
             node_exist[src] = false;
-            in_degrees = in_degrees.into_iter().enumerate().map(|(i, x)| {
-                let tmp: Vec<usize> = x.into_iter().filter(|&x| x != src).collect();
-                if tmp.len() == 0 && node_exist[i] {
-                    s.push(i);
-                    node_exist[i] = false
+            for &v in edges_from[src].iter() {
+                if node_exist[v] {
+                    in_degrees[v] -= 1;
+                    if in_degrees[v] == 0 { s.push(v) }
                 }
-                tmp
-            }).collect();
+            }
         }
-        in_degrees.iter().all(|x| x.is_empty())
+        node_exist.iter().all(|&x| x == false)
     }
 }
 
