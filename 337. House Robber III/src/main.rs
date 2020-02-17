@@ -27,7 +27,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 impl Solution {
-    /// slow solution : 1508 ms
+    /// awsome solution : 0 ms
     pub fn rob(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         let (x, y) = Self::robb(root.as_ref());
         std::cmp::max(x, y)
