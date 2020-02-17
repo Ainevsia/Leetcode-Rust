@@ -28,39 +28,20 @@ use std::rc::Rc;
 use std::collections::HashMap;
 
 impl Solution {
-    /// slow solution : 1508 ms
+    /// awsome solution : 0 ms
     pub fn rob(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        if root.is_none() { return 0 }
-        let root = root.unwrap();
-        let mut val = root.borrow().val;
-        if let Some(node) = root.borrow().left.as_ref() {
-            val += Self::robb(node.borrow().left.as_ref());
-            val += Self::robb(node.borrow().right.as_ref());
-        }
-        if let Some(node) = root.borrow().right.as_ref() {
-            val += Self::robb(node.borrow().left.as_ref());
-            val += Self::robb(node.borrow().right.as_ref());
-        }
-        let res = std::cmp::max(val, Self::robb(root.borrow().left.as_ref()) + 
-                                     Self::robb(root.borrow().right.as_ref()));
-        res
+        let (x, y) = Self::robb(root.as_ref());
+        std::cmp::max(x, y)
     }
 
-    pub fn robb(root: Option<&Rc<RefCell<TreeNode>>>) -> i32 {
-        if root.is_none() { return 0 }
+    /// return value (not robbed , robbed)
+    pub fn robb(root: Option<&Rc<RefCell<TreeNode>>>) -> (i32, i32) {
+        if root.is_none() { return (0, 0) }
         let root = root.unwrap();
-        let mut val = root.borrow().val;
-        if let Some(node) = root.borrow().left.as_ref() {
-            val += Self::robb(node.borrow().left.as_ref());
-            val += Self::robb(node.borrow().right.as_ref());
-        }
-        if let Some(node) = root.borrow().right.as_ref() {
-            val += Self::robb(node.borrow().left.as_ref());
-            val += Self::robb(node.borrow().right.as_ref());
-        }
-        let res = std::cmp::max(val, Self::robb(root.borrow().left.as_ref()) + 
-                                     Self::robb(root.borrow().right.as_ref()));
-        res
+        let val = root.borrow().val;
+        let l = Self::robb(root.borrow().left.as_ref());
+        let r = Self::robb(root.borrow().right.as_ref());
+        (std::cmp::max(l.0, l.1) + std::cmp::max(r.0, r.1), val + l.0 + r.0)
     }
 }
 
