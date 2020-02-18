@@ -1,3 +1,5 @@
+use regex::Regex;
+
 fn main() {
     assert_eq!(Solution::is_number(String::from("0")), true);
 }
@@ -5,7 +7,7 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    pub fn is_number(s: String) -> bool {
+    pub fn is_number_(s: String) -> bool {
         let s = s.trim();
         if s.chars().any(|x| !x.is_digit(10) && !['e', '+', '-', '.'].contains(&x)) {
             return false
@@ -36,6 +38,12 @@ impl Solution {
         
         true
     }
+    pub fn is_number(s: String) -> bool {
+        // this regex works
+        let re = Regex::new(r"^ *(\+|-)?(\d+\.\d*|\d*\.\d+|\d+)(e(\+|-)?\d+)? *$").unwrap();
+        println!("s = {:#?}", s);
+        re.is_match(&s)
+    }
 }
 
 #[cfg(test)]
@@ -47,10 +55,6 @@ mod test {
         assert_eq!(Solution::is_number(String::from("0")), true);
         assert_eq!(Solution::is_number(String::from("0.1")), true);
         assert_eq!(Solution::is_number(String::from("2e10")), true);
-        assert_eq!(Solution::is_number(String::from(" -90e3   ")), true);
-        assert_eq!(Solution::is_number(String::from(" 6e-1")), true);
-        assert_eq!(Solution::is_number(String::from("53.5e93")), true);
-        assert_eq!(Solution::is_number(String::from(" 1e")), false);
         assert_eq!(Solution::is_number(String::from("e3")), false);
         assert_eq!(Solution::is_number(String::from("abc")), false);
         assert_eq!(Solution::is_number(String::from("1 a")), false);
@@ -58,9 +62,6 @@ mod test {
         assert_eq!(Solution::is_number(String::from(" +-3")), false);
         assert_eq!(Solution::is_number(String::from("95a54e53")), false);
         assert_eq!(Solution::is_number(String::from(" --6 ")), false);
-        assert_eq!(Solution::is_number(String::from(" ... ")), false);
-        assert_eq!(Solution::is_number(String::from(" . ")), false);
-        assert_eq!(Solution::is_number(String::from(" 5+1 ")), false);
         assert_eq!(Solution::is_number(String::from(" .8+ ")), false);
         assert_eq!(Solution::is_number(String::from(" 4e+ ")), false);
     }
@@ -68,5 +69,44 @@ mod test {
     #[test]
     fn fail() {
         assert_eq!(Solution::is_number(String::from(" -. ")), false);
+        assert_eq!(Solution::is_number(String::from(" -90e3   ")), true);
+        assert_eq!(Solution::is_number(String::from(" ... ")), false);
+        assert_eq!(Solution::is_number(String::from(" . ")), false);
+        assert_eq!(Solution::is_number(String::from(" 5+1 ")), false);
+        assert_eq!(Solution::is_number(String::from(" 6e-1")), true);
+        assert_eq!(Solution::is_number(String::from("53.5e93")), true);
+        assert_eq!(Solution::is_number(String::from(" 1e")), false);
+    }
+
+    #[test]
+    fn leetcode() {
+        assert_eq!(Solution::is_number(String::from("123")), true);
+        assert_eq!(Solution::is_number(String::from(" 123 ")), true);
+        assert_eq!(Solution::is_number(String::from("0")), true);
+        assert_eq!(Solution::is_number(String::from("0123")), true);  //Cannot agree
+        assert_eq!(Solution::is_number(String::from("00")), true);  //Cannot agree
+        assert_eq!(Solution::is_number(String::from("-10")), true);
+        assert_eq!(Solution::is_number(String::from("-0")), true);
+        assert_eq!(Solution::is_number(String::from("123.5")), true);
+        assert_eq!(Solution::is_number(String::from("123.000000")), true);
+        assert_eq!(Solution::is_number(String::from("-500.777")), true);
+        assert_eq!(Solution::is_number(String::from("0.0000001")), true);
+        assert_eq!(Solution::is_number(String::from("0.00000")), true);
+        assert_eq!(Solution::is_number(String::from("0.")), true);  //Cannot be more disagree!!!
+        assert_eq!(Solution::is_number(String::from("00.5")), true);  //Strongly cannot agree
+        // assert_eq!(Solution::is_number(String::from("123e1")), true);
+        // assert_eq!(Solution::is_number(String::from("1.23e10")), true);
+        // assert_eq!(Solution::is_number(String::from("0.5e-10")), true);
+        // assert_eq!(Solution::is_number(String::from("1.0e4.5")), false);
+        // assert_eq!(Solution::is_number(String::from("0.5e04")), true);
+        // assert_eq!(Solution::is_number(String::from("12 3")), false);
+        // assert_eq!(Solution::is_number(String::from("1a3")), false);
+        // assert_eq!(Solution::is_number(String::from("")), false);
+        // assert_eq!(Solution::is_number(String::from("   ")), false);
+        // assert_eq!(Solution::is_number(String::from(".1")), true); //Ok)), if you say so
+        // assert_eq!(Solution::is_number(String::from(".")), false);
+        // assert_eq!(Solution::is_number(String::from("2e0")), true);  //Really?!
+        // assert_eq!(Solution::is_number(String::from("+.8")), true);  
+        // assert_eq!(Solution::is_number(String::from(" 005047e+6")), true);  //Damn = =|||
     }
 }
