@@ -6,6 +6,7 @@ fn main() {
 
 struct Solution {}
 
+#[allow(dead_code)]
 impl Solution {
     pub fn is_number_(s: String) -> bool {
         let s = s.trim();
@@ -46,7 +47,7 @@ impl Solution {
         re.is_match(s.trim())
     }
 
-    pub fn is_number(s: String) -> bool {
+    pub fn is_number_dfa(s: String) -> bool {
         let mut state = S1;
         for c in s.trim().chars() {
             match state {
@@ -63,9 +64,7 @@ impl Solution {
                         _ => if "0123456789".contains(c) { state = S4 } else { return false },
                     }
                 }
-                S3 => {
-                    if "0123456789".contains(c) { state = S5 } else { return false }
-                }
+                S3 => if "0123456789".contains(c) { state = S5 } else { return false }
                 S4 => {
                     match c {
                         '.' => state = S5,
@@ -85,16 +84,16 @@ impl Solution {
                         _ => if "0123456789".contains(c) { state = S8 } else { return false },
                     }
                 }
-                S7 => {
-                    if "0123456789".contains(c) { state = S8 } else { return false }
-                }
-                S8 => {
-                    if "0123456789".contains(c) { state = S8 } else { return false }
-                }
+                S7 => if "0123456789".contains(c) { state = S8 } else { return false }
+                S8 => if "0123456789".contains(c) { state = S8 } else { return false }
             }
         }
         // println!("s = {:#?}, state = {:#?}", s, state);
         if state == S4 || state == S5 || state == S8 { true } else { false }
+    }
+
+    pub fn is_number(s: String) -> bool {   // sneaky way but you **should** think of
+        s.trim().parse::<f64>().is_ok()
     }
 }
 
