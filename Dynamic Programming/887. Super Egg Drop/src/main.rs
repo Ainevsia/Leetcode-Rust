@@ -13,11 +13,18 @@ impl Solution {
         for i in 2..=k as usize {
             dp[i][1] = 1;
             for j in 2..=n as usize {
-                let mut min = std::cmp::max(dp[i-1][0], dp[i][j-1]);
-                for idx in 0..=j-1 {
-                    min = std::cmp::min(min, std::cmp::max(dp[i-1][idx], dp[i][j-1-idx]));
+                // use binary search to reduce the complexity to O(KN logN)
+                let (mut start, mut end) = (0, j-1);
+                let mut m = (start + end) / 2;
+                while start + 1 != end {  // breaks when start + 1 == end
+                    if dp[i][m] < dp[i-1][j-1-m] { start = m }
+                    else if dp[i][m] == dp[i-1][j-1-m] { break }
+                    else if dp[i][m] > dp[i-1][j-1-m] { end = m }
+                    m = (start + end) / 2;
                 }
-                dp[i][j] = min + 1;
+                // end = start + 1  or  dp[i-1][m] == dp[i][m]
+                dp[i][j] = std::cmp::min(std::cmp::max(dp[i][m], dp[i-1][j-1-m]),
+                                         std::cmp::max(dp[i][j-m-1], dp[i-1][j-1-m]) ) + 1;
             }
         }
         // println!("dp = {:#?}", dp);
