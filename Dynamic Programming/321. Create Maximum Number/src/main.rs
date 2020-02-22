@@ -5,18 +5,18 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    /// O(kn) can be reduced to O(k) by using more space
+    /// O(kn) by using more space
     pub fn max_number(n1: Vec<i32>, n2: Vec<i32>, k: i32) -> Vec<i32> {
         let k = k as usize;
         let mut i = if k <= n2.len() { 0 } else { k - n2.len() };
+        let iend = n1.len();
+        let (n1, n2) = (MaxNumber::new(n1), MaxNumber::new(n2));
         let mut max_vec = vec![];
         loop {
-            let x = Self::max_n(&n1, i);
-            let y = Self::max_n(&n2, k - i);
-            let tmp = Self::merge(x, y);
+            let tmp = Self::merge(n1.get(i), n2.get(k - i));
             max_vec = if tmp > max_vec { tmp } else { max_vec };
             i += 1;
-            if i > n1.len() || k < i { break max_vec }
+            if i > iend || k < i { break max_vec }
         }
     }
 
@@ -67,6 +67,37 @@ impl Solution {
     }
 }
 
+pub struct MaxNumber {
+    max_vec: Vec<Option<Vec<i32>>>,
+}
+
+impl MaxNumber {
+    pub fn new(mut stack: Vec<i32>) -> MaxNumber {
+        let mut tmp = MaxNumber { max_vec: Vec::with_capacity(stack.len() + 1) };
+        // Question: is push_front of VecDeque a O(1) operation ?
+        let mut i = 0;
+        tmp.max_vec.push(Some(stack.clone()));
+        for _ in 1..stack.len() {
+            while i + 1 < stack.len() && stack[i + 1] <= stack[i] {
+                i += 1
+            }
+            if i >= stack.len() { stack.pop(); tmp.max_vec.insert(0, Some(stack.clone())) }
+            else { stack.remove(i); tmp.max_vec.insert(0, Some(stack.clone())) }
+            if i > 0 { i -= 1 }
+        }
+        tmp.max_vec.insert(0, None);
+        tmp
+    }
+
+    pub fn get(&self, i: usize) -> Option<Vec<i32>> {
+        self.max_vec[i].clone()
+    }
+
+    pub fn debug(&self) {
+        println!("self.max = {:#?}", self.max_vec);
+    }
+}
+
 #[cfg(test)]
 mod test {
     use crate::*;
@@ -85,6 +116,12 @@ mod test {
         assert_eq!(Solution::max_number(vec![3,9],vec![8,9],3),vec![9,8,9]);
         assert_eq!(Solution::max_number(vec![2,5,6,4,4,0],vec![7,3,8,0,6,5,7,6,2],15),vec![7,3,8,2,5,6,4,4,0,6,5,7,6,2,0]);
         assert_eq!(Solution::max_number(vec![2,8,0,4,5,1,4,8,9,9,0,8,2,9],vec![5,9,6,6,4,1,0,7],22),vec![5,9,6,6,4,2,8,1,0,7,0,4,5,1,4,8,9,9,0,8,2,9]);
+        assert_eq!(Solution::max_number(vec![8,6,9],vec![1,7,5],3),vec![9,7,5]);
 
+    }
+
+    #[test]
+    fn fail() {
+        assert_eq!(Solution::max_number(vec![5,5,1],vec![4,0,1],3),vec![5,5,4]);
     }
 }
