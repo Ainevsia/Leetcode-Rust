@@ -34,9 +34,7 @@ impl Solution {
                     if x[i] > y[j] { res.push(x[i]); i += 1 }
                     else if x[i] < y[j] { res.push(y[j]); j += 1 }
                     else /* x[i] == y[j] */ {
-                        if i + 1 == n1 { res.push(y[j]); j += 1 }
-                        else if j + 1 == n2 { res.push(x[i]); i += 1 }
-                        else if x[i + 1] > y[j + 1] { res.push(x[i]); i += 1 }
+                        if &x[i..] > &y[j..] { res.push(x[i]); i += 1 }
                         else { res.push(y[j]); j += 1 }
                     }
                 }
