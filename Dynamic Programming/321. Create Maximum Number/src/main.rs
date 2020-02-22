@@ -5,21 +5,23 @@ fn main() {
 struct Solution {}
 
 impl Solution {
+    /// O(kn) can be reduced to O(k) by using more space
     pub fn max_number(n1: Vec<i32>, n2: Vec<i32>, k: i32) -> Vec<i32> {
         let k = k as usize;
         let mut i = if k <= n2.len() { 0 } else { k - n2.len() };
-        let mut max_number_i = vec![];
+        let mut max_vec = vec![];
         loop {
             let x = Self::max_n(&n1, i);
             let y = Self::max_n(&n2, k - i);
             let tmp = Self::merge(x, y);
-            max_number_i = if tmp > max_number_i { tmp } else { max_number_i };
-            // println!("i = {:#?}, max_number_i = {:#?}", i, max_number_i);
+            max_vec = if tmp > max_vec { tmp } else { max_vec };
             i += 1;
-            if i > n1.len() || k < i { break max_number_i }
+            if i > n1.len() || k < i { break max_vec }
         }
     }
 
+    /// merge two vectors to get the max number, use vector comparsion
+    /// O(n) time
     pub fn merge(x: Option<Vec<i32>>, y: Option<Vec<i32>>) -> Vec<i32> {
         match (x, y) {
             (None, Some(x)) => return x,
@@ -43,22 +45,23 @@ impl Solution {
         }
     }
 
-    /// calculate the max `stack_len` digit number of the vector `nums`
-    pub fn max_n(nums: &Vec<i32>, stack_len: usize) -> Option<Vec<i32>> {
-        if stack_len == 0 { return None }
-        let mut stack: Vec<i32> = Vec::with_capacity(stack_len);
+    /// calculate the max `digit_cnt` digit number of the vector `nums`
+    /// O(n) time
+    pub fn max_n(nums: &Vec<i32>, digit_cnt: usize) -> Option<Vec<i32>> {
+        if digit_cnt == 0 { return None }
+        let mut stack: Vec<i32> = Vec::with_capacity(digit_cnt);
         stack.push(nums[0]);
         for i in 1..nums.len() {
-            while let Some(&x) = stack.last() {
-                if stack.len() == stack_len && nums[i] < x { break }
+            while let Some(&x) = stack.last() { // may pop a few times
+                if stack.len() == digit_cnt && nums[i] < x { break }
                 // stack not full
-                if  nums[i] > x && /* remaining digits */
-                    nums.len() - i + stack.len() - 1 >= stack_len {
+                if  nums[i] > x && /* remaining digits can fill the stack */
+                    nums.len() - i + stack.len() - 1 >= digit_cnt {
                     stack.pop();
                 } else { break }
             }
-            // discard smaller ones
-            if stack.len() < stack_len { stack.push(nums[i]) }
+            // if full, discard smaller ones
+            if stack.len() < digit_cnt { stack.push(nums[i]) }
         }
         Some(stack)
     }
