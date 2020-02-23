@@ -5,8 +5,26 @@ fn main() {
 struct Solution {}
 
 impl Solution {
-    /// recursive
     pub fn validate_binary_tree_nodes(n: i32, left_child: Vec<i32>, right_child: Vec<i32>) -> bool {
+        let n = n as usize;
+        let mut v = vec![0; n];
+        v[0] = 1;
+        for i in 0..n {
+            if left_child[i] != -1 {
+                if v[left_child[i] as usize] == 1 { return false }
+                else { v[left_child[i] as usize] = 1 }
+            }
+            if right_child[i] != -1 {
+                if v[right_child[i] as usize] == 1 { return false }
+                else { v[right_child[i] as usize] = 1 }
+            }
+        }
+        v.iter().all(|&x| x == 1)
+    }
+
+
+    /// recursive
+    pub fn validate_binary_tree_nodes_recursive(n: i32, left_child: Vec<i32>, right_child: Vec<i32>) -> bool {
         let n = n as usize;
         let mut visited = vec![false; n];
         if Self::visit(&left_child, &right_child, 0, &mut visited) == false { return false }
@@ -28,8 +46,12 @@ mod test {
 
     #[test]
     fn basic() {
-        assert_eq!(Solution::validate_binary_tree_nodes(4, vec![1,-1,3,-1], vec![2,-1,-1,-1]), true);
-        assert_eq!(Solution::validate_binary_tree_nodes(6, vec![1,-1,-1,4,-1,-1], vec![2,-1,-1,5,-1,-1]), false);
+        assert_eq!(Solution::validate_binary_tree_nodes(4,
+            vec![1,-1,3,-1],
+            vec![2,-1,-1,-1]), true);
+        assert_eq!(Solution::validate_binary_tree_nodes(6,
+            vec![1,-1,-1,4,-1,-1],
+            vec![2,-1,-1,5,-1,-1]), false);
 
     }
 }
