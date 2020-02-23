@@ -1,7 +1,7 @@
 fn main() {
-    for i in 0..100 {
-        println!("3*i = {:#?}", 3*i);
-    }
+    let mut v = [1, 2, 3, 4, 5];
+    v.sort_by(|a, b| b.cmp(a));
+    println!("floats = {:#?}", v);
     assert_eq!(Solution::largest_multiple_of_three(vec![8,1,9]), "981");
 }
 
@@ -9,24 +9,24 @@ struct Solution {}
 
 impl Solution {
     pub fn largest_multiple_of_three(mut digits: Vec<i32>) -> String {
+        if digits.len() == 0 { return "".to_string() }
         let sum =  digits.iter().fold(0, |sum, &x| sum + x);
-        digits.sort();
-        digits = digits.into_iter().rev().collect();
+        digits.sort_by(|a, b| b.cmp(a) );
         if sum % 3 != 0 {
-            // println!("digits = {:#?}", digits);
-            let mut m1 = 0;let mut m2 = 0;
+            let (mut m1, mut m2) = (0, 0);
             for &i in digits.iter() {
                 if i % 3 == 1 { m1 += 1 }
                 if i % 3 == 2 { m2 += 1 }
             }
-            if m1 != 0 && m2 != 0 && i32::abs(m1-m2) % 3 == 1 && (m1 % 3 == 2 ||m2%3==2) {
+            // these lines are [[magic]] ..
+            if m1 != 0 && m2 != 0 && i32::abs(m1-m2) % 3 == 1 &&
+            ( m1 % 3 == 2 || m2 % 3 == 2 ) {
                 m1 -= 1; m2 -= 1;
             }
             m1 %= 3; m2 %= 3;
             while m1 != 0 && m2 != 0 { 
                 m1 -= 1; m2 -= 1;
             }
-            // println!("m1 = {:#?}, m2 = {:#?}", m1, m2);
             match (m1, m2) {
                 (1, 0) => {
                     let mut j = digits.len() - 1;
@@ -70,16 +70,12 @@ impl Solution {
                         else { j -= 1 }
                     }
                 }
-                _ => unimplemented!()
+                _ => unreachable!()
             }
         }
-        if digits.len() == 0 { return "".to_string() }
-        digits.sort();
-        // println!("digits = {:#?}", digits);
-        let mut res: Vec<i32> = digits.into_iter().rev().collect();
+        let mut res = digits;
         while !res.is_empty() && res[0] == 0 { res.remove(0); }
         if res.is_empty() { return "0".to_string() }
-
         res.iter().map(|&x| std::char::from_digit(x as u32, 10).unwrap()).collect()
     }
 }
