@@ -10,6 +10,7 @@ function recur() {
         then  
 			# this is a problem folder, not problem class folder 
     		echo -n "| ${folder//'/'/''} |" 
+
 			if [[ `ls "$1""$folder" | grep "toml"` ]]
 			then
 				# this is a rust project
@@ -17,11 +18,26 @@ function recur() {
 			else
 				echo -n "|"
 			fi
+
 			if [[ `ls "$1""$folder" | grep "cpp"` ]]
 			then
 				# this project contains cpp Solution
-				echo -n "[C++](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"})|"
+				file=`ls "$1""$folder" | grep "cpp"`
+				echo -n "[C++](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}"$file")|"
+			else
+				echo -n "|"
 			fi
+
+			if [[ `ls "$1""$folder" | grep "md"` ]]
+			then
+				# this project contains README.md
+				solution=`ls "$1""$folder" | grep "md"` 
+				echo -n "[Solution](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}"$solution")|"
+			else
+				echo -n "|"
+			fi
+
+			echo
         else 
 			# this is problem class folder , recur
 			recur "$1""$folder"
@@ -29,4 +45,4 @@ function recur() {
     done  
 }
 
-recur $CWD'/'
+recur $CWD'/' | sort -V
