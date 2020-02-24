@@ -26,6 +26,14 @@ function recur() {
 				file=`ls "$1""$folder" | grep "cpp"`
 				echo -n "[C++](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}"$file")|"
 			else
+				# test whether a README contains cpp
+				for readme in `ls "$1""$folder" | grep "md"` 
+				do
+					if [[ `grep cpp "$1""$folder""$readme"` ]]
+					then
+						echo -n "[C++ in README](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}"$readme")"
+					fi
+				done
 				echo -n "|"
 			fi
 
@@ -47,3 +55,4 @@ function recur() {
 }
 
 recur $CWD'/' | sort -V
+# recur $CWD'/' 
