@@ -10,11 +10,12 @@ function recur() {
         then  
 			# this is a problem folder, not problem class folder 
     		echo -n "| ${folder//'/'/''} |" 
-
+			path="${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}"
+			path="${path//' '/"%20"}"
 			if [[ `ls "$1""$folder" | grep "toml"` ]]
 			then
 				# this is a rust project
-				echo -n "[Rust](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}src/main.rs)|"
+				echo -n "[Rust]("$path"src/main.rs)|"
 			else
 				echo -n "|"
 			fi
