@@ -16,4 +16,4 @@ Cargo.lock
 */*/target/
 **/a.out
 **/.vscode
-Solution.cpp
+/Solution.cpp
