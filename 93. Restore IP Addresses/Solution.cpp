@@ -5,6 +5,8 @@
 #include <algorithm>
 using namespace std;
 
+
+
 class Solution {
 public:
     bool isPart(string str) {
@@ -37,7 +39,6 @@ public:
         return this->ipFromNPart(4, s);
     }
 };
-
 
 
 int main() {
