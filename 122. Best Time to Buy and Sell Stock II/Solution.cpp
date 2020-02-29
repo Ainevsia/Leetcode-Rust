@@ -25,6 +25,16 @@ public:
         return sum + maxprofit;
     }
 
+
+    // extremely short and clean
+    int maxProfit(vector<int>& prices) {
+        int sum = 0;
+        for (int i=1; i<prices.size(); i++) {
+            int diff = prices[i] > prices[i-1];
+            sum += diff > 0 ? diff : 0;
+        }
+        return sum;
+    }
 };
 
 int main() {
