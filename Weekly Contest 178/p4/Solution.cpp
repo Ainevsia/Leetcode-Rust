@@ -3,41 +3,41 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <tuple>
+#include <deque>
 using namespace std;
 
 class Solution {
 public:
+    /* this is a graph dfs problem to search the min distance */
     int minCost(vector<vector<int>>& grid) {
-        
-    }
-
-    bool bt(vector<vector<int>>& g, vector<vector<int>>& v, 
-            vector<vector<int>>& c, int & cost, int i, int j ) {
-        int m = g.size(), n = g[0].size();
-        if (i < 0 or i >= m or j < 0 or j >= n) return false;
-        if (i==m-1 and j == n-1) return true;
-        if (v[i][j] == true) return false;
-        int dir = g[i][j], mincost = 1<<30;
-        v[i][j] = true;
-        for (int d = 0; d<4; d++) {
-            int cur_dir = (dir + d) % 4;
-            switch (cur_dir) {
-                case 1:
-                    if (this->bt(g,v,c,mincost,i,j+1)) {
-                        if 
-                    }
-                    break;
-                case 2:
-                case 3:
-                case 4:
+        deque<tuple<int, int, int>> q { make_tuple(0,0,0) };    // search queue
+        const int m = grid.size(), n = grid[0].size();          // m * n matrix
+        vector<vector<int>> dp (m, vector<int>(n, 1 << 30));    // currnt min distance
+        int dirs[4][2] { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };    // four directions
+        while (not q.empty()) { // always true
+            auto node = q.front();
+            q.pop_front();
+            int i = get<0>(node), j = get<1>(node), cost = get<2>(node);
+            if (i + 1 == m and j + 1 == n) return cost;
+            dp[i][j] = cost;    // this should be the best cost at this time
+            for (auto dir: dirs) {
+                int ni = i + dir[0], nj = j + dir[1];
+                if (ni < 0 or ni >= m or nj < 0 or nj >= n or dp[ni][nj] <= cost)
+                    continue;
+                if (grid[i][j] == 1 and dir[0] == 0 and dir[1] == 1 or
+                    grid[i][j] == 2 and dir[0] == 0 and dir[1] ==-1 or
+                    grid[i][j] == 3 and dir[0] == 1 and dir[1] == 0 or
+                    grid[i][j] == 4 and dir[0] ==-1 and dir[1] == 0)
+                    q.push_front(make_tuple(ni, nj, cost));
+                else q.push_back(make_tuple(ni, nj, cost + 1));
             }
-            if (this->bt(g,v,c,cost,i,j))
         }
-
+        return 0;
     }
 };
 
 int main() {
     Solution s;
-
+    return 0;
 }
