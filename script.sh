@@ -24,7 +24,8 @@ function recur() {
 			then
 				# this project contains cpp Solution
 				file=`ls "$1""$folder" | grep "cpp"`
-				echo -n "[C++](${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}${folder//' '/"%20"}"$file")|"
+                prefix=${1//'/home/ainevsia/gh/Leetcode-Rust'/'.'}
+				echo -n "[C++](${prefix//' '/"%20"}${folder//' '/"%20"}"$file")|"
 			else
 				# test whether a README contains cpp
 				for readme in `ls "$1""$folder" | grep "md"` 

@@ -4,6 +4,7 @@ Trying to solve the problems on leetcode by rust.
 
 | Title | Rust | C++ | Solution |
 | ----- | ---- | --- | -------- |
+| 1. Two Sum |[Rust](./1.%20Two%20Sum/src/main.rs)|[C++](./1.%20Two%20Sum/Solution.cpp)||
 | 2. Add Two Numbers |[Rust](./2.%20Add%20Two%20Numbers/src/main.rs)|||
 | 3. Longest Substring Without Repeating Characters |[Rust](./3.%20Longest%20Substring%20Without%20Repeating%20Characters/src/main.rs)|||
 | 4. Median of Two Sorted Arrays |[Rust](./4.%20Median%20of%20Two%20Sorted%20Arrays/src/main.rs)|||
@@ -24,7 +25,7 @@ Trying to solve the problems on leetcode by rust.
 | 19. Remove Nth Node From End of List |[Rust](./19.%20Remove%20Nth%20Node%20From%20End%20of%20List/src/main.rs)||[Solution](./19.%20Remove%20Nth%20Node%20From%20End%20of%20List/README.md)|
 | 20. Valid Parentheses |[Rust](./20.%20Valid%20Parentheses/src/main.rs)|||
 | 21. Merge Two Sorted Lists |[Rust](./21.%20Merge%20Two%20Sorted%20Lists/src/main.rs)|||
-| 22. Generate Parentheses |[Rust](./22.%20Generate%20Parentheses/src/main.rs)|||
+| 22. Generate Parentheses |[Rust](./22.%20Generate%20Parentheses/src/main.rs)|[C++](./22.%20Generate%20Parentheses/Solution.cpp)||
 | 23. Merge k Sorted Lists |[Rust](./23.%20Merge%20k%20Sorted%20Lists/src/main.rs)|||
 | 24. Swap Nodes in Pairs |[Rust](./24.%20Swap%20Nodes%20in%20Pairs/src/main.rs)|||
 | 25. Reverse Nodes in k-Group |[Rust](./25.%20Reverse%20Nodes%20in%20k-Group/src/main.rs)|||
@@ -70,15 +71,32 @@ Trying to solve the problems on leetcode by rust.
 | 65. Valid Number |[Rust](./65.%20Valid%20Number/src/main.rs)|||
 | 66. Plus One |[Rust](./66.%20Plus%20One/src/main.rs)|||
 | 67. Add Binary |[Rust](./67.%20Add%20Binary/src/main.rs)|||
+| 71. Simplify Path ||[C++](./71.%20Simplify%20Path/Solution.cpp)|[Solution](./71.%20Simplify%20Path/README.md)|
 | 72. Edit Distance |[Rust](./72.%20Edit%20Distance/src/main.rs)|||
+| 73. Set Matrix Zeroes ||[C++](./73.%20Set%20Matrix%20Zeroes/Solution.cpp)||
 | 74. Search a 2D Matrix |[Rust](./74.%20Search%20a%202D%20Matrix/src/main.rs)|||
 | 75. Sort Colors |[Rust](./Two%20Pointers/75.%20Sort%20Colors/src/main.rs)|||
 | 76. Minimum Window Substring |[Rust](./Sliding%20Window/76.%20Minimum%20Window%20Substring/src/main.rs)|||
+| 77. Combinations ||[C++](./77.%20Combinations/Solution.cpp)||
+| 78. Subsets |[Rust](./78.%20Subsets/src/main.rs)|[C++](./78.%20Subsets/Solution.cpp)|[Solution](./78.%20Subsets/README.md)|
+| 79. Word Search |[Rust](./79.%20Word%20Search/src/main.rs)|||
+| 80. Remove Duplicates from Sorted Array II |[Rust](./80.%20Remove%20Duplicates%20from%20Sorted%20Array%20II/src/main.rs)|||
+| 81. Search in Rotated Sorted Array II |[Rust](./81.%20Search%20in%20Rotated%20Sorted%20Array%20II/src/main.rs)|[C++](./81.%20Search%20in%20Rotated%20Sorted%20Array%20II/Solution.cpp)||
+| 82. Remove Duplicates from Sorted List II |[Rust](./82.%20Remove%20Duplicates%20from%20Sorted%20List%20II/src/main.rs)|[C++](./82.%20Remove%20Duplicates%20from%20Sorted%20List%20II/Solution.cpp)||
+| 83. Remove Duplicates from Sorted List ||[C++](./83.%20Remove%20Duplicates%20from%20Sorted%20List/Solution.cpp)||
+| 84. Largest Rectangle in Histogram |[Rust](./84.%20Largest%20Rectangle%20in%20Histogram/src/main.rs)|||
+| 86. Partition List |[Rust](./86.%20Partition%20List/src/main.rs)|[C++](./86.%20Partition%20List/Solution.cpp)||
+| 89. Gray Code ||[C++](./89.%20Gray%20Code/Solution.cpp)||
+| 90. Subsets II |[Rust](./90.%20Subsets%20II/src/main.rs)|[C++](./90.%20Subsets%20II/Solution.cpp)||
 | 91. Decode Ways |[Rust](./91.%20Decode%20Ways/src/main.rs)|||
 | 92. Reverse Linked List II |[Rust](./92.%20Reverse%20Linked%20List%20II/src/main.rs)|||
+| 93. Restore IP Addresses ||[C++](./93.%20Restore%20IP%20Addresses/Solution.cpp)||
 | 103. Binary Tree Zigzag Level Order Traversal |[Rust](./Tree/103.%20Binary%20Tree%20Zigzag%20Level%20Order%20Traversal/src/main.rs)|||
 | 111. Minimum Depth of Binary Tree |[Rust](./Tree/111.%20Minimum%20Depth%20of%20Binary%20Tree/src/main.rs)|||
 | 113. Path Sum II |[Rust](./Tree/113.%20Path%20Sum%20II/src/main.rs)|||
+| 121. Best Time to Buy and Sell Stock ||[C++](./121.%20Best%20Time%20to%20Buy%20and%20Sell%20Stock/Solution.cpp)||
+| 122. Best Time to Buy and Sell Stock II ||[C++](./122.%20Best%20Time%20to%20Buy%20and%20Sell%20Stock%20II/Solution.cpp)||
+| 131. Palindrome Partitioning |[Rust](./131.%20Palindrome%20Partitioning/src/main.rs)|||
 | 136. Single Number |[Rust](./136.%20Single%20Number/src/main.rs)|||
 | 160. Intersection of Two Linked Lists ||[C++](./160.%20Intersection%20of%20Two%20Linked%20Lists/Solution.cpp)||
 | 198. House Robber |[Rust](./198.%20House%20Robber/src/main.rs)|||
@@ -99,6 +117,7 @@ Trying to solve the problems on leetcode by rust.
 | 378. Kth Smallest Element in a Sorted Matrix |[Rust](./378.%20Kth%20Smallest%20Element%20in%20a%20Sorted%20Matrix/src/main.rs)|||
 | 395. Longest Substring with At Least K Repeating Characters |[Rust](./Sliding%20Window/395.%20Longest%20Substring%20with%20At%20Least%20K%20Repeating%20Characters/src/main.rs)|||
 | 416. Partition Equal Subset Sum |[Rust](./416.%20Partition%20Equal%20Subset%20Sum/src/main.rs)|||
+| 448. Find All Numbers Disappeared in an Array ||[C++](./448.%20Find%20All%20Numbers%20Disappeared%20in%20an%20Array/Solution.cpp)||
 | 457. Circular Array Loop |[Rust](./Two%20Pointers/457.%20Circular%20Array%20Loop/src/main.rs)|||
 | 480. Sliding Window Median |[Rust](./Two%20Heaps/480.%20Sliding%20Window%20Median/src/main.rs)|||
 | 639. Decode Ways II |[Rust](./639.%20Decode%20Ways%20II/src/main.rs)|||
@@ -118,5 +137,9 @@ Trying to solve the problems on leetcode by rust.
 | 1361. Validate Binary Tree Nodes |[Rust](./Weekly%20Contest%20177/1361.%20Validate%20Binary%20Tree%20Nodes/src/main.rs)|||
 | 1362. Closest Divisors |[Rust](./Weekly%20Contest%20177/1362.%20Closest%20Divisors/src/main.rs)|||
 | 1363. Largest Multiple of Three |[Rust](./Weekly%20Contest%20177/1363.%20Largest%20Multiple%20of%20Three/src/main.rs)|||
+| 1365. How Many Numbers Are Smaller Than the Current Number ||[C++](./Weekly%20Contest%20178/1365.%20How%20Many%20Numbers%20Are%20Smaller%20Than%20the%20Current%20Number/Solution.cpp)||
+| 1366. Rank Teams by Votes ||[C++](./Weekly%20Contest%20178/1366.%20Rank%20Teams%20by%20Votes/Solution.cpp)||
+| 1367. Linked List in Binary Tree ||[C++](./Weekly%20Contest%20178/1367.%20Linked%20List%20in%20Binary%20Tree/Solution.cpp)||
+| 1368. Minimum Cost to Make at Least One Valid Path in a Grid ||[C++](./Weekly%20Contest%20178/1368.%20Minimum%20Cost%20to%20Make%20at%20Least%20One%20Valid%20Path%20in%20a%20Grid/Solution.cpp)||
 | 5319. Remove Palindromic Subsequences |[Rust](./Weekly%20Contest%20173/5319.%20Remove%20Palindromic%20Subsequences/src/main.rs)|||
 | 5328. The K Weakest Rows in a Matrix |[Rust](./Weekly%20Contest%20174/5328.%20The%20K%20Weakest%20Rows%20in%20a%20Matrix/src/main.rs)|||
