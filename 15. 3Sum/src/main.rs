@@ -5,13 +5,14 @@ fn main() {
 struct Solution {}
 
 impl Solution {
+    /// find three elements in a sorted array O(n^2)
+    /// fix the first element and find the remaining two elements
+    /// in the right subvector
     pub fn three_sum(nums: Vec<i32>) -> Vec<Vec<i32>> {
         let mut nums = nums.clone();
         nums.sort();
-        // first sort the array from small to large
         let mut ret: Vec<Vec<i32>> = Vec::new();
         if nums.len() < 3 { return ret }
-
         for i in 0..nums.len()-2 {
             if nums[i] > 0 { break }
             else if i > 0 && nums[i] == nums[i - 1] { continue }
