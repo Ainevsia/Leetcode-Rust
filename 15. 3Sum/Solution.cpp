@@ -10,6 +10,8 @@ using namespace std;
 
 class Solution {
 public:
+
+    // just like 3 sum
     vector<vector<int>> threeSum(vector<int>& nums) {
         sort(nums.begin(), nums.end());
         vector<vector<int>> res;
