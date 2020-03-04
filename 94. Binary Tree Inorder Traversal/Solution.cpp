@@ -18,16 +18,18 @@ struct TreeNode {
 
 class Solution {
 public:
-    // trival recursive version, passing vector
+    // trival recursive version, optimize space
     vector<int> inorderTraversal(TreeNode* root) {
         vector<int>res;
-        if (root == NULL)
-            return res;
-        res = inorderTraversal(root->left);
-        res.push_back(root->val);
-        auto r = inorderTraversal(root->right);
-        res.insert(res.end(), r.begin(), r.end());
+        help(root, res);
         return res;
+    }
+
+    void help(TreeNode * root, vector<int> & res) {
+        if (root == NULL) return;
+        help(root->left, res);
+        res.push_back(root->val);
+        help(root->right, res);
     }
 };
 
