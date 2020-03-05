@@ -7,6 +7,7 @@
 #include <deque>
 #include <unordered_map>
 #include <cmath>
+#include <stack>
 using namespace std;
 
 struct TreeNode {
@@ -18,18 +19,24 @@ struct TreeNode {
 
 class Solution {
 public:
-    // trival recursive version, optimize space
-    vector<int> inorderTraversal(TreeNode* root) {
+    // Morris Traversal, do not need extra space
+    // https://stackoverflow.com/questions/5502916/explain-morris-inorder-tree-traversal-without-using-stacks-or-recursion
+    // just reorder the tree in the output order
+    vector<int> inorderTraversal(TreeNode* p) {
         vector<int>res;
-        help(root, res);
+        while (p != NULL) {
+            if (p->left != NULL) {
+                auto lr = p->left, newp = p->left;
+                while (lr->right != NULL) lr = lr->right;
+                lr->right = p;
+                p->left = NULL;
+                p = newp;
+            } else {
+                res.push_back(p->val);
+                p = p->right;
+            }
+        }
         return res;
-    }
-
-    void help(TreeNode * root, vector<int> & res) {
-        if (root == NULL) return;
-        help(root->left, res);
-        res.push_back(root->val);
-        help(root->right, res);
     }
 };
 
