@@ -11,29 +11,32 @@ using namespace std;
 
 class Solution {
 public:
-    // terminate called after throwing an instance of 'std::bad_alloc'
-    //   what():  std::bad_alloc
+    // my version
     int numTrees(int n) {
-        deque<int> buf;
-        buf.push_back(1);
-        while (n-- > 1) {
-            int l = buf.size();
-            for(int i=0; i<l; i++) {
-                int x = buf.front();
-                buf.pop_front();
-                for(int j=1; j<=x+1; j++) {
-                    buf.push_back(j);
-                }
-            }
+        const int len = 1 << 10;
+        vector<int> buf (len, 0);
+        buf[1] = 1;
+        for (int i=1; i<n; i++) {  // now at state i --> state i + 1
+            vector<int> add (len, 0);
+            for (int j = 1; j <= i; j ++)
+                for (int k = 1; k <= j + 1; k ++)
+                    if (k != j)
+                        add[k] += buf[j];
+            for (int j = 1; j <= i + 1; j++)
+                buf[j] += add[j];
+            // now (i + 1) th done
         }
-        return buf.size();
+        int res = 0;
+        for (int i=1; i<=n; i++)
+            res += buf[i];
+        return res;
     }
 };
 
 
 int main() {
     Solution s;
-    auto x = s.numTrees(123);
+    auto x = s.numTrees(8);
     cout << x;
     return 0;
 }
