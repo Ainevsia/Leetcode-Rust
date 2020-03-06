@@ -50,12 +50,23 @@ public:
         }
         return dp[n];
     }
+
+    // cantalan tree
+    // http://www-math.mit.edu/~rstan/ec/catalan.pdf
+    int numTrees_cantalan(int n) {
+        //  h(n)=h(n-1)*(4*n-2)/(n+1);
+        // this formula is can be derived from dp version
+        long long p = 1;
+        for (int i=1; i<=n; i++)
+            p = p * (4 * i - 2) / (i + 1);
+        return p;
+    }
 };
 
 
 int main() {
     Solution s;
-    auto x = s.numTrees(8);
+    auto x = s.numTrees_cantalan(8);
     cout << x;
     return 0;
 }
