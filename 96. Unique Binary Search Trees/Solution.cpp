@@ -11,6 +11,8 @@ using namespace std;
 
 class Solution {
 public:
+    // terminate called after throwing an instance of 'std::bad_alloc'
+    //   what():  std::bad_alloc
     int numTrees(int n) {
         deque<int> buf;
         buf.push_back(1);
@@ -31,6 +33,8 @@ public:
 
 int main() {
     Solution s;
+    auto x = s.numTrees(123);
+    cout << x;
     return 0;
 }
 
