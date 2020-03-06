@@ -12,19 +12,26 @@ using namespace std;
 class Solution {
 public:
     // my version
+    // for each round i
+    // `buf[x]` means **the number of trees** that has `x` right nodes
+    // base on the `buf` vector of the `i - 1` round, we can calculate the `buf` of the `i` round:
+    //      since the element now add is `cur_n + 1` which is the largest element so far,
+    // 
     int numTrees(int n) {
         const int len = 1 << 10;
         vector<int> buf (len, 0);
+        vector<int> add (len, 0);
         buf[1] = 1;
-        for (int i=1; i<n; i++) {  // now at state i --> state i + 1
-            vector<int> add (len, 0);
-            for (int j = 1; j <= i; j ++)
-                for (int k = 1; k <= j + 1; k ++)
-                    if (k != j)
-                        add[k] += buf[j];
-            for (int j = 1; j <= i + 1; j++)
-                buf[j] += add[j];
-            // now (i + 1) th done
+        for (int cur_n = 1; cur_n < n; cur_n ++) {   // now at state cur_n --> state cur_n + 1
+            for (int p = 1; p <= cur_n; p ++)       // --> previus buf vector
+                for (int c = 1; c <= p + 1; c ++)   // --> current add vector
+                    if (c != p)
+                        add[c] += buf[p];
+            for (int _ = 1; _ <= cur_n + 1; _ ++) {
+                buf[_] += add[_];
+                add[_] = 0; // clear the previous `add` vector
+            }
+            // now (cur_n + 1) state done
         }
         int res = 0;
         for (int i=1; i<=n; i++)
