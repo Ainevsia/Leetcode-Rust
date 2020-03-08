@@ -11,25 +11,19 @@ using namespace std;
 
 class Solution {
 public:
-    string generateTheString(int n) {
-        string s;
-        if (n % 2 == 0) {
-            for (int i=0; i<n-1; i++) {
-                s += 'a';
-            }
-            s += 'b';
-            return s;
-        } else {
-            for (int i=0; i<n; i++) {
-                s += 'a';
-            }
-            return s;
-        }
+    string generateTheString(int n) {   /* 1 <= n <= 500 */
+        string res(n-1,'a');
+        if (n%2)    /* n is odd number */
+            res += 'a';
+        else
+            res += 'b';
+        return res;
     }
 };
 
 int main() {
     Solution s;
+    s.generateTheString(1);
     return 0;
 }
 
