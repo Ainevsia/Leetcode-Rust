@@ -10,28 +10,28 @@
 using namespace std;
 
 class Solution {
+private:
+    vector<vector<int>> subo;   /* subordinates */
+    vector<int> info_time;
 public:
-    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
-        vector<vector<int>> subo (n, vector<int>());
-        for (int i=0; i<n; i ++) {
-            if (manager[i] != -1) {
-                subo[manager[i]].push_back(i);
-            }
-        }
-        vector<int> time(n, 0); // time to get informed
-        deque<int> send;
-        send.push_back(headID);
-        while (not send.empty()) {
-            int sender = send.front();
-            send.pop_front();
-            for (auto i : subo[sender]) {
-                time[i] = time[sender] + informTime[sender];
-                send.push_back(i);
-            }
-        }
+    int dfs(int id) {
+        if (subo[id].size() == 0) return 0;
         int res = 0;
-        for (auto i : time) if (i > res) res = i;
+        for (int sub: subo[id])
+            res = max(res, dfs(sub) + info_time[id]);
         return res;
+    }
+
+    int numOfMinutes(int n, int headID, vector<int>& manager, vector<int>& informTime) {
+        subo.resize(n, vector<int>());
+        info_time.assign(informTime.begin(), informTime.end());
+        
+        for (int i=0; i<n; i ++)
+            if (manager[i] != -1)
+                subo[manager[i]].push_back(i);
+        /* this is called  `Adjacency list`  */
+        // dfs can use recursive, do not need stack
+        return dfs(headID);
     }
 };
 
