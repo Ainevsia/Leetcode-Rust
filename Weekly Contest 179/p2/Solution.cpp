@@ -11,23 +11,12 @@ using namespace std;
 
 class Solution {
 public:
+    // do not try to simulate in algorithm contest
+    // find the inner regulation and abstraction
     int numTimesAllBlue(vector<int>& light) {
-        int l = light.size();
-        vector <bool > dp (l+1, false), on (l+1, false);
-        dp[0] = on[0] = true;
-        int maxn = 0, res = 0;
-        for (int k=0; k<l; k++) {
-            int target = light[k];
-            maxn = maxn < target ? target : maxn;
-            on[target] = true;
-            if (dp[target - 1]) {
-                dp [target] = true;
-                for (int i=target+1; i<=maxn; i ++) {
-                    if (dp[i-1] and on[i]) dp[i] = true;
-                }
-                if (dp[maxn]) res++ ;
-            }
-        }
+        int res = 0, r = 0;
+        for (int i=0; i<light.size(); i ++ )
+            res += (r = max(light[i], r)) == i + 1;
         return res;
     }
 };
