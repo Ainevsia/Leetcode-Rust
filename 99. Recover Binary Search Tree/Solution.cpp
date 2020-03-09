@@ -30,6 +30,7 @@ public:
         if (root == NULL) return ;
         traverse(root->left);
         // in-order traverse
+        // edge case stack overfloe
         if (sw1 == NULL and prev->val >= root->val and root->val != (1 << 31)) sw1 = prev;
         if (sw1 != NULL and prev->val >= root->val) sw2 = root;
         prev = root;
