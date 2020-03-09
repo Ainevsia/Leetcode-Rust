@@ -16,27 +16,23 @@ public:
     Solution():rev_pair(0) {}
 
     void mergeSort(int l, int r) {
-        // cout << l << ' ' << r << endl;
         if (l + 1 >= r) return; // zero or one element
         if (l + 2 == r) {
             if (n[l] >= n[l + 1]) {
                 if (n[l] > n[l + 1] * 2L) rev_pair ++ ;
-                n[l] ^= n[l + 1];
-                n[l + 1] ^= n[l];
-                n[l] ^= n[l + 1];
+                n[l] ^= n[l + 1] ^= n[l] ^= n[l + 1];
             }
             return;
         }
-        int m = (l + r) >> 1;
+        int m = (l + r) / 2;
         mergeSort(l, m);
         mergeSort(m, r);
         int i = 0, j = 0;
         // i dont know why i am getting wrong
         while (i + l < m and j + m < r) {
-            if (n[i + l] > n[j + m] * 2L) {
-                rev_pair += m - l - i;
-                j ++ ;
-            } else i++ ;
+            while (j + m < r and n[i + l] > 2L * n[j + m]) j++;
+            rev_pair += j; 
+            i ++;
         }
         // merge sort
         vector<int> buf;
