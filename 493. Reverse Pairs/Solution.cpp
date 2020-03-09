@@ -30,16 +30,17 @@ public:
         int m = (l + r) >> 1;
         mergeSort(l, m);
         mergeSort(m, r);
-        // merge the two arrays
-        vector<int> buf;
-        buf.reserve(r - l);
         int i = 0, j = 0;
+        // i dont know why i am getting wrong
         while (i + l < m and j + m < r) {
             if (n[i + l] > n[j + m] * 2L) {
                 rev_pair += m - l - i;
                 j ++ ;
             } else i++ ;
         }
+        // merge sort
+        vector<int> buf;
+        buf.reserve(r - l);
         for (i = j = 0; i + l < m and j + m < r;) {
             if (n[i + l] > n[j + m]) buf.push_back(n[j++ + m]);
             else buf.push_back(n[i++ + l]);
