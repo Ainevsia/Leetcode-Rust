@@ -30,7 +30,7 @@ public:
         if (root == NULL) return ;
         traverse(root->left);
         // in-order traverse
-        if (sw1 == NULL and prev->val >= root->val) sw1 = prev;
+        if (sw1 == NULL and prev->val >= root->val and root->val != (1 << 31)) sw1 = prev;
         if (sw1 != NULL and prev->val >= root->val) sw2 = root;
         prev = root;
         traverse(root->right);
@@ -50,7 +50,8 @@ public:
 
 
 int main() {
-    Solution s;
+    int a = 1 << 31;
+    cout << a;
     return 0;
 }
 
