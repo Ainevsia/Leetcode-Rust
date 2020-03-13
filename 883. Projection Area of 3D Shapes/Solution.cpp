@@ -13,6 +13,7 @@ using namespace std;
 class Solution {
 public:
     // O(n) extra space can optimize?
+    // can be optimized to O(1) space but iterate through the grid more than once
     int projectionArea(vector<vector<int>>& grid) {
         int n = grid.size();
         if (n < 1) return 0;
