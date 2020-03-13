@@ -24,7 +24,7 @@ public:
         else if (cnt < k) return quickSelect(nums, l, pivot - 1, k - cnt);
         else /* if (cnt > k) */ return quickSelect(nums, pivot + 1, r, k);
     }
-
+    
     int findKthLargest(vector<int>& nums, int k) {
         return quickSelect(nums, 0, nums.size() - 1, k);
     }
