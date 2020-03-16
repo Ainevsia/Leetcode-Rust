@@ -40,6 +40,7 @@ int main() {
     string s = "hello world!";
     reverse(s.begin(), s.end());
     cout << s;
+    cout << s.substr(0,5);
     return 0;
 }
 
