@@ -50,6 +50,7 @@ public:
         return false;
     }
     
+    // dfs
     bool hasValidPath(vector<vector<int>>& grid) {
         m = grid.size();
         n = grid[0].size();
