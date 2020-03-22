@@ -10,7 +10,7 @@
 #include <queue>
 using namespace std;
 
-class Solution {
+class Solution_ {
 public:
     // both end inclusive
     bool _equal(string & s1, int i1, int j1, string & s2, int i2, int j2) {
@@ -40,6 +40,18 @@ public:
     // if N = 3e5, 30w
     // (3e5)^2 * 10 (10 instruction per N) / 5e9 / 60 = 3 min
     // actual (include IO) : 4min30s
+};
+
+class Solution {
+public:
+    // i am too young to learn the power of stl
+    string longestPrefix(string s) {
+        for (int i =s.size()-1; i>0; i--) {
+            if (equal(s.end()-i, s.end(), s.begin()) )
+                return s.substr(0, i);
+        }
+        return "";
+    }
 };
 
 int main() {
