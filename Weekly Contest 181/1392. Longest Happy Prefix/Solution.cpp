@@ -42,7 +42,7 @@ public:
     // actual (include IO) : 4min30s
 };
 
-class Solution {
+class Solution__ {
 public:
     // i am too young to learn the power of stl
     string longestPrefix(string s) {
@@ -54,12 +54,37 @@ public:
     }
 };
 
+class Solution {
+public:
+    long R = 1e11 + 9;
+    int M = 26;
+
+    // Rabin-Karp
+    // s contains only lowercase English letters.
+    // notice **longest** !
+    string longestPrefix(string s) {
+        // prefix hash
+        long lhash = 0, rhash = 0, W = 1, found = 0;
+        for (int l = 1; l < s.size(); l ++) {
+            // l -> the length of the prefix
+            lhash = (lhash * M + (s[l - 1] - 'a')) % R;
+            rhash = (rhash + (s[s.size()- l] - 'a') * W) % R;
+            W = W * M % R;
+            if (lhash == rhash) {
+                found = l;
+            }
+        }
+        return string(s.begin(), s.begin() + found);
+    }
+};
+
 int main() {
     Solution a;
     string str;
     cin >> str;
+    // cout << str;
     string x = a.longestPrefix(str);
-    cout << x << "hel\n";
+    cout << x ;
     return 0;
 }
 
