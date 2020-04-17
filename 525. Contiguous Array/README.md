@@ -18,9 +18,12 @@ But unfortunately, it will cause TLE.
 
 To get rid of the TLE, can we use DP?
 
-We can search the height array from both end, each end maintaining a `found zone`:
+This is a (2n+1) x 1 one dimensional DP.
 
-If first Left < Right , then Left keeps the max height found.
+The DP states are the two occurance of the current height.
 
 ## Insights
 
+The possible `Heights` are in the range of `[-n, +n]`, total 2n + 1 cases.
+
+So we can use a map to record the appearance of each height.
