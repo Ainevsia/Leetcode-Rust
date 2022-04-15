@@ -6,17 +6,10 @@ struct Solution {}
 
 impl Solution {
     pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
-        let mut max_wealth = 0;
-        for acc in accounts {
-            let mut wealth = 0;
-            for w in acc {
-                wealth += w;
-            }
-            if wealth > max_wealth {
-                max_wealth = wealth;
-            }
-        }
-        max_wealth
+        accounts.iter().fold(0, |max_wealth, acc| {
+            let wealth = acc.iter().sum();
+            if wealth > max_wealth { wealth } else { max_wealth }
+        })
     }
 }
 
