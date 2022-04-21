@@ -1,5 +1,3 @@
-use std::{vec, fmt::format};
-
 fn main() {
     Solution::to_goat_latin("I speak Goat Latin".to_owned());
 }
