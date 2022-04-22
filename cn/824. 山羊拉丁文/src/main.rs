@@ -8,13 +8,11 @@ impl Solution {
     pub fn to_goat_latin(sentence: String) -> String {
         let mut res = vec![];
         for (idx, i) in sentence.split(' ').enumerate() {
-            if i.to_lowercase().starts_with(['a', 'e', 'i', 'o', 'u']) {
-                let x = format!("{}maa{}",i,"a".repeat(idx));
-                res.push(x);
+            res.push(if i.to_lowercase().starts_with(['a', 'e', 'i', 'o', 'u']) {
+                format!("{}maa{}",i,"a".repeat(idx))
             } else {
-                let x = format!("{}{}maa{}",&i[1..],&i[..1],"a".repeat(idx));
-                res.push(x);
-            }
+                format!("{}{}maa{}",&i[1..],&i[..1],"a".repeat(idx))
+            })
         }
         // println!("res = {:#?}", res);
         res.join(" ")
