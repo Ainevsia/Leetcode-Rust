@@ -7,15 +7,14 @@ struct Solution {}
 impl Solution {
     pub fn max_rotate_function(nums: Vec<i32>) -> i32 {
         let n = nums.len() as i32;
-        // use std::iter::FromIterator;
-        let mut arr = Vec::from_iter(0..n);
-        let mut res = i32::MIN;
-        for _ in 0..n {
-            let f = nums.iter().zip(arr.iter())
-                .map(|(x, y)| { x * y })
-                .sum::<i32>();
+        let s = nums.iter().sum::<i32>();
+        let mut f = nums.iter().enumerate()
+            .map(|(x, y)| { x as i32 * y })
+            .sum::<i32>();
+        let mut res = f;
+        for idx in (1..n as usize).rev() {
+            f += s - nums[idx] * n;
             if f > res { res = f; }
-            arr.rotate_right(1);
         }
         res
     }
