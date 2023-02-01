@@ -2,7 +2,8 @@
 
 Trying to solve the problems on leetcode by rust.
 
-
+| Title | Rust | C++ | Solution |
+| ----- | ---- | --- | -------- |
 | 1. Two Sum |[Rust](./1.%20Two%20Sum/src/main.rs)|[C++](./1.%20Two%20Sum/Solution.cpp)|[Solution](./1.%20Two%20Sum/README.md)|
 | 2. Add Two Numbers |[Rust](./2.%20Add%20Two%20Numbers/src/main.rs)|||
 | 3. Longest Substring Without Repeating Characters |[Rust](./3.%20Longest%20Substring%20Without%20Repeating%20Characters/src/main.rs)|||
