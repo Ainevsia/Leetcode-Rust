@@ -3,3 +3,4 @@ data.txt
 saved_dictionary.pkl
 .gitignore
 *.lock
+target/
