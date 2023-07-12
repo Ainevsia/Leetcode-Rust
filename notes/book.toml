@@ -1,0 +1,6 @@
+[book]
+authors = ["zhipengxu@sjtu.edu.cn"]
+language = "en"
+multilingual = false
+src = "src"
+title = "代码随想录算法训练营刷题笔记"
