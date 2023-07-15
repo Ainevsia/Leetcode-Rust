@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li><li class="chapter-item expanded "><a href="day2.html"><strong aria-hidden="true">2.</strong> Day 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day2/lc977.html"><strong aria-hidden="true">2.1.</strong> 977. 有序数组的平方</a></li><li class="chapter-item expanded "><a href="day2/lc209.html"><strong aria-hidden="true">2.2.</strong> 209. 长度最小的子数组</a></li><li class="chapter-item expanded "><a href="day2/lc59.html"><strong aria-hidden="true">2.3.</strong> 59. 螺旋矩阵II</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -254,7 +254,222 @@
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<div style="break-before: page; page-break-before: always;"></div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="27-移除元素-1"><a class="header" href="#27-移除元素-1">27. 移除元素</a></h1>
+<h2 id="题目描述-1"><a class="header" href="#题目描述-1">题目描述</a></h2>
+<p>给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。</p>
+<p>不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</p>
+<p>元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</p>
+<p>0 &lt;= nums.length &lt;= 100
+0 &lt;= nums[i] &lt;= 50
+0 &lt;= val &lt;= 100</p>
+<h2 id="解题思路-1"><a class="header" href="#解题思路-1">解题思路</a></h2>
+<p>线性算法，找到一个要移除的元素就和最后一个交换</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn remove_element(nums: &amp;mut Vec&lt;i32&gt;, val: i32) -&gt; i32 {
+        let n = nums.len();
+        if n == 0 { return 0 }
+        // [i,j) 表示还需要处理的区间，在这个区间之外的都是无需处理的
+        let mut i = 0;
+        let mut j = n;
+        while i &lt; j {
+            if nums[i] == val {
+                j -= 1;
+                nums[i] = nums[j];
+            } else {
+                i += 1;
+            }
+        }
+        j as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="学习感想-1"><a class="header" href="#学习感想-1">学习感想</a></h2>
+<p>一开始想的时候其实有不变量的思想在里面</p>
+<p>写一下 双指针的版本</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
+    pub fn remove_element(nums: &amp;mut Vec&lt;i32&gt;, val: i32) -&gt; i32 {
+        let mut a = 0;
+        let mut b = 0;
+        let n = nums.len();
+        while b &lt; n {
+            if nums[b] == val { b += 1 }
+            else {
+                nums[a] = nums[b];
+                a += 1;
+                b += 1;
+            }
+        }
+        a as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="第一章--数组part02"><a class="header" href="#第一章--数组part02">第一章  数组part02</a></h1>
+<p>977.有序数组的平方 y，209.长度最小的子数组 ，59.螺旋矩阵II ，总结 </p>
+<p>建议大家先独立做题，然后看视频讲解，然后看文章讲解，然后在重新做一遍题，把题目AC，最后整理成今日当天的博客</p>
+<p>拓展题目可以先不做</p>
+<p>详细布置</p>
+<h2 id="977有序数组的平方"><a class="header" href="#977有序数组的平方">977.有序数组的平方</a></h2>
+<p>题目建议： 本题关键在于理解双指针思想 </p>
+<p>题目链接：https://leetcode.cn/problems/squares-of-a-sorted-array/
+文章讲解：https://programmercarl.com/0977.%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E5%B9%B3%E6%96%B9.html
+视频讲解： https://www.bilibili.com/video/BV1QB4y1D7ep </p>
+<h2 id="209长度最小的子数组"><a class="header" href="#209长度最小的子数组">209.长度最小的子数组</a></h2>
+<p>题目建议： 本题关键在于理解滑动窗口，这个滑动窗口看文字讲解 还挺难理解的，建议大家先看视频讲解。  拓展题目可以先不做。 </p>
+<p>题目链接：https://leetcode.cn/problems/minimum-size-subarray-sum/
+文章讲解：https://programmercarl.com/0209.%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84.html
+视频讲解：https://www.bilibili.com/video/BV1tZ4y1q7XE</p>
+<h2 id="59螺旋矩阵ii"><a class="header" href="#59螺旋矩阵ii">59.螺旋矩阵II</a></h2>
+<p>题目建议：  本题关键还是在转圈的逻辑，在二分搜索中提到的区间定义，在这里又用上了。 </p>
+<p>题目链接：https://leetcode.cn/problems/spiral-matrix-ii/
+文章讲解：https://programmercarl.com/0059.%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5II.html
+视频讲解：https://www.bilibili.com/video/BV1SL4y1N7mV/</p>
+<p>总结 </p>
+<p>题目建议：希望大家 也做一个自己 对数组专题的总结</p>
+<p>文章链接：https://programmercarl.com/%E6%95%B0%E7%BB%84%E6%80%BB%E7%BB%93%E7%AF%87.html </p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="977-有序数组的平方"><a class="header" href="#977-有序数组的平方">977. 有序数组的平方</a></h1>
+<h2 id="题目描述-2"><a class="header" href="#题目描述-2">题目描述</a></h2>
+<p>给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。</p>
+<h2 id="解题思路-2"><a class="header" href="#解题思路-2">解题思路</a></h2>
+<p>有个很直接的方法是，先取绝对值，然后sort，然后平方</p>
+<p>但是这个是nlogn的算法，想要一个n的算法，那很显然需要用到数组有序这个特性。</p>
+<p>其实平方是无关紧要的操作。</p>
+<p>找到最小的元素，然后向两边双边移动？</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn sorted_squares(mut nums: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        nums.iter_mut()
+            .filter(|&amp;&amp;mut x| x &lt; 0)
+            .for_each(|x| *x = -*x);
+        let low = nums.iter().enumerate()
+            .fold((0, nums[0]), |(idx, v), (jdx, &amp;x)| {
+                if x &lt; v { (jdx, x) } else { ( idx, v ) }
+            }).0;
+        if low == 0 { return nums.iter().map(|x| x**x).collect() }
+        let mut left = low as isize - 1;
+        let mut right = low + 1;
+        let n = nums.len();
+        let mut v = Vec::with_capacity(n);
+        v.push(nums[low]);
+        // left -&gt; 还需要处理的左侧第一个元素
+        // right 还需要处理的右侧第一个元素
+        while left &gt;= 0 &amp;&amp; right &lt; n {
+            // 判断两侧
+            if nums[left as usize] &lt; nums[right] {
+                v.push(nums[left as usize]);
+                left -= 1;
+            } else {
+                v.push(nums[right]);
+                right += 1;
+            }
+        }
+        if left &lt; 0 {
+            while right &lt; n {
+                v.push(nums[right]);
+                right += 1;
+            }
+        } else {
+            while left &gt;= 0 {
+                v.push(nums[left as usize]);
+                left -= 1;
+            }
+        }
+        v.iter().map(|x| x**x).collect()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>写出来了，但是很长，确实定义的每一个变量的明确含义一定要在写之前就很清楚</p>
+<h2 id="学习感想-2"><a class="header" href="#学习感想-2">学习感想</a></h2>
+<p>数组平方的最大值就在数组的两端，不是最左边就是最右边，不可能是中间。</p>
+<p>我是从最小数开始构建，确实麻烦，从最大的数开始构建就是一个简单一点的从两侧开始的双指针了。</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
+    pub fn sorted_squares(mut nums: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        let n = nums.len();
+        let mut v = Vec::with_capacity(n);
+        let mut a = 0;
+        let mut b = n as isize - 1;
+        while a &lt;= b {
+            if nums[a as usize].abs() &lt; nums[b as usize].abs() {
+                v.push(nums[b as usize]);
+                b -= 1;
+            } else {
+                v.push(nums[a as usize]);
+                a += 1;
+            }
+        }
+        v.iter().map(|x| x**x).rev().collect()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>注意是abs比较，a和b都是闭区间</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="209-长度最小的子数组"><a class="header" href="#209-长度最小的子数组">209. 长度最小的子数组</a></h1>
+<h2 id="题目描述-3"><a class="header" href="#题目描述-3">题目描述</a></h2>
+<p>给定一个含有 n 个正整数的数组和一个正整数 target 。</p>
+<p>找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。</p>
+<h2 id="解题思路-3"><a class="header" href="#解题思路-3">解题思路</a></h2>
+<p>哎写出来了但是很长，用双指针维护一个区间，相当于是循环不变量，</p>
+<p>有一个观察：就是找到一个可行解后，第二个元素开始的可行解的最后一个元素一定大于或等于当前最后一个元素</p>
+<p>所以不断地右侧生长去找到一个可行解，然后左侧缩小去尝试更小的解</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
+        let n = nums.len();
+        let mut a = 0;
+        let mut b = 0;
+        let mut s = 0;
+        let mut res = 0;
+        while s &lt; target &amp;&amp; b &lt; n {
+            s += nums[b];b += 1;
+        }
+        if s &lt; target &amp;&amp;  b == n { return 0 }
+        res = b;
+        loop {
+
+            while s &gt;= target &amp;&amp; a &lt; b {
+                s -= nums[a];
+                res = res.min(b - a);
+                a += 1;
+            }
+            while s &lt; target &amp;&amp; b &lt; n {
+                s += nums[b];b += 1;
+            }
+            if s &gt;= target {
+                res = res.min(b - a);
+            }
+            if b == n &amp;&amp; s &lt; target { break }
+        }
+
+        res as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="学习感想-3"><a class="header" href="#学习感想-3">学习感想</a></h2>
+<p>首先要思考 如果用一个for循环，那么应该表示 滑动窗口的起始位置，还是终止位置。</p>
+<p>如果只用一个for循环来表示 滑动窗口的起始位置，那么如何遍历剩下的终止位置？</p>
+<p>此时难免再次陷入 暴力解法的怪圈。</p>
+<p>所以 只用一个for循环，那么这个循环的索引，一定是表示 滑动窗口的终止位置。</p>
+<p>原来是滑动窗口，只用一个变量来表示结束的位置</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="59-螺旋矩阵ii"><a class="header" href="#59-螺旋矩阵ii">59. 螺旋矩阵II</a></h1>
+<h2 id="题目描述-4"><a class="header" href="#题目描述-4">题目描述</a></h2>
+<p>给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</p>
+<h2 id="解题思路-4"><a class="header" href="#解题思路-4">解题思路</a></h2>
+<h2 id="学习感想-4"><a class="header" href="#学习感想-4">学习感想</a></h2>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
