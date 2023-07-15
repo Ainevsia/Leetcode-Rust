@@ -181,8 +181,8 @@
 <p>直接使用标准库的做法，slice的partition_point没有找到的时候返回数组的长度</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Solution {}
-impl Solution {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
     pub fn search(nums: Vec&lt;i32&gt;, target: i32) -&gt; i32 {
         let x = nums.partition_point(|&amp;x| x &lt; target);
         if x == nums.len() { return -1 }
@@ -194,8 +194,8 @@ impl Solution {
 <p>手写的二分查找</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Solution {}
-impl Solution {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
     pub fn search(nums: Vec&lt;i32&gt;, target: i32) -&gt; i32 {
         let mut left = 0;
         let mut right = nums.len();
@@ -218,8 +218,8 @@ impl Solution {
 <p>在左闭右闭区间的情况下 由于right 要 -1，所以要考虑right=0 - 1的情况</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Solution {}
-impl Solution {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
     pub fn search(nums: Vec&lt;i32&gt;, target: i32) -&gt; i32 {
         let mut left = 0isize;
         let mut right = nums.len() as isize - 1;
