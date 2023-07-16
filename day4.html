@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>977. 有序数组的平方 - 代码随想录算法训练营刷题笔记</title>
+        <title>Day 4 - 代码随想录算法训练营刷题笔记</title>
 
 
         <!-- Custom HTML head -->
@@ -12,21 +12,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        <link rel="icon" href="../favicon.svg">
-        <link rel="shortcut icon" href="../favicon.png">
-        <link rel="stylesheet" href="../css/variables.css">
-        <link rel="stylesheet" href="../css/general.css">
-        <link rel="stylesheet" href="../css/chrome.css">
-        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="../fonts/fonts.css">
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="../highlight.css">
-        <link rel="stylesheet" href="../tomorrow-night.css">
-        <link rel="stylesheet" href="../ayu-highlight.css">
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
@@ -35,7 +35,7 @@
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "../";
+            var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="../day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li><li class="chapter-item expanded "><a href="../day2.html"><strong aria-hidden="true">2.</strong> Day 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day2/lc977.html" class="active"><strong aria-hidden="true">2.1.</strong> 977. 有序数组的平方</a></li><li class="chapter-item expanded "><a href="../day2/lc209.html"><strong aria-hidden="true">2.2.</strong> 209. 长度最小的子数组</a></li><li class="chapter-item expanded "><a href="../day2/lc59.html"><strong aria-hidden="true">2.3.</strong> 59. 螺旋矩阵II</a></li></ol></li><li class="chapter-item expanded "><a href="../day3.html"><strong aria-hidden="true">3.</strong> Day 3</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day3/lc203.html"><strong aria-hidden="true">3.1.</strong> 203. 移除链表元素</a></li><li class="chapter-item expanded "><a href="../day3/lc707.html"><strong aria-hidden="true">3.2.</strong> 707. 设计链表</a></li><li class="chapter-item expanded "><a href="../day3/lc206.html"><strong aria-hidden="true">3.3.</strong> 206. 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="../day4.html"><strong aria-hidden="true">4.</strong> Day 4</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day4/lc24.html"><strong aria-hidden="true">4.1.</strong> 24. 两两交换链表中的节点</a></li></ol></li><li class="chapter-item expanded "><a href="../day5.html"><strong aria-hidden="true">5.</strong> Day 5</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li><li class="chapter-item expanded "><a href="day2.html"><strong aria-hidden="true">2.</strong> Day 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day2/lc977.html"><strong aria-hidden="true">2.1.</strong> 977. 有序数组的平方</a></li><li class="chapter-item expanded "><a href="day2/lc209.html"><strong aria-hidden="true">2.2.</strong> 209. 长度最小的子数组</a></li><li class="chapter-item expanded "><a href="day2/lc59.html"><strong aria-hidden="true">2.3.</strong> 59. 螺旋矩阵II</a></li></ol></li><li class="chapter-item expanded "><a href="day3.html"><strong aria-hidden="true">3.</strong> Day 3</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day3/lc203.html"><strong aria-hidden="true">3.1.</strong> 203. 移除链表元素</a></li><li class="chapter-item expanded "><a href="day3/lc707.html"><strong aria-hidden="true">3.2.</strong> 707. 设计链表</a></li><li class="chapter-item expanded "><a href="day3/lc206.html"><strong aria-hidden="true">3.3.</strong> 206. 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="day4.html" class="active"><strong aria-hidden="true">4.</strong> Day 4</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day4/lc24.html"><strong aria-hidden="true">4.1.</strong> 24. 两两交换链表中的节点</a></li></ol></li><li class="chapter-item expanded "><a href="day5.html"><strong aria-hidden="true">5.</strong> Day 5</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -137,7 +137,7 @@
                     <h1 class="menu-title">代码随想录算法训练营刷题笔记</h1>
 
                     <div class="right-buttons">
-                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -166,97 +166,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="977-有序数组的平方"><a class="header" href="#977-有序数组的平方">977. 有序数组的平方</a></h1>
-<h2 id="题目描述"><a class="header" href="#题目描述">题目描述</a></h2>
-<p>给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。</p>
-<h2 id="解题思路"><a class="header" href="#解题思路">解题思路</a></h2>
-<p>有个很直接的方法是，先取绝对值，然后sort，然后平方</p>
-<p>但是这个是nlogn的算法，想要一个n的算法，那很显然需要用到数组有序这个特性。</p>
-<p>其实平方是无关紧要的操作。</p>
-<p>找到最小的元素，然后向两边双边移动？</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">struct Solution {}
-</span>
-impl Solution {
-    pub fn sorted_squares(mut nums: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
-        nums.iter_mut()
-            .filter(|&amp;&amp;mut x| x &lt; 0)
-            .for_each(|x| *x = -*x);
-        let low = nums.iter().enumerate()
-            .fold((0, nums[0]), |(idx, v), (jdx, &amp;x)| {
-                if x &lt; v { (jdx, x) } else { ( idx, v ) }
-            }).0;
-        if low == 0 { return nums.iter().map(|x| x**x).collect() }
-        let mut left = low as isize - 1;
-        let mut right = low + 1;
-        let n = nums.len();
-        let mut v = Vec::with_capacity(n);
-        v.push(nums[low]);
-        // left -&gt; 还需要处理的左侧第一个元素
-        // right 还需要处理的右侧第一个元素
-        while left &gt;= 0 &amp;&amp; right &lt; n {
-            // 判断两侧
-            if nums[left as usize] &lt; nums[right] {
-                v.push(nums[left as usize]);
-                left -= 1;
-            } else {
-                v.push(nums[right]);
-                right += 1;
-            }
-        }
-        if left &lt; 0 {
-            while right &lt; n {
-                v.push(nums[right]);
-                right += 1;
-            }
-        } else {
-            while left &gt;= 0 {
-                v.push(nums[left as usize]);
-                left -= 1;
-            }
-        }
-        v.iter().map(|x| x**x).collect()
-    }
-}
-<span class="boring">}</span></code></pre></pre>
-<p>写出来了，但是很长，确实定义的每一个变量的明确含义一定要在写之前就很清楚</p>
-<h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
-<p>数组平方的最大值就在数组的两端，不是最左边就是最右边，不可能是中间。</p>
-<p>我是从最小数开始构建，确实麻烦，从最大的数开始构建就是一个简单一点的从两侧开始的双指针了。</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">struct Solution {}
-</span>impl Solution {
-    pub fn sorted_squares(mut nums: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
-        let n = nums.len();
-        let mut v = Vec::with_capacity(n);
-        let mut a = 0;
-        let mut b = n as isize - 1;
-        while a &lt;= b {
-            if nums[a as usize].abs() &lt; nums[b as usize].abs() {
-                v.push(nums[b as usize]);
-                b -= 1;
-            } else {
-                v.push(nums[a as usize]);
-                a += 1;
-            }
-        }
-        v.iter().map(|x| x**x).rev().collect()
-    }
-}
-<span class="boring">}</span></code></pre></pre>
-<p>注意是abs比较，a和b都是闭区间</p>
-
+                        
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../day2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="day3/lc206.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../day2/lc209.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="day4/lc24.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -266,11 +185,11 @@ impl Solution {
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../day2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="day3/lc206.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../day2/lc209.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="day4/lc24.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -285,13 +204,13 @@ impl Solution {
         </script>
 
 
-        <script src="../elasticlunr.min.js"></script>
-        <script src="../mark.min.js"></script>
-        <script src="../searcher.js"></script>
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
 
-        <script src="../clipboard.min.js"></script>
-        <script src="../highlight.js"></script>
-        <script src="../book.js"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
 

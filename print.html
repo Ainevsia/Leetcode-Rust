@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li><li class="chapter-item expanded "><a href="day2.html"><strong aria-hidden="true">2.</strong> Day 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day2/lc977.html"><strong aria-hidden="true">2.1.</strong> 977. 有序数组的平方</a></li><li class="chapter-item expanded "><a href="day2/lc209.html"><strong aria-hidden="true">2.2.</strong> 209. 长度最小的子数组</a></li><li class="chapter-item expanded "><a href="day2/lc59.html"><strong aria-hidden="true">2.3.</strong> 59. 螺旋矩阵II</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li><li class="chapter-item expanded "><a href="day2.html"><strong aria-hidden="true">2.</strong> Day 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day2/lc977.html"><strong aria-hidden="true">2.1.</strong> 977. 有序数组的平方</a></li><li class="chapter-item expanded "><a href="day2/lc209.html"><strong aria-hidden="true">2.2.</strong> 209. 长度最小的子数组</a></li><li class="chapter-item expanded "><a href="day2/lc59.html"><strong aria-hidden="true">2.3.</strong> 59. 螺旋矩阵II</a></li></ol></li><li class="chapter-item expanded "><a href="day3.html"><strong aria-hidden="true">3.</strong> Day 3</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day3/lc203.html"><strong aria-hidden="true">3.1.</strong> 203. 移除链表元素</a></li><li class="chapter-item expanded "><a href="day3/lc707.html"><strong aria-hidden="true">3.2.</strong> 707. 设计链表</a></li><li class="chapter-item expanded "><a href="day3/lc206.html"><strong aria-hidden="true">3.3.</strong> 206. 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="day4.html"><strong aria-hidden="true">4.</strong> Day 4</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="day4/lc24.html"><strong aria-hidden="true">4.1.</strong> 24. 两两交换链表中的节点</a></li></ol></li><li class="chapter-item expanded "><a href="day5.html"><strong aria-hidden="true">5.</strong> Day 5</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -538,7 +538,273 @@ impl Solution {
 <p>确实，定义一定要非常明确，明确了定义之后就牢牢地实现这个定义</p>
 <p>可以发现这里的边界条件非常多，在一个循环中，如此多的边界条件，如果不按照固定规则来遍历，那就是一进循环深似海，从此offer是路人。</p>
 <p>然后好像就是我这种模拟的做法</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="第二章-链表part01"><a class="header" href="#第二章-链表part01">第二章 链表part01</a></h1>
+<p>day1 任务以及具体安排：https://docs.qq.com/doc/DUG9UR2ZUc3BjRUdY
+day 2 任务以及具体安排：https://docs.qq.com/doc/DUGRwWXNOVEpyaVpG 
+今日任务 </p>
+<p>● 链表理论基础 
+● 203.移除链表元素 
+● 707.设计链表 
+● 206.反转链表 </p>
+<p>详细布置 </p>
+<p>链表理论基础 </p>
+<p>建议：了解一下链接基础，以及链表和数组的区别 </p>
+<p>文章链接：https://programmercarl.com/%E9%93%BE%E8%A1%A8%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80.html</p>
+<h2 id="203移除链表元素"><a class="header" href="#203移除链表元素">203.移除链表元素</a></h2>
+<p>建议： 本题最关键是要理解 虚拟头结点的使用技巧，这个对链表题目很重要。</p>
+<p>题目链接/文章讲解/视频讲解：：https://programmercarl.com/0203.%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0.html</p>
+<h2 id="707设计链表"><a class="header" href="#707设计链表">707.设计链表</a></h2>
+<p>建议： 这是一道考察 链表综合操作的题目，不算容易，可以练一练 使用虚拟头结点</p>
+<p>题目链接/文章讲解/视频讲解：https://programmercarl.com/0707.%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8.html</p>
+<h2 id="206反转链表"><a class="header" href="#206反转链表">206.反转链表</a></h2>
+<p>建议先看我的视频讲解，视频讲解中对 反转链表需要注意的点讲的很清晰了，看完之后大家的疑惑基本都解决了。</p>
+<p>题目链接/文章讲解/视频讲解：https://programmercarl.com/0206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.html </p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="203-移除链表元素"><a class="header" href="#203-移除链表元素">203. 移除链表元素</a></h1>
+<h2 id="题目描述-5"><a class="header" href="#题目描述-5">题目描述</a></h2>
+<p>给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。</p>
+<h2 id="解题思路-5"><a class="header" href="#解题思路-5">解题思路</a></h2>
+<p>链表题，hhhh，不是特别想用rust，不多说，直接操作ownersheip</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
 
+// Definition for singly-linked list.
+#[derive(PartialEq, Eq, Clone, Debug)]
+pub struct ListNode {
+  pub val: i32,
+  pub next: Option&lt;Box&lt;ListNode&gt;&gt;
+}
+
+impl ListNode {
+  #[inline]
+  fn new(val: i32) -&gt; Self {
+    ListNode {
+      next: None,
+      val
+    }
+  }
+}
+
+impl Solution {
+    pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; {
+        let mut head = Some(Box::new(ListNode { val: 0, next: head }));
+        let mut a = &amp;mut head;
+        while a.as_deref_mut().unwrap().next.is_some() {
+            let v = a.as_deref_mut().unwrap().next.as_deref().unwrap().val;
+            if v == val {
+                let mut b = a.as_deref_mut().unwrap().next.take();
+                let c = b.as_deref_mut().unwrap().next.take();
+                a.as_deref_mut().unwrap().next = c;
+            } else {
+                let b = &amp;mut a.as_deref_mut().unwrap().next;
+                a = b;
+            }
+        }
+        head.unwrap().next
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>属实有点恶心了</p>
+<h2 id="学习感想-5"><a class="header" href="#学习感想-5">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span><span class="boring">
+</span><span class="boring">// Definition for singly-linked list.
+</span><span class="boring">#[derive(PartialEq, Eq, Clone, Debug)]
+</span><span class="boring">pub struct ListNode {
+</span><span class="boring">  pub val: i32,
+</span><span class="boring">  pub next: Option&lt;Box&lt;ListNode&gt;&gt;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl ListNode {
+</span><span class="boring">  #[inline]
+</span><span class="boring">  fn new(val: i32) -&gt; Self {
+</span><span class="boring">    ListNode {
+</span><span class="boring">      next: None,
+</span><span class="boring">      val
+</span><span class="boring">    }
+</span><span class="boring">  }
+</span><span class="boring">}
+</span>
+
+impl Solution {
+    pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; {
+        let mut dummyHead = Box::new(ListNode::new(0));
+        dummyHead.next = head;
+        let mut cur = dummyHead.as_mut();
+	// 使用take()替换std::men::replace(&amp;mut node.next, None)达到相同的效果，并且更普遍易读
+        while let Some(nxt) = cur.next.take() {
+            if nxt.val == val {
+                cur.next = nxt.next;
+            } else {
+                cur.next = Some(nxt);
+                cur = cur.next.as_mut().unwrap();
+            }
+        }
+        dummyHead.next
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p>向这位老哥学习，使用take，管它用不用，先取下来再说。并且 先把option刨了</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="707-设计链表"><a class="header" href="#707-设计链表">707. 设计链表</a></h1>
+<h2 id="题目描述-6"><a class="header" href="#题目描述-6">题目描述</a></h2>
+<p>你可以选择使用单链表或者双链表，设计并实现自己的链表。</p>
+<p>单链表中的节点应该具备两个属性：val 和 next 。val 是当前节点的值，next 是指向下一个节点的指针/引用。</p>
+<p>如果是双向链表，则还需要属性 prev 以指示链表中的上一个节点。假设链表中的所有节点下标从 0 开始。</p>
+<p>实现 MyLinkedList 类：</p>
+<p>MyLinkedList() 初始化 MyLinkedList 对象。
+int get(int index) 获取链表中下标为 index 的节点的值。如果下标无效，则返回 -1 。
+void addAtHead(int val) 将一个值为 val 的节点插入到链表中第一个元素之前。在插入完成后，新节点会成为链表的第一个节点。
+void addAtTail(int val) 将一个值为 val 的节点追加到链表中作为链表的最后一个元素。
+void addAtIndex(int index, int val) 将一个值为 val 的节点插入到链表中下标为 index 的节点之前。如果 index 等于链表的长度，那么该节点会被追加到链表的末尾。如果 index 比长度更大，该节点将 不会插入 到链表中。
+void deleteAtIndex(int index) 如果下标有效，则删除链表中下标为 index 的节点。</p>
+<h2 id="解题思路-6"><a class="header" href="#解题思路-6">解题思路</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct MyLinkedList {
+    val: i32,
+    next: Option&lt;Box&lt;MyLinkedList&gt;&gt;
+}
+
+
+/**
+ * `&amp;self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&amp;mut self` instead.
+ */
+impl MyLinkedList {
+
+    fn new() -&gt; Self {
+        Self { val: 0, next: None }
+    }
+    
+    fn get(&amp;self, index: i32) -&gt; i32 {
+        let mut dummpy = self.next.as_deref();
+        let mut cnt = 0;
+        while let Some(node) = dummpy {
+            if index == cnt { return node.val }
+            dummpy = node.next.as_deref();
+            cnt += 1;
+        }
+        -1
+    }
+    
+    fn add_at_head(&amp;mut self, val: i32) {
+        self.next = Some(Box::new(
+            MyLinkedList {
+                val: val, 
+                next: self.next.take()
+            }
+        ));
+    }
+    
+    fn add_at_tail(&amp;mut self, val: i32) {
+        let mut dummpy = self;
+        while dummpy.next.is_some() {
+            dummpy = dummpy.next.as_mut().unwrap();
+        }
+        dummpy.next = Some(Box::new(
+            MyLinkedList {
+                val: val, 
+                next: None
+            }
+        ));
+    }
+    
+    fn add_at_index(&amp;mut self, index: i32, val: i32) {
+        let mut cnt = 0;
+        let mut dummpy = self;
+        while dummpy.next.is_some() {
+            if cnt == index {
+                let nxt = dummpy.next.take();
+                dummpy.next = Some(Box::new(
+                    MyLinkedList {
+                        val: val, 
+                        next: nxt
+                    }
+                ));
+                return;
+            }
+            dummpy = dummpy.next.as_mut().unwrap();
+            cnt += 1;
+        }
+        if cnt == index {
+            dummpy.next = Some(Box::new(
+                MyLinkedList {
+                    val: val, 
+                    next: None
+                }
+            ));
+        }
+    }
+    
+    fn delete_at_index(&amp;mut self, index: i32) {
+        let mut cnt = 0;
+        let mut dummpy = self;
+        while dummpy.next.is_some() {
+            if cnt == index {
+                let nxt = dummpy.next.take().unwrap();
+                dummpy.next = nxt.next;
+                return;
+            }
+            dummpy = dummpy.next.as_mut().unwrap();
+            cnt += 1;
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="学习感想-6"><a class="header" href="#学习感想-6">学习感想</a></h2>
+<p>也没啥好说的，rust只要写出来，基本是对的，没有用take的形式，而是全部去除了option用ref</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="206-反转链表"><a class="header" href="#206-反转链表">206. 反转链表</a></h1>
+<h2 id="题目描述-7"><a class="header" href="#题目描述-7">题目描述</a></h2>
+<p>给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。</p>
+<h2 id="解题思路-7"><a class="header" href="#解题思路-7">解题思路</a></h2>
+<p>这就很简单了，一边出栈 一边入</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+
+// Definition for singly-linked list.
+#[derive(PartialEq, Eq, Clone, Debug)]
+pub struct ListNode {
+  pub val: i32,
+  pub next: Option&lt;Box&lt;ListNode&gt;&gt;
+}
+
+impl ListNode {
+  #[inline]
+  fn new(val: i32) -&gt; Self {
+    ListNode {
+      next: None,
+      val
+    }
+  }
+}
+
+
+impl Solution {
+    pub fn reverse_list(mut head: Option&lt;Box&lt;ListNode&gt;&gt;) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; {
+        let mut dummy = Box::new(ListNode { val: 0, next: None });
+        while let Some(mut node) = head {
+            let tmp = dummy.next.take();
+            let n = node.next.take();
+            node.next = tmp;
+            dummy.next = Some(node);
+            head = n;
+        }
+        dummy.next
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h2 id="学习感想-7"><a class="header" href="#学习感想-7">学习感想</a></h2>
+<p>所以我这个算是什么方式</p>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id=""><a class="header" href="#"></a></h1>
+<h2 id="题目描述-8"><a class="header" href="#题目描述-8">题目描述</a></h2>
+<h2 id="解题思路-8"><a class="header" href="#解题思路-8">解题思路</a></h2>
+<h2 id="学习感想-8"><a class="header" href="#学习感想-8">学习感想</a></h2>
+<div style="break-before: page; page-break-before: always;"></div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
