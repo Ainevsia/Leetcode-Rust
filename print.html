@@ -424,8 +424,8 @@ impl Solution {
 <p>所以不断地右侧生长去找到一个可行解，然后左侧缩小去尝试更小的解</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Solution {}
-
+</span><span class="boring">struct Solution {}
+</span>
 impl Solution {
     pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
         let n = nums.len();
@@ -464,11 +464,80 @@ impl Solution {
 <p>此时难免再次陷入 暴力解法的怪圈。</p>
 <p>所以 只用一个for循环，那么这个循环的索引，一定是表示 滑动窗口的终止位置。</p>
 <p>原来是滑动窗口，只用一个变量来表示结束的位置</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
+        let n = nums.len();
+        let mut res = i32::MAX;
+        let mut s = 0;
+        let mut a = 0;
+        for b in 0..n {
+            s += nums[b];
+            while s &gt;= target {
+                res = res.min((b - a + 1) as i32);
+                s -= nums[a];
+                a += 1;
+            }
+        }
+        if res == i32::MAX {0} else {res as i32}
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="59-螺旋矩阵ii"><a class="header" href="#59-螺旋矩阵ii">59. 螺旋矩阵II</a></h1>
 <h2 id="题目描述-4"><a class="header" href="#题目描述-4">题目描述</a></h2>
 <p>给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</p>
 <h2 id="解题思路-4"><a class="header" href="#解题思路-4">解题思路</a></h2>
+<p>好像就是en做 
+写出来了 但是很长，就是按照题目的意思进行模拟（迭代），每次迭代填入最外层的一圈</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn generate_matrix(n: i32) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        let n = n as usize;
+        let mut v = vec![vec![0; n]; n];
+        // idx,idx 左上角的坐标， n 这一行的所有元素个数-1  右上角坐标idx,idx+n
+        pub fn f(v: &amp;mut Vec&lt;Vec&lt;i32&gt;&gt;, idx: usize, n: usize, start: i32) -&gt; i32 {
+            if n == 0 { v[idx][idx] = start; return start + 1 }
+            let mut cur = start;
+            for j in 0..n {
+                v[idx][idx+j] = cur ; cur += 1;
+            }
+            for i in 0..n {
+                v[idx+i][idx+n] = cur ; cur += 1;
+            }
+            for j in 0..n {
+                v[idx+n][idx+n-j] = cur ; cur += 1;
+            }
+            for i in 0..n {
+                v[idx+n-i][idx] = cur ; cur += 1;
+            }
+            cur
+        }
+        let mut start = 1;
+        let mut x = n as isize - 1;
+        let mut i = 0;
+        while x &gt;= 0 {
+            start = f(&amp;mut v, i, x as usize, start);
+            i += 1;
+            x -= 2;
+        }
+        v
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-4"><a class="header" href="#学习感想-4">学习感想</a></h2>
+<p>本题并不涉及到什么算法，就是模拟过程，但却十分考察对代码的掌控能力。</p>
+<p>坚持循环不变量原则</p>
+<p>确实，定义一定要非常明确，明确了定义之后就牢牢地实现这个定义</p>
+<p>可以发现这里的边界条件非常多，在一个循环中，如此多的边界条件，如果不按照固定规则来遍历，那就是一进循环深似海，从此offer是路人。</p>
+<p>然后好像就是我这种模拟的做法</p>
 
                     </main>
 

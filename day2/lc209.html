@@ -176,8 +176,8 @@
 <p>所以不断地右侧生长去找到一个可行解，然后左侧缩小去尝试更小的解</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>struct Solution {}
-
+</span><span class="boring">struct Solution {}
+</span>
 impl Solution {
     pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
         let n = nums.len();
@@ -216,6 +216,29 @@ impl Solution {
 <p>此时难免再次陷入 暴力解法的怪圈。</p>
 <p>所以 只用一个for循环，那么这个循环的索引，一定是表示 滑动窗口的终止位置。</p>
 <p>原来是滑动窗口，只用一个变量来表示结束的位置</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
+        let n = nums.len();
+        let mut res = i32::MAX;
+        let mut s = 0;
+        let mut a = 0;
+        for b in 0..n {
+            s += nums[b];
+            while s &gt;= target {
+                res = res.min((b - a + 1) as i32);
+                s -= nums[a];
+                a += 1;
+            }
+        }
+        if res == i32::MAX {0} else {res as i32}
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 
