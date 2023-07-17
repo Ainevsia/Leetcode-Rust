@@ -13,7 +13,7 @@
 ## 解题思路
 
 ```rust
-struct Solution {}
+# struct Solution {}
 
 
 impl Solution {
