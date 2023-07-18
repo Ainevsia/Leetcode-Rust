@@ -1,9 +1,112 @@
 fn main() {
     let a = Solution::maximum_beauty(vec![49,26], 12);
     dbg!(a);
+    let a = 1i32;
+    let b = 2i32;
+    let c = 1i32 as usize + a as usize == b as usize;
+    dbg!(c);;
 }
 
 struct Solution {}
+
+impl Solution {
+    pub fn four_sum(mut v: Vec<i32>, t: i32) -> Vec<Vec<i32>> {
+        v.sort();
+        let n = v.len();
+        let mut res = vec![];
+        if n < 4 { return res }
+        for i in 0..n-3 {
+            if i > 0 && v[i] == v[i-1] { continue }
+            for l in (i+3..n).rev() {
+                if l < n - 1 && v[l] == v[l+1] { continue }
+                let mut j = i + 1;
+                let mut k = l - 1;
+                while j < k {
+                    if v[i] as isize + v[j] as isize + v[k] as isize + v[l] as isize == t as isize {
+                        res.push(vec![v[i], v[j], v[k], v[l]]);
+                        j += 1;
+                        while j < k && v[j] == v[j-1] { j += 1 }
+                        k -= 1;
+                        while j < k && v[k] == v[k+1] { k -= 1 }
+                    } else if (v[i] as isize + v[j] as isize + v[k] as isize + v[l] as isize) < t as isize {
+                        j += 1;
+                    } else {
+                        k -= 1;
+                    }
+                }
+            }
+        }
+        res
+    }
+}
+
+impl Solution {
+    pub fn can_construct(ransom_note: String, magazine: String) -> bool {
+        use std::collections::HashMap;
+        let mut map: HashMap<char, usize> = HashMap::new();
+        for c in magazine.chars() {
+            *map.entry(c).or_default() += 1;
+        }
+        for c in ransom_note.chars() {
+            if ! map.contains_key(&c) { return false }
+            let a = map.get_mut(&c).unwrap();
+            *a -= 1;
+            if *a == 0 { map.remove(&c); }
+        }
+        true
+    }
+}
+
+impl Solution {
+    pub fn four_sum_count(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>, nums4: Vec<i32>) -> i32 {
+        let n = nums1.len();
+        use std::collections::HashMap;
+        let mut res = 0;
+        let mut map: HashMap<i32, usize> = HashMap::new();
+        for i in 0..n {
+            for j in 0..n {
+                let target = nums1[i] + nums2[j];
+                *map.entry(target).or_default() += 1;
+            }
+        }
+        for i in 0..n {
+            for j in 0..n {
+                let target = - nums3[i] - nums4[j];
+                if map.contains_key(&target) {
+                    res += map.get(&target).unwrap();
+                }
+            }
+        }
+        res as i32
+    }
+}
+
+
+impl Solution {
+    pub fn four_sum_count2(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>, nums4: Vec<i32>) -> i32 {
+        let n = nums1.len();
+        use std::collections::HashMap;
+        let mut res = 0;
+        let mut map3: HashMap<i32, usize> = HashMap::new();
+        let mut map4: HashMap<i32, usize> = HashMap::new();
+        for i in 0..n {
+            *map3.entry(nums3[i]).or_default() += 1;
+            *map4.entry(nums4[i]).or_default() += 1;
+        }
+        for i in 0..n {
+            for j in 0..n {
+                let mut target = - nums1[i] - nums2[j];
+                for (&a, &b) in map3.iter() {
+                    let d = target - a;
+                    if map4.contains_key(&d) {
+                        res += b * map4.get(&d).unwrap();
+                    }
+                }
+            }
+        }
+        res as i32
+    }
+}
 
 impl Solution {
     pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
