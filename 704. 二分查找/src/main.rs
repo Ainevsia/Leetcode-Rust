@@ -10,6 +10,111 @@ fn main() {
 struct Solution {}
 
 impl Solution {
+    pub fn reverse_left_words(s: String, n: i32) -> String {
+        let mut v: Vec<char> = s.chars().collect();
+        Self::reverse2(&mut v[..n as usize]);
+        Self::reverse2(&mut v[n as usize..]);
+        Self::reverse2(&mut v[..]);
+        v.iter().collect()
+    }
+    
+    pub fn reverse2(s: &mut [char]) {
+        let n = s.len();
+        for i in 0..n/2 {
+            let tmp = s[i];
+            s[i] = s[n-1-i];
+            s[n-1-i] = tmp;
+        }
+    }
+}
+
+impl Solution {
+    // O(n) space O(n) time
+    pub fn reverse_words(s: String) -> String {
+        let mut v: Vec<char> = vec![];
+        for c in s.chars().rev() {
+            if c == ' ' {
+                let a = v.last();
+                if a.is_none() { continue }
+                if *a.unwrap() == ' ' { continue }
+            }
+            v.push(c);
+        }
+        if v[v.len() - 1] == ' ' { v.pop(); }
+        // reverse each word
+        let mut start = 0;
+        while start < v.len() {
+            let mut end = start + 1;
+            while end < v.len() && v[end] != ' ' { end += 1 }
+            Self::reverse(&mut v[start..end]);
+            start = end + 1;
+        }
+        v.iter().collect()
+    }
+
+    pub fn reverse(s: &mut [char]) {
+        let n = s.len();
+        for i in 0..n/2 {
+            let tmp = s[i];
+            s[i] = s[n-1-i];
+            s[n-1-i] = tmp;
+        }
+    }
+}
+
+impl Solution {
+    pub fn replace_space(s: String) -> String {
+        let mut s = s.chars().collect::<Vec<char>>();
+        let cnt = s.iter().filter(|&&x| x == ' ').count();
+        let n = s.len();
+        s.resize(n + 2 * cnt, ' ');
+        let mut tail = s.len() - 1;
+        let mut head = n as isize - 1;
+        while head >= 0 {
+            if s[head as usize] == ' ' {
+                s[tail] = '0';
+                s[tail - 1] = '2';
+                s[tail - 2] = '%';
+                tail -= 3;
+            } else {
+                s[tail] = s[head as usize];
+                tail -= 1;
+            }
+            head -= 1;
+        }
+        s.iter().collect()
+    }
+}
+
+impl Solution {
+    pub fn reverse_str(s: String, k: i32) -> String {
+        let s = s.chars().collect::<Vec<char>>();
+        let mut v: Vec<char> = vec![];
+        let mut rev = true;
+        for i in s.chunks(k as usize) {
+            if rev {
+                v.extend(i.iter().rev());
+            } else {
+                v.extend(i);
+            }
+            rev = !rev;
+        }
+        v.iter().collect()
+    }
+}
+
+impl Solution {
+    pub fn reverse_string(s: &mut Vec<char>) {
+        let n = s.len();
+        for i in 0..n/2 {
+            let tmp = s[i];
+            s[i] = s[n-1-i];
+            s[n-1-i] = tmp;
+        }
+    }
+}
+
+impl Solution {
     pub fn four_sum(mut v: Vec<i32>, t: i32) -> Vec<Vec<i32>> {
         v.sort();
         let n = v.len();
