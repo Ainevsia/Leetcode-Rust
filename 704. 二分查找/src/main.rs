@@ -1,13 +1,68 @@
 fn main() {
-    let a = Solution::maximum_beauty(vec![49,26], 12);
+    let a = Solution::str_str("hello".into(), "ll".into());
     dbg!(a);
-    let a = 1i32;
-    let b = 2i32;
-    let c = 1i32 as usize + a as usize == b as usize;
-    dbg!(c);;
 }
 
 struct Solution {}
+
+impl Solution {
+    pub fn repeated_substring_pattern(s: String) -> bool {
+        let n = s.len();
+        let mut next = vec![0; n];
+        let s = s.chars().collect::<Vec<char>>();
+        let mut j = 0;
+        for i in 1..n {
+            while j >= 1 && s[i] != s[j] {
+                j = next[j - 1];
+            }
+            if s[i] == s[j] {
+                j += 1;
+            }
+            next[i] = j;    // next 表示以i结尾的字符串最大前后缀长度
+        }
+        let a = *next.last().unwrap();
+        if a == 0 { return false }
+        let b = n - a;
+        if n % b != 0 { return false }
+        else { true }
+    }
+}
+
+impl Solution {
+    pub fn str_str(haystack: String, needle: String) -> i32 {
+        let n = needle.len();
+        let mut next = vec![0; n];
+        let hay = haystack.chars().collect::<Vec<char>>();
+        let s = needle.chars().collect::<Vec<char>>();
+        let mut j = 0;
+        for i in 1..n {
+            while j >= 1 && s[i] != s[j] {
+                j = next[j - 1];
+            }
+            if s[i] == s[j] {
+                j += 1;
+            }
+            next[i] = j;    // next 表示以i结尾的字符串最大前后缀长度
+        }
+        // dbg!(&next);
+        // build next ok
+        if n == 0 { return 0 }
+        j = 0;
+        for i in 0..hay.len() {
+            // dbg!(i, j);
+            while j >= 1 && hay[i] != s[j] {
+                j = next[j - 1];
+            }
+            if hay[i] == s[j] {
+                j += 1;
+            }
+            if j == n {
+                return (i + 1 - n) as i32
+            }
+        }
+        -1
+    }
+}
 
 impl Solution {
     pub fn reverse_left_words(s: String, n: i32) -> String {
