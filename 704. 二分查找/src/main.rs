@@ -5,6 +5,116 @@ fn main() {
 
 struct Solution {}
 
+struct MyStack {
+    q: std::collections::VecDeque<i32>,
+}
+
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl MyStack {
+
+    fn new() -> Self {
+        Self { q: std::collections::VecDeque::new() }
+    }
+    
+    fn push(&mut self, x: i32) {
+        self.q.push_back(x);
+    }
+    
+    fn pop(&mut self) -> i32 {
+        let n = self.q.len();
+        for _ in 1..n {
+            let x = self.q.pop_front().unwrap();
+            self.q.push_back(x);
+        }
+        self.q.pop_front().unwrap()
+    }
+    
+    fn top(&mut self) -> i32 {
+        let n = self.q.len();
+        for _ in 1..n {
+            let x = self.q.pop_front().unwrap();
+            self.q.push_back(x);
+        }
+        let x = self.q.pop_front().unwrap();
+        self.q.push_back(x);
+        return x;
+    }
+    
+    fn empty(&self) -> bool {
+        self.q.is_empty()
+    }
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * let obj = MyStack::new();
+ * obj.push(x);
+ * let ret_2: i32 = obj.pop();
+ * let ret_3: i32 = obj.top();
+ * let ret_4: bool = obj.empty();
+ */
+
+struct MyQueue {
+    is: Vec<i32>,
+    os: Vec<i32>,
+}
+
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl MyQueue {
+
+    fn new() -> Self {
+        Self { is: vec![], os: vec![] }
+    }
+
+    fn o2i(&mut self) {
+        while let Some(i) = self.os.pop() {
+            self.is.push(i);
+        }
+    }
+
+    fn i2o(&mut self) {
+        while let Some(i) = self.is.pop() {
+            self.os.push(i);
+        }
+    }
+    
+    fn push(&mut self, x: i32) {
+        self.o2i();
+        self.is.push(x);
+    }
+    
+    fn pop(&mut self) -> i32 {
+        self.i2o();
+        self.os.pop().unwrap()
+    }
+    
+    fn peek(&mut self) -> i32 {
+        self.i2o();
+        self.os.last().copied().unwrap()
+    }
+    
+    fn empty(&self) -> bool {
+        self.is.is_empty() && self.os.is_empty()
+    }
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * let obj = MyQueue::new();
+ * obj.push(x);
+ * let ret_2: i32 = obj.pop();
+ * let ret_3: i32 = obj.peek();
+ * let ret_4: bool = obj.empty();
+ */
+
 impl Solution {
     pub fn repeated_substring_pattern(s: String) -> bool {
         let n = s.len();
