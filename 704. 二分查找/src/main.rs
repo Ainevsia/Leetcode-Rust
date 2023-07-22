@@ -1,9 +1,68 @@
+
 fn main() {
     let a = Solution::str_str("hello".into(), "ll".into());
     dbg!(a);
 }
 
 struct Solution {}
+impl Solution {
+    pub fn eval_rpn(tokens: Vec<String>) -> i32 {
+        let mut v = vec![];
+        for s in tokens {
+            let a = vec!["+","-","*","/"];
+            if a.contains(&&s[..]) {
+                let x = v.pop().unwrap();
+                let y = v.pop().unwrap();
+                match &s[..] {
+                    "+" => {v.push(x+y)},
+                    "-" => {v.push(y-x)},
+                    "*" => {v.push(y*x)},
+                    "/" => {v.push(y/x)},
+                    _ => {},
+                }
+            } else {
+                v.push(s.parse::<i32>().unwrap());
+            }
+        }
+        v.pop().unwrap()
+    }
+}
+impl Solution {
+    pub fn remove_duplicates(s: String) -> String {
+        let mut v = vec![];
+        for c in s.chars() {
+            if let Some(&x) = v.last() {
+                if x == c { v.pop(); }
+                else { v.push(c) }
+            } else { v.push(c) }
+        }
+        v.iter().collect()
+    }
+}
+
+impl Solution {
+    pub fn is_valid(s: String) -> bool {
+        let mut v = vec![]; // only }])
+        for c in s.chars() {
+            if c == '(' || c == '[' || c == '{' {
+                v.push(Self::mutate(c));
+            } else {
+                if let Some(&x) = v.last() {
+                    if x == c { v.pop(); }
+                    else { return false }
+                } else {
+                    return false
+                }
+            }
+        }
+        v.is_empty()
+    }
+    fn mutate(x: char) -> char {
+        if x == '(' { return ')' }
+        else if x == '[' { return ']' }
+        else {return '}'}
+    }
+}
 
 struct MyStack {
     q: std::collections::VecDeque<i32>,
