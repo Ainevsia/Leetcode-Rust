@@ -88,3 +88,5 @@
 - [day 25](./day25.md)
   - [216. 组合总和 III](./day25/lc216.md)
   - [17. 电话号码的字母组合](./day25/lc17.md)
+- [day 27](./day27.md)
+- [remains](./remains.md)
