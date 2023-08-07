@@ -513,8 +513,155 @@ public:
 
 # 134. 加油站
 
-https://programmercarl.com/0134.%E5%8A%A0%E6%B2%B9%E7%AB%99.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE
+```cpp
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& g, vector<int>& c) {
+        int n = g.size();
+        vector<int> h(n,0);
+        // h[i] -> gas change from i-1 -> i
+        h[0] = g[n-1] - c[n-1];
+        for (int i = 1 ; i < n ; i ++ ) {
+            h[i] = g[i-1]-c[i-1];
+        }
+        int start = 0;
+        int pos = start;
+        int csum = 0;
+        while (pos < start + n && start < n) {
+            csum += h[(1+pos)%n];
+            if (csum < 0) {
+                start = pos + 1;
+                csum = 0;
+            }
+            pos ++ ;
+        }
+        return start<n?start:-1;
+    }
+};
+```
+
+贪心算法（方法一） 还挺巧妙的，我这个就是个最大子数组的算法
+
+# 135. 分发糖果
+
+```cpp
+class Solution {
+public:
+    int candy(vector<int>& v) {
+        // 1,3,4,5,2
+        // 1,2,3,4,1
+        // 
+        vector<int>res(v.size(),1);
+        for (int i = 1 ; i < v.size() ; i ++ ) {
+            if (v[i] > v[i-1]) res[i] = res[i-1] + 1;
+        }
+        for (int i = v.size() - 2; i >= 0 ; i -- ) {
+            if (v[i] > v[i+1] && res[i] <= res[i+1]) res[i] = res[i+1] + 1;
+        }
+        return accumulate(res.begin(),res.end(),0);
+    }
+};
+```
+
+WA了一发漏了`&& res[i] <= res[i+1]`
+
+# 860.柠檬水找零
+
+```cpp
+class Solution {
+public:
+    bool lemonadeChange(vector<int>& bills) {
+        int c5 = 0, c10 = 0;
+        for ( int bill : bills) {
+            switch (bill) {
+                case 5:
+                    c5 ++ ;
+                    break;
+                case 10:
+                    if (c5 == 0) return false;
+                    c5 -- ;
+                    c10 ++ ;
+                    break;
+                default:
+                    if (c10>0&&c5>0) {
+                        c10 -- ; c5 -- ; continue;
+                    }
+                    if (c5 >= 3) {
+                        c5 -= 3; continue;
+                    }
+                    return false;
+                    break;
+            }
+        }
+        return true;
+    }
+};
+```
+
+
+模拟题
+
+# 406.根据身高重建队列
+错误解答
+```cpp
+
+bool f(const vector<int>&a, const vector<int>&b) {
+    if (a[1]==b[1])return a[0]>b[0];return a[1]<b[1];
+}
+class Solution {
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& p) {
+        vector<vector<int>> res;
+        sort(p.begin(),p.end(),f);
+        for ( auto peo: p ) {
+            if (peo[1]!=0) break;
+            res.push_back(peo);
+        }
+        reverse(res.begin(),res.end());
+        for (int i = res.size(); i < p.size(); i ++ ) {
+            auto x = p[i];
+            int insert_pos = 0; int cnt = 0;
+            while ( cnt < x[1] + 1 ) {
+                if (p[insert_pos][0] >= x[0]) cnt ++ ;
+                insert_pos ++ ;
+            }
+            res.insert(res.begin()+insert_pos - 1,x);
+        }
+        return res;
+    }
+};
+```
+
+> 这道题我没有能够做出来
+
+在135. 分发糖果 (opens new window)我就强调过一次，遇到两个维度权衡的时候，一定要先确定一个维度，再确定另一个维度。
+
+如果两个维度一起考虑一定会顾此失彼。
+
+> 我就是错误的按照k来从小到大排序了
 
 ```cpp
 
+bool f(vector<int>& a, vector<int>& b){
+    if(a[0]==b[0])return a[1]<b[1];return a[0]>b[0];
+}
+class Solution {
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& p) {
+        vector<vector<int>> res;
+        sort(p.begin(),p.end(),f);
+        for (int i = 0; i < p.size(); i ++ ) {
+            auto x = p[i];
+            int pos = x[1];
+            res.insert(res.begin()+pos,x);
+        }
+        return res;
+    }
+};
 ```
+
+先按照身高排序，固定住规律。按照k排序没法获得额外的规律
+
+# 452. 用最少数量的箭引爆气球
+
+https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html
