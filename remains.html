@@ -611,9 +611,140 @@ public:
 };
 </code></pre>
 <h1 id="134-加油站"><a class="header" href="#134-加油站">134. 加油站</a></h1>
-<p>https://programmercarl.com/0134.%E5%8A%A0%E6%B2%B9%E7%AB%99.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE</p>
-<pre><code class="language-cpp">
+<pre><code class="language-cpp">class Solution {
+public:
+    int canCompleteCircuit(vector&lt;int&gt;&amp; g, vector&lt;int&gt;&amp; c) {
+        int n = g.size();
+        vector&lt;int&gt; h(n,0);
+        // h[i] -&gt; gas change from i-1 -&gt; i
+        h[0] = g[n-1] - c[n-1];
+        for (int i = 1 ; i &lt; n ; i ++ ) {
+            h[i] = g[i-1]-c[i-1];
+        }
+        int start = 0;
+        int pos = start;
+        int csum = 0;
+        while (pos &lt; start + n &amp;&amp; start &lt; n) {
+            csum += h[(1+pos)%n];
+            if (csum &lt; 0) {
+                start = pos + 1;
+                csum = 0;
+            }
+            pos ++ ;
+        }
+        return start&lt;n?start:-1;
+    }
+};
 </code></pre>
+<p>贪心算法（方法一） 还挺巧妙的，我这个就是个最大子数组的算法</p>
+<h1 id="135-分发糖果"><a class="header" href="#135-分发糖果">135. 分发糖果</a></h1>
+<pre><code class="language-cpp">class Solution {
+public:
+    int candy(vector&lt;int&gt;&amp; v) {
+        // 1,3,4,5,2
+        // 1,2,3,4,1
+        // 
+        vector&lt;int&gt;res(v.size(),1);
+        for (int i = 1 ; i &lt; v.size() ; i ++ ) {
+            if (v[i] &gt; v[i-1]) res[i] = res[i-1] + 1;
+        }
+        for (int i = v.size() - 2; i &gt;= 0 ; i -- ) {
+            if (v[i] &gt; v[i+1] &amp;&amp; res[i] &lt;= res[i+1]) res[i] = res[i+1] + 1;
+        }
+        return accumulate(res.begin(),res.end(),0);
+    }
+};
+</code></pre>
+<p>WA了一发漏了<code>&amp;&amp; res[i] &lt;= res[i+1]</code></p>
+<h1 id="860柠檬水找零"><a class="header" href="#860柠檬水找零">860.柠檬水找零</a></h1>
+<pre><code class="language-cpp">class Solution {
+public:
+    bool lemonadeChange(vector&lt;int&gt;&amp; bills) {
+        int c5 = 0, c10 = 0;
+        for ( int bill : bills) {
+            switch (bill) {
+                case 5:
+                    c5 ++ ;
+                    break;
+                case 10:
+                    if (c5 == 0) return false;
+                    c5 -- ;
+                    c10 ++ ;
+                    break;
+                default:
+                    if (c10&gt;0&amp;&amp;c5&gt;0) {
+                        c10 -- ; c5 -- ; continue;
+                    }
+                    if (c5 &gt;= 3) {
+                        c5 -= 3; continue;
+                    }
+                    return false;
+                    break;
+            }
+        }
+        return true;
+    }
+};
+</code></pre>
+<p>模拟题</p>
+<h1 id="406根据身高重建队列"><a class="header" href="#406根据身高重建队列">406.根据身高重建队列</a></h1>
+<p>错误解答</p>
+<pre><code class="language-cpp">
+bool f(const vector&lt;int&gt;&amp;a, const vector&lt;int&gt;&amp;b) {
+    if (a[1]==b[1])return a[0]&gt;b[0];return a[1]&lt;b[1];
+}
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; reconstructQueue(vector&lt;vector&lt;int&gt;&gt;&amp; p) {
+        vector&lt;vector&lt;int&gt;&gt; res;
+        sort(p.begin(),p.end(),f);
+        for ( auto peo: p ) {
+            if (peo[1]!=0) break;
+            res.push_back(peo);
+        }
+        reverse(res.begin(),res.end());
+        for (int i = res.size(); i &lt; p.size(); i ++ ) {
+            auto x = p[i];
+            int insert_pos = 0; int cnt = 0;
+            while ( cnt &lt; x[1] + 1 ) {
+                if (p[insert_pos][0] &gt;= x[0]) cnt ++ ;
+                insert_pos ++ ;
+            }
+            res.insert(res.begin()+insert_pos - 1,x);
+        }
+        return res;
+    }
+};
+</code></pre>
+<blockquote>
+<p>这道题我没有能够做出来</p>
+</blockquote>
+<p>在135. 分发糖果 (opens new window)我就强调过一次，遇到两个维度权衡的时候，一定要先确定一个维度，再确定另一个维度。</p>
+<p>如果两个维度一起考虑一定会顾此失彼。</p>
+<blockquote>
+<p>我就是错误的按照k来从小到大排序了</p>
+</blockquote>
+<pre><code class="language-cpp">
+bool f(vector&lt;int&gt;&amp; a, vector&lt;int&gt;&amp; b){
+    if(a[0]==b[0])return a[1]&lt;b[1];return a[0]&gt;b[0];
+}
+class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; reconstructQueue(vector&lt;vector&lt;int&gt;&gt;&amp; p) {
+        vector&lt;vector&lt;int&gt;&gt; res;
+        sort(p.begin(),p.end(),f);
+        for (int i = 0; i &lt; p.size(); i ++ ) {
+            auto x = p[i];
+            int pos = x[1];
+            res.insert(res.begin()+pos,x);
+        }
+        return res;
+    }
+};
+</code></pre>
+<p>先按照身高排序，固定住规律。按照k排序没法获得额外的规律</p>
+<h1 id="452-用最少数量的箭引爆气球"><a class="header" href="#452-用最少数量的箭引爆气球">452. 用最少数量的箭引爆气球</a></h1>
+<p>https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html</p>
 
                     </main>
 
