@@ -664,4 +664,267 @@ public:
 
 # 452. 用最少数量的箭引爆气球
 
-https://programmercarl.com/0452.%E7%94%A8%E6%9C%80%E5%B0%91%E6%95%B0%E9%87%8F%E7%9A%84%E7%AE%AD%E5%BC%95%E7%88%86%E6%B0%94%E7%90%83.html
+想不出来用什么数据结构
+
+```cpp
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& v) {
+        int res = 1;
+        sort(v.begin(),v.end());
+        for ( int i = 1 ; i < v.size(); i ++ ) {
+            if ( v[i][0] > v[i-1][1] ) {
+                res ++ ;
+            } else {
+                v[i][1] = min(v[i][1],v[i-1][1]);
+            }
+        }
+        return res;
+    }
+};
+```
+
+发现不用数据结构，要点是每次右端点取重合的最小值
+
+```plaintext
+        ======        
+====================
+```
+
+# 435. 无重叠区间
+
+```cpp
+bool f(const vector<int>&a,const vector<int>&b) {
+    if(a[0]==b[0])return a[1]>b[1];return a[0]<b[0];
+}
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& v) {
+        int res = 0;
+        sort(v.begin(),v.end(),f);
+        for ( int i = 1 ; i < v.size(); i ++ ) {
+            cout << v[i][0] << v[i][1] << endl;
+            if ( v[i][0] >= v[i-1][1] ) {
+            } else {
+                res ++ ;
+                // v[i][1] = min(v[i][1],v[i-1][1]);
+            }
+        }
+        return res;
+    }
+};
+```
+
+不会做，不知道怎么处理这种情况
+
+```plaintext
+ -------  -------  ------- -------
+====== ======= ====== ======= =====
+```
+
+求`需要移除区间的最小数量，使剩余区间互不重叠` -> 求最大的不交叉区间个数
+
+```cpp
+bool f(const vector<int>&a,const vector<int>&b) {
+    return a[1]<b[1];
+}
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& v) {
+        int cnt = 1;
+        sort(v.begin(),v.end(),f);
+        int rend = v[0][1];
+        for ( int i = 1 ; i < v.size(); i ++ ) {
+            if (rend <= v[i][0]) {
+                rend = v[i][1];
+                cnt ++ ;
+            }
+        }
+        return v.size() - cnt;
+    }
+};
+```
+
+通用技巧，求不重合区间的最大个数
+
+# 763.划分字母区间
+
+```cpp
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        int v[26] = {0};
+        vector<int> res;
+        for (int i = 0; i < s.size(); i ++ ) {
+            v[s[i]-'a']=i;
+        }
+        int last = v[s[0]-'a'];
+        int pre = 0;
+        for (int i = 0; i < s.size(); i ++ ) {
+            last = max(last,v[s[i]-'a']);
+            if (last == i) {
+                res.push_back(i - pre + 1);
+                pre = i + 1;
+            }
+        }
+        return res;
+    }
+};
+```
+
+# 56. 合并区间
+
+```cpp
+bool f(const vector<int>&a,const vector<int>&b) {
+    if(a[0]==b[0])return a[1]<b[1];return a[0]<b[0];
+}
+class Solution {
+public:
+    vector<vector<int>>res;
+    vector<vector<int>> merge(vector<vector<int>>& v) {
+        sort(v.begin(),v.end(),f);
+        int l = v[0][0], r = v[0][1];
+        for ( int i = 1; i < v.size(); i ++ ) {
+            if (v[i][0]<=r) r = max(r,v[i][1]);
+            else {
+                res.push_back(vector<int>{l, r});
+                l = v[i][0];
+                r = v[i][1];
+            }
+        }
+        res.push_back(vector<int>{l, r});
+        return res;
+    }
+};
+```
+
+这个 很直接
+
+# 738.单调递增的数字
+
+```cpp
+class Solution {
+public:
+    int monotoneIncreasingDigits(int n) {
+        vector <int> a;
+        int nn = n;
+        while(n > 0) {
+            int item = n % 10;
+            a.push_back(item);
+            n /= 10;
+        }
+        reverse(a.begin(),a.end());
+        for (int i = 1; i < a.size(); i ++ ) {
+            if (a[i] < a[i-1]) {
+                int cnt = a.size() - i;
+                int shift = cnt;
+                int right = 0;
+                while (cnt > 0) {
+                    right *= 10;
+                    right += 9;
+                    cnt -- ;
+                }
+                int left = 0;
+                for (int j = 0; j < i; j ++ ) {
+                    left *= 10;
+                    left += a[j];
+                }
+                left = monotoneIncreasingDigits(left - 1);
+                return left * 10 * shift + right;
+            }
+        }
+        return nn;
+        // 1232 -> 1229
+        // 2312 -> 2299
+        // 9123 -> 8999
+        // 100001 -> 
+    }
+};
+```
+
+
+332 -- 329 ×
+332 -- 299 √
+想不出了，原来是要从后往前
+
+```cpp
+class Solution {
+public:
+    int monotoneIncreasingDigits(int n) {
+        string s = to_string(n);
+        int flag = s.size();
+        for ( int i = s.size() - 1; i > 0; i -- ) {
+            if (s[i-1] > s[i]) {
+                flag = i;
+                s[i-1] -- ;
+            }
+        }
+        for ( int i = flag; i < s.size() ; i ++ ) {
+            s[i] = '9';
+        }
+        return stoi(s);
+    }
+};
+```
+
+草 真优雅
+
+# 968.监控二叉树
+
+```cpp
+class Solution {
+public:
+    int cnt = 0;
+    bool f(TreeNode*r) { // should not be null
+        // if(!r)return true;
+        if(!r->left&&!r->right)return false; // no monitor
+        bool lres = false;
+        if(r->left)res=f(r->left);
+        if(!res&&r->right)res=f(r->right);
+        if(res == true) return false;
+        else {
+            cnt ++ ;
+            return true;
+        }
+    }
+    int minCameraCover(TreeNode* r) {if(!r->left&&!r->right)return 1;
+        f(r);
+        return cnt;
+    }
+};
+```
+
+想不明白：在二叉树中如何从低向上推导呢？
+
+```cpp
+class Solution {
+public:
+    int cnt = 0;
+    int f(TreeNode*p) {
+        // 0 -- 没有覆盖
+        // 1 -- 有覆盖了
+        // 2 -- 有摄像头
+        if(!p)return 1;
+        int l = f(p->left);
+        int r = f(p->right);
+        if (l==1 && r==1) return 0;//////
+        if (l==0 || r==0) {//////////////
+            cnt ++ ;
+            return 2;
+        }
+        return 1;
+    }
+    int minCameraCover(TreeNode* r) {if(!r->left&&!r->right)return 1;
+        if(f(r)==0)cnt++;///////
+        return cnt;
+    }
+};
+```
+
+[0,0,null,null,0,0,null,null,0,0]
+  0
+ 0 n
+n 0 
+ 0 n
+n 0
+ 0
