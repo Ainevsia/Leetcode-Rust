@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>968.监控二叉树 - 代码随想录算法训练营刷题笔记</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../day1.html"><strong aria-hidden="true">1.</strong> Day 1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day1/lc704.html"><strong aria-hidden="true">1.1.</strong> 704. 二分查找</a></li><li class="chapter-item expanded "><a href="../day1/lc27.html"><strong aria-hidden="true">1.2.</strong> 27. 移除元素</a></li></ol></li><li class="chapter-item expanded "><a href="../day2.html"><strong aria-hidden="true">2.</strong> Day 2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day2/lc977.html"><strong aria-hidden="true">2.1.</strong> 977. 有序数组的平方</a></li><li class="chapter-item expanded "><a href="../day2/lc209.html"><strong aria-hidden="true">2.2.</strong> 209. 长度最小的子数组</a></li><li class="chapter-item expanded "><a href="../day2/lc59.html"><strong aria-hidden="true">2.3.</strong> 59. 螺旋矩阵II</a></li></ol></li><li class="chapter-item expanded "><a href="../day3.html"><strong aria-hidden="true">3.</strong> Day 3</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day3/lc203.html"><strong aria-hidden="true">3.1.</strong> 203. 移除链表元素</a></li><li class="chapter-item expanded "><a href="../day3/lc707.html"><strong aria-hidden="true">3.2.</strong> 707. 设计链表</a></li><li class="chapter-item expanded "><a href="../day3/lc206.html"><strong aria-hidden="true">3.3.</strong> 206. 反转链表</a></li></ol></li><li class="chapter-item expanded "><a href="../day4.html"><strong aria-hidden="true">4.</strong> Day 4</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day4/lc24.html"><strong aria-hidden="true">4.1.</strong> 24. 两两交换链表中的节点</a></li><li class="chapter-item expanded "><a href="../day4/lc19.html"><strong aria-hidden="true">4.2.</strong> 19. 删除链表的倒数第N个节点</a></li><li class="chapter-item expanded "><a href="../day4/lc02.07.html"><strong aria-hidden="true">4.3.</strong> 面试题 02.07. 链表相交</a></li><li class="chapter-item expanded "><a href="../day4/lc142.html"><strong aria-hidden="true">4.4.</strong> 142. 环形链表II</a></li></ol></li><li class="chapter-item expanded "><a href="../day5.html"><strong aria-hidden="true">5.</strong> Day 5</a></li><li class="chapter-item expanded "><a href="../day6.html"><strong aria-hidden="true">6.</strong> Day 6</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day6/lc242.html"><strong aria-hidden="true">6.1.</strong> 242. 有效的字母异位词</a></li><li class="chapter-item expanded "><a href="../day6/lc349.html"><strong aria-hidden="true">6.2.</strong> 349. 两个数组的交集</a></li><li class="chapter-item expanded "><a href="../day6/lc202.html"><strong aria-hidden="true">6.3.</strong> 202. 快乐数</a></li><li class="chapter-item expanded "><a href="../day6/lc1.html"><strong aria-hidden="true">6.4.</strong> 1. 两数之和</a></li></ol></li><li class="chapter-item expanded "><a href="../day7.html"><strong aria-hidden="true">7.</strong> Day 7</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day7/lc454.html"><strong aria-hidden="true">7.1.</strong> 454. 四数相加II</a></li><li class="chapter-item expanded "><a href="../day7/lc383.html"><strong aria-hidden="true">7.2.</strong> 383. 赎金信</a></li><li class="chapter-item expanded "><a href="../day7/lc15.html"><strong aria-hidden="true">7.3.</strong> 15. 三数之和</a></li><li class="chapter-item expanded "><a href="../day7/lc18.html"><strong aria-hidden="true">7.4.</strong> 18. 四数之和</a></li></ol></li><li class="chapter-item expanded "><a href="../day8.html"><strong aria-hidden="true">8.</strong> Day 8</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day8/lc344.html"><strong aria-hidden="true">8.1.</strong> 344. 反转字符串</a></li><li class="chapter-item expanded "><a href="../day8/lc541.html"><strong aria-hidden="true">8.2.</strong> 541. 反转字符串 II</a></li><li class="chapter-item expanded "><a href="../day8/offer5.html"><strong aria-hidden="true">8.3.</strong> 剑指 Offer 05. 替换空格</a></li><li class="chapter-item expanded "><a href="../day8/lc151.html"><strong aria-hidden="true">8.4.</strong> 151. 反转字符串中的单词</a></li><li class="chapter-item expanded "><a href="../day8/offer58.html"><strong aria-hidden="true">8.5.</strong> 剑指 Offer 58 - II. 左旋转字符串</a></li></ol></li><li class="chapter-item expanded "><a href="../day9.html"><strong aria-hidden="true">9.</strong> Day 9</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day9/lc28.html"><strong aria-hidden="true">9.1.</strong> 28. 找出字符串中第一个匹配项的下标</a></li><li class="chapter-item expanded "><a href="../day9/lc459.html"><strong aria-hidden="true">9.2.</strong> 459. 重复的子字符串</a></li></ol></li><li class="chapter-item expanded "><a href="../day10.html"><strong aria-hidden="true">10.</strong> Day 10</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day10/lc232.html"><strong aria-hidden="true">10.1.</strong> 232. 用栈实现队列</a></li><li class="chapter-item expanded "><a href="../day10/lc255.html"><strong aria-hidden="true">10.2.</strong> 225. 用队列实现栈</a></li></ol></li><li class="chapter-item expanded "><a href="../day11.html"><strong aria-hidden="true">11.</strong> Day 11</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day11/lc20.html"><strong aria-hidden="true">11.1.</strong> 20. 有效的括号</a></li><li class="chapter-item expanded "><a href="../day11/lc1047.html"><strong aria-hidden="true">11.2.</strong> 1047. 删除字符串中的所有相邻重复项</a></li><li class="chapter-item expanded "><a href="../day11/lc150.html"><strong aria-hidden="true">11.3.</strong> 150. 逆波兰表达式求值</a></li></ol></li><li class="chapter-item expanded "><a href="../day12.html"><strong aria-hidden="true">12.</strong> Day 12</a></li><li class="chapter-item expanded "><a href="../day13.html"><strong aria-hidden="true">13.</strong> Day 13</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day13/lc239.html"><strong aria-hidden="true">13.1.</strong> 239. 滑动窗口最大值</a></li><li class="chapter-item expanded "><a href="../day13/lc347.html"><strong aria-hidden="true">13.2.</strong> 347. 前 K 个高频元素</a></li></ol></li><li class="chapter-item expanded "><a href="../day14.html"><strong aria-hidden="true">14.</strong> day 14</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day14/lc144.html"><strong aria-hidden="true">14.1.</strong> 144. 二叉树的前序遍历</a></li></ol></li><li class="chapter-item expanded "><a href="../day15.html"><strong aria-hidden="true">15.</strong> day 15</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day15/lc102.html"><strong aria-hidden="true">15.1.</strong> 102. 二叉树的层序遍历</a></li><li class="chapter-item expanded "><a href="../day15/lc226.html"><strong aria-hidden="true">15.2.</strong> 226. 翻转二叉树</a></li><li class="chapter-item expanded "><a href="../day15/lc101.html"><strong aria-hidden="true">15.3.</strong> 101. 对称二叉树</a></li></ol></li><li class="chapter-item expanded "><a href="../day16.html"><strong aria-hidden="true">16.</strong> day 16</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day16/lc104.html"><strong aria-hidden="true">16.1.</strong> 104. 二叉树的最大深度</a></li><li class="chapter-item expanded "><a href="../day16/lc111.html"><strong aria-hidden="true">16.2.</strong> 111. 二叉树的最小深度</a></li><li class="chapter-item expanded "><a href="../day16/lc222.html"><strong aria-hidden="true">16.3.</strong> 222. 完全二叉树的节点个数</a></li></ol></li><li class="chapter-item expanded "><a href="../day17.html"><strong aria-hidden="true">17.</strong> day 17</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day17/lc110.html"><strong aria-hidden="true">17.1.</strong> 110. 平衡二叉树</a></li><li class="chapter-item expanded "><a href="../day17/lc257.html"><strong aria-hidden="true">17.2.</strong> 257. 二叉树的所有路径</a></li><li class="chapter-item expanded "><a href="../day17/lc404.html"><strong aria-hidden="true">17.3.</strong> 404. 左叶子之和</a></li></ol></li><li class="chapter-item expanded "><a href="../day18.html"><strong aria-hidden="true">18.</strong> day 18</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day18/lc513.html"><strong aria-hidden="true">18.1.</strong> 513. 找树左下角的值</a></li><li class="chapter-item expanded "><a href="../day18/lc112.html"><strong aria-hidden="true">18.2.</strong> 112. 路径总和</a></li><li class="chapter-item expanded "><a href="../day18/lc106.html"><strong aria-hidden="true">18.3.</strong> 106. 从中序与后序遍历序列构造二叉树</a></li></ol></li><li class="chapter-item expanded "><a href="../day19.html"><strong aria-hidden="true">19.</strong> day 19</a></li><li class="chapter-item expanded "><a href="../day20.html"><strong aria-hidden="true">20.</strong> day 20</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day20/lc654.html"><strong aria-hidden="true">20.1.</strong> 654. 最大二叉树</a></li><li class="chapter-item expanded "><a href="../day20/lc617.html"><strong aria-hidden="true">20.2.</strong> 617. 合并二叉树</a></li><li class="chapter-item expanded "><a href="../day20/lc700.html"><strong aria-hidden="true">20.3.</strong> 700.二叉搜索树中的搜索</a></li><li class="chapter-item expanded "><a href="../day20/lc98.html"><strong aria-hidden="true">20.4.</strong> 98. 验证二叉搜索树</a></li></ol></li><li class="chapter-item expanded "><a href="../day21.html"><strong aria-hidden="true">21.</strong> day 21</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day21/lc530.html"><strong aria-hidden="true">21.1.</strong> 530. 二叉搜索树的最小绝对差</a></li><li class="chapter-item expanded "><a href="../day21/lc501.html"><strong aria-hidden="true">21.2.</strong> 501. 二叉搜索树中的众数</a></li><li class="chapter-item expanded "><a href="../day21/lc236.html"><strong aria-hidden="true">21.3.</strong> 236. 二叉树的最近公共祖先</a></li></ol></li><li class="chapter-item expanded "><a href="../day22.html"><strong aria-hidden="true">22.</strong> day 22</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day22/lc235.html"><strong aria-hidden="true">22.1.</strong> 235. 二叉搜索树的最近公共祖先</a></li><li class="chapter-item expanded "><a href="../day22/lc701.html"><strong aria-hidden="true">22.2.</strong> 701. 二叉搜索树中的插入操作</a></li><li class="chapter-item expanded "><a href="../day22/lc450.html"><strong aria-hidden="true">22.3.</strong> 450. 删除二叉搜索树中的节点</a></li></ol></li><li class="chapter-item expanded "><a href="../day23.html"><strong aria-hidden="true">23.</strong> day 23</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day23/lc669.html"><strong aria-hidden="true">23.1.</strong> 669. 修剪二叉搜索树</a></li><li class="chapter-item expanded "><a href="../day23/lc108.html"><strong aria-hidden="true">23.2.</strong> 108. 将有序数组转换为二叉搜索树</a></li><li class="chapter-item expanded "><a href="../day23/lc538.html"><strong aria-hidden="true">23.3.</strong> 538. 把二叉搜索树转换为累加树</a></li></ol></li><li class="chapter-item expanded "><a href="../day24.html"><strong aria-hidden="true">24.</strong> day 24</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day24/lc77.html"><strong aria-hidden="true">24.1.</strong> 77. 组合</a></li></ol></li><li class="chapter-item expanded "><a href="../day25.html"><strong aria-hidden="true">25.</strong> day 25</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day25/lc216.html"><strong aria-hidden="true">25.1.</strong> 216. 组合总和 III</a></li><li class="chapter-item expanded "><a href="../day25/lc17.html"><strong aria-hidden="true">25.2.</strong> 17. 电话号码的字母组合</a></li></ol></li><li class="chapter-item expanded "><a href="../day27.html"><strong aria-hidden="true">26.</strong> day 27</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day27/lc39.html"><strong aria-hidden="true">26.1.</strong> 39. 组合总和</a></li><li class="chapter-item expanded "><a href="../day27/lc40.html"><strong aria-hidden="true">26.2.</strong> 40. 组合总和II</a></li><li class="chapter-item expanded "><a href="../day27/lc131.html"><strong aria-hidden="true">26.3.</strong> 131. 分割回文串</a></li></ol></li><li class="chapter-item expanded "><a href="../day28.html"><strong aria-hidden="true">27.</strong> day 28</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day28/lc93.html"><strong aria-hidden="true">27.1.</strong> 93.复原IP地址</a></li><li class="chapter-item expanded "><a href="../day28/lc78.html"><strong aria-hidden="true">27.2.</strong> 78.子集</a></li><li class="chapter-item expanded "><a href="../day28/lc90.html"><strong aria-hidden="true">27.3.</strong> 90.子集II</a></li></ol></li><li class="chapter-item expanded "><a href="../day29.html"><strong aria-hidden="true">28.</strong> day 29</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day29/lc491.html"><strong aria-hidden="true">28.1.</strong> 491.递增子序列</a></li><li class="chapter-item expanded "><a href="../day29/lc46.html"><strong aria-hidden="true">28.2.</strong> 46.全排列</a></li><li class="chapter-item expanded "><a href="../day29/lc47.html"><strong aria-hidden="true">28.3.</strong> 47.全排列 II</a></li></ol></li><li class="chapter-item expanded "><a href="../day30.html"><strong aria-hidden="true">29.</strong> day 30</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day30/332.html"><strong aria-hidden="true">29.1.</strong> 332.重新安排行程</a></li><li class="chapter-item expanded "><a href="../day30/lc51.html"><strong aria-hidden="true">29.2.</strong> 51. N皇后</a></li><li class="chapter-item expanded "><a href="../day30/lc37.html"><strong aria-hidden="true">29.3.</strong> 37. 解数独</a></li></ol></li><li class="chapter-item expanded "><a href="../day31.html"><strong aria-hidden="true">30.</strong> day 31</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day31/lc455.html"><strong aria-hidden="true">30.1.</strong> 455.分发饼干</a></li><li class="chapter-item expanded "><a href="../day31/lc376.html"><strong aria-hidden="true">30.2.</strong> 376. 摆动序列</a></li><li class="chapter-item expanded "><a href="../day31/lc53.html"><strong aria-hidden="true">30.3.</strong> 53. 最大子序和</a></li></ol></li><li class="chapter-item expanded "><a href="../day32.html"><strong aria-hidden="true">31.</strong> day 32</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day32/lc122.html"><strong aria-hidden="true">31.1.</strong> 122.买卖股票的最佳时机II</a></li><li class="chapter-item expanded "><a href="../day32/lc55.html"><strong aria-hidden="true">31.2.</strong> 55. 跳跃游戏</a></li><li class="chapter-item expanded "><a href="../day32/lc45.html"><strong aria-hidden="true">31.3.</strong> 45.跳跃游戏II</a></li></ol></li><li class="chapter-item expanded "><a href="../day34.html"><strong aria-hidden="true">32.</strong> day 34</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day34/lc1005.html"><strong aria-hidden="true">32.1.</strong> 1005.K次取反后最大化的数组和</a></li><li class="chapter-item expanded "><a href="../day34/lc134.html"><strong aria-hidden="true">32.2.</strong> 134. 加油站</a></li><li class="chapter-item expanded "><a href="../day34/lc135.html"><strong aria-hidden="true">32.3.</strong> 135. 分发糖果</a></li></ol></li><li class="chapter-item expanded "><a href="../day35.html"><strong aria-hidden="true">33.</strong> day 35</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day35/lc860.html"><strong aria-hidden="true">33.1.</strong> 860.柠檬水找零</a></li><li class="chapter-item expanded "><a href="../day35/lc406.html"><strong aria-hidden="true">33.2.</strong> 406.根据身高重建队列</a></li><li class="chapter-item expanded "><a href="../day35/lc452.html"><strong aria-hidden="true">33.3.</strong> 452. 用最少数量的箭引爆气球</a></li></ol></li><li class="chapter-item expanded "><a href="../day36.html"><strong aria-hidden="true">34.</strong> day 36</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day36/lc435.html"><strong aria-hidden="true">34.1.</strong> 435. 无重叠区间</a></li><li class="chapter-item expanded "><a href="../day36/lc763.html"><strong aria-hidden="true">34.2.</strong> 763.划分字母区间</a></li><li class="chapter-item expanded "><a href="../day36/lc56.html"><strong aria-hidden="true">34.3.</strong> 56. 合并区间</a></li></ol></li><li class="chapter-item expanded "><a href="../day37.html"><strong aria-hidden="true">35.</strong> day 37</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../day37/lc738.html"><strong aria-hidden="true">35.1.</strong> 738.单调递增的数字</a></li><li class="chapter-item expanded "><a href="../day37/lc968.html" class="active"><strong aria-hidden="true">35.2.</strong> 968.监控二叉树</a></li></ol></li><li class="chapter-item expanded "><a href="../remains.html"><strong aria-hidden="true">36.</strong> remains</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">代码随想录算法训练营刷题笔记</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="968监控二叉树"><a class="header" href="#968监控二叉树">968.监控二叉树</a></h1>
+<pre><code class="language-cpp">class Solution {
+public:
+    int cnt = 0;
+    bool f(TreeNode*r) { // should not be null
+        // if(!r)return true;
+        if(!r-&gt;left&amp;&amp;!r-&gt;right)return false; // no monitor
+        bool lres = false;
+        if(r-&gt;left)res=f(r-&gt;left);
+        if(!res&amp;&amp;r-&gt;right)res=f(r-&gt;right);
+        if(res == true) return false;
+        else {
+            cnt ++ ;
+            return true;
+        }
+    }
+    int minCameraCover(TreeNode* r) {if(!r-&gt;left&amp;&amp;!r-&gt;right)return 1;
+        f(r);
+        return cnt;
+    }
+};
+</code></pre>
+<p>想不明白：在二叉树中如何从低向上推导呢？</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    int cnt = 0;
+    int f(TreeNode*p) {
+        // 0 -- 没有覆盖
+        // 1 -- 有覆盖了
+        // 2 -- 有摄像头
+        if(!p)return 1;
+        int l = f(p-&gt;left);
+        int r = f(p-&gt;right);
+        if (l==1 &amp;&amp; r==1) return 0;//////
+        if (l==0 || r==0) {//////////////
+            cnt ++ ;
+            return 2;
+        }
+        return 1;
+    }
+    int minCameraCover(TreeNode* r) {if(!r-&gt;left&amp;&amp;!r-&gt;right)return 1;
+        if(f(r)==0)cnt++;///////
+        return cnt;
+    }
+};
+</code></pre>
+<p>[0,0,null,null,0,0,null,null,0,0]
+0
+0 n
+n 0 
+0 n
+n 0
+0</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../day37/lc738.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../remains.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../day37/lc738.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../remains.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
