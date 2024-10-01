@@ -853,14 +853,18 @@ impl Solution {
     pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; {
         let mut dummyHead = Box::new(ListNode::new(0));
         dummyHead.next = head;
-        let mut cur = dummyHead.as_mut();
+        let mut cur: &amp;mut ListNode = dummyHead.as_mut();
 	// 使用take()替换std::men::replace(&amp;mut node.next, None)达到相同的效果，并且更普遍易读
         while let Some(nxt) = cur.next.take() {
             if nxt.val == val {
                 cur.next = nxt.next;
             } else {
                 cur.next = Some(nxt);
-                cur = cur.next.as_mut().unwrap();
+                cur = cur.next.as_mut().unwrap();   // coercion
+                //           ^ Option&lt;Box&lt;ListNode&gt;&gt;
+                //                    ^ Option&lt;&amp;mut Box&lt;ListNode&gt;&gt;
+                //                             ^ &amp;mut Box&lt;ListNode&gt;
+                //            deref   coerce -&gt;     &amp; mut ListNode
             }
         }
         dummyHead.next
@@ -868,6 +872,43 @@ impl Solution {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>向这位老哥学习，使用take，管它用不用，先取下来再说。并且 先把option刨了</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span><span class="boring">
+</span><span class="boring">// Definition for singly-linked list.
+</span><span class="boring">#[derive(PartialEq, Eq, Clone, Debug)]
+</span><span class="boring">pub struct ListNode {
+</span><span class="boring">  pub val: i32,
+</span><span class="boring">  pub next: Option&lt;Box&lt;ListNode&gt;&gt;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl ListNode {
+</span><span class="boring">  #[inline]
+</span><span class="boring">  fn new(val: i32) -&gt; Self {
+</span><span class="boring">    ListNode {
+</span><span class="boring">      next: None,
+</span><span class="boring">      val
+</span><span class="boring">    }
+</span><span class="boring">  }
+</span><span class="boring">}
+</span>
+impl Solution {
+    pub fn remove_elements(mut head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; {
+        let mut res: Option&lt;Box&lt;ListNode&gt;&gt; = None;
+        let mut ptr: &amp;mut Option&lt;Box&lt;ListNode&gt;&gt; = &amp;mut res;
+        while let Some(mut x) = head {
+            head = x.next.take();
+            if x.val != val {
+                *ptr = Some(x);
+                ptr = &amp;mut ptr.as_mut().unwrap().next;
+            }
+        }
+        res
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="707-设计链表"><a class="header" href="#707-设计链表">707. 设计链表</a></h1>
 <h2 id="题目描述-6"><a class="header" href="#题目描述-6">题目描述</a></h2>
 <p>你可以选择使用单链表或者双链表，设计并实现自己的链表。</p>
