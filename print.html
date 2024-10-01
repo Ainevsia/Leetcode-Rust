@@ -719,6 +719,45 @@ impl Solution {
 <p>确实，定义一定要非常明确，明确了定义之后就牢牢地实现这个定义</p>
 <p>可以发现这里的边界条件非常多，在一个循环中，如此多的边界条件，如果不按照固定规则来遍历，那就是一进循环深似海，从此offer是路人。</p>
 <p>然后好像就是我这种模拟的做法</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn generate_matrix(n: i32) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        let mut m: Vec&lt;Vec&lt;i32&gt;&gt; = vec![vec![0i32; n as usize]; n as usize];
+        let mut current: i32 = 1i32;
+        for i in 0usize .. (n as usize + 1usize) / 2usize {
+            Self::f(&amp;mut m, i, &amp;mut current);
+        }
+        m
+    }
+
+    pub fn f(m: &amp;mut Vec&lt;Vec&lt;i32&gt;&gt;, start: usize, start_num: &amp;mut i32) {
+        let width: usize = m.len() - start * 2usize - 1usize;
+        if width == 0 { m[start][start] = *start_num; return; }
+        for i in 0..width {
+            m[start][start + i] = *start_num;
+            *start_num += 1i32;
+        }
+        for j in 0..width {
+            m[start + j][start + width] = *start_num;
+            *start_num += 1i32;
+        }
+        for i in 0..width {
+            m[start + width][start + width - i] = *start_num;
+            *start_num += 1i32;
+        }
+        for j in 0..width {
+            m[start + width - j][start] = *start_num;
+            *start_num += 1i32;
+        }
+    }
+}
+
+
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="第二章-链表part01"><a class="header" href="#第二章-链表part01">第二章 链表part01</a></h1>
 <p>day1 任务以及具体安排：https://docs.qq.com/doc/DUG9UR2ZUc3BjRUdY
 day 2 任务以及具体安排：https://docs.qq.com/doc/DUGRwWXNOVEpyaVpG 
