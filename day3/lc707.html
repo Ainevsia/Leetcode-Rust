@@ -274,6 +274,74 @@ impl MyLinkedList {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
 <p>也没啥好说的，rust只要写出来，基本是对的，没有用take的形式，而是全部去除了option用ref</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct MyLinkedList {
+    head: Option&lt;Box&lt;ListNode&gt;&gt;,
+    cnt: i32,
+}
+
+struct ListNode {
+    val: i32,
+    next: Option&lt;Box&lt;ListNode&gt;&gt;,
+}
+
+/** 
+ * `&amp;self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&amp;mut self` instead.
+ */
+impl MyLinkedList {
+
+    fn new() -&gt; Self {
+        Self {
+            head: None,
+            cnt: 0i32,
+        }
+    }
+    
+    fn get(&amp;self, mut index: i32) -&gt; i32 {
+        if index &gt;= self.cnt { return -1i32 }
+        let mut ptr: &amp; Box&lt;ListNode&gt; = self.head.as_ref().unwrap();
+        while index &gt; 0i32 {
+            ptr = ptr.next.as_ref().unwrap();
+            index -= 1i32;
+        }
+        ptr.val
+    }
+    
+    fn add_at_head(&amp;mut self, val: i32) {
+        self.add_at_index(0i32, val);
+    }
+    
+    fn add_at_tail(&amp;mut self, val: i32) {
+        self.add_at_index(self.cnt, val);
+    }
+    
+    fn add_at_index(&amp;mut self, mut index: i32, val: i32) {
+        if index &gt; self.cnt { return }
+        let mut ptr: &amp;mut Option&lt;Box&lt;ListNode&gt;&gt; = &amp;mut self.head;
+        while index &gt; 0i32 {
+            ptr = &amp;mut ptr.as_mut().unwrap().next;
+            index -= 1i32;
+        }
+        self.cnt += 1i32;
+        *ptr = Some(Box::new(ListNode { val: val, next: ptr.take() }))
+    }
+    
+    fn delete_at_index(&amp;mut self, mut index: i32) {
+        if index &gt;= self.cnt { return }
+        let mut ptr: &amp;mut Option&lt;Box&lt;ListNode&gt;&gt; = &amp;mut self.head;
+        while index &gt; 0i32 {
+            ptr = &amp;mut ptr.as_mut().unwrap().next;
+            index -= 1i32;
+        }
+        let nxt: Option&lt;Box&lt;ListNode&gt;&gt; = ptr.take().unwrap().next.take();
+        *ptr = nxt;
+        self.cnt -= 1i32;
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

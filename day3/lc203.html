@@ -195,8 +195,10 @@ impl ListNode {
 impl Solution {
     pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; {
         let mut head = Some(Box::new(ListNode { val: 0, next: head }));
-        let mut a = &amp;mut head;
+        let mut a: &amp;mut Option&lt;Box&lt;ListNode&gt;&gt; = &amp;mut head;
         while a.as_deref_mut().unwrap().next.is_some() {
+            //         ^  Option&lt;&amp;mut ListNode&gt;
+            //    
             let v = a.as_deref_mut().unwrap().next.as_deref().unwrap().val;
             if v == val {
                 let mut b = a.as_deref_mut().unwrap().next.take();
@@ -211,7 +213,7 @@ impl Solution {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>属实有点恶心了</p>
+<p>属实有点恶心了，看着太复杂了，这就是不用take的后果</p>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span>
@@ -296,6 +298,8 @@ impl Solution {
     }
 }
 <span class="boring">}</span></code></pre></pre>
+<p>链表的ownership还是非常容易理清楚的</p>
+<p>一个Option不是owner没法直接unwrap，但是as_mut了之后可以随意unwrap，这也是容器穿透</p>
 
                     </main>
 
