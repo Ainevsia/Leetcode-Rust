@@ -239,6 +239,17 @@ impl Solution {
 }
 
 <span class="boring">}</span></code></pre></pre>
+<p>在闭包中使用pattern matching来去除变量前边的引用的时候，有时候不要去除多了</p>
+<pre><code class="language-js">    pub fn min_sub_array_len(nums: Vec&lt;i32&gt;) {
+        nums.iter().scan(1i32, |&amp;mut st, &amp;x| {
+            st += x;
+            Some(st)
+        });
+    }
+
+</code></pre>
+<p>类似这个时候，st绑定到的就永远都是输入的那个1 到闭包函数内了，起不到修改闭包外的1的效果。</p>
+<p>所以这个引用就不要自动匹配掉了，就手动解引用吧</p>
 
                     </main>
 
