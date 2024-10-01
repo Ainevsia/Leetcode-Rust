@@ -222,6 +222,38 @@ impl Solution {
     }
 }
 <span class="boring">}</span></code></pre></pre>
+<p>std强大的标准库 Vec上retain方法</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
+    pub fn remove_element(nums: &amp;mut Vec&lt;i32&gt;, val: i32) -&gt; i32 {
+        nums.retain(|&amp;x| x != val);
+        nums.len() as i32
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
+<p>slow指针用来存储需要留下元素应该存放的地址，fast指针是当前处理的元素</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
+    pub fn remove_element(nums: &amp;mut Vec&lt;i32&gt;, val: i32) -&gt; i32 {
+        let mut slow: usize = 0usize;    // the result elem
+        let mut fast: usize = 0usize;    // the processing elem
+        while fast &lt; nums.len() {
+            if nums[fast] == val { fast += 1usize }
+            else {
+                nums[slow] = nums[fast]; // move elem
+                slow += 1usize;
+                fast += 1usize;
+            }
+        }
+        slow as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 
