@@ -250,6 +250,59 @@ impl Solution {
 </code></pre>
 <p>类似这个时候，st绑定到的就永远都是输入的那个1 到闭包函数内了，起不到修改闭包外的1的效果。</p>
 <p>所以这个引用就不要自动匹配掉了，就手动解引用吧</p>
+<p>思路：前缀和+双指针</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
+    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
+        // prefix sum
+        let pre_sum: Vec&lt;i32&gt; = nums.iter().scan(0i32, |st, &amp;x| {
+            *st += x;
+            Some(*st)
+        }).collect();
+        let idx: usize = pre_sum.partition_point(|&amp;x| x &lt; target);
+        if idx == nums.len() { return 0i32 }
+        let mut res: usize = idx + 1usize;
+        let mut right: usize = idx;
+        let mut left: usize = 0usize;
+        while right &lt; nums.len() {
+            while pre_sum[right] - pre_sum[left] &gt;= target {
+                left += 1usize;
+            }
+            let candidate: usize = right - left + 1usize;
+            res = std::cmp::min(candidate, res);
+            right += 1usize;
+        }
+        res as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>
+impl Solution {
+    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 {
+        let mut sum: i32 = 0i32;
+        let mut left: usize = 0usize;
+        let mut res: usize = usize::MAX;
+        for right in 0usize..nums.len() {
+            sum += nums[right];
+            while sum &gt;= target {
+                res = std::cmp::min(res, right - left + 1usize);
+                sum -= nums[left];
+                left += 1usize;
+            }
+        }
+        match res {
+            usize::MAX =&gt; 0,
+            _ =&gt; res as i32,
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 
