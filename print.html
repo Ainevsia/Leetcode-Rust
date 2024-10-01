@@ -502,6 +502,35 @@ impl Solution {
 }
 <span class="boring">}</span></code></pre></pre>
 <p>注意是abs比较，a和b都是闭区间</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Solution {}
+</span>impl Solution {
+    pub fn sorted_squares(nums: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
+        let mut res: Vec&lt;i32&gt; = vec![0i32; nums.len()];
+        let mut idx: usize = 0usize;
+        let mut left: usize = 0usize;
+        let mut right: usize = nums.len() - 1usize;
+        while idx &lt; res.len() {
+            let left_square: i32 = nums[left].pow(2u32);
+            let right_square: i32 = nums[right].pow(2u32);
+            use std::cmp::Ordering;
+            match left_square.cmp(&amp;right_square) {
+                Ordering::Less =&gt; {
+                    right -= 1usize;
+                    res[nums.len() - 1usize - idx] = right_square;
+                }
+                _ =&gt; {
+                    left += 1usize;
+                    res[nums.len() - 1usize - idx] = left_square;
+                }
+            }
+            idx += 1;
+        }
+        res
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="209-长度最小的子数组"><a class="header" href="#209-长度最小的子数组">209. 长度最小的子数组</a></h1>
 <h2 id="题目描述-3"><a class="header" href="#题目描述-3">题目描述</a></h2>
 <p>给定一个含有 n 个正整数的数组和一个正整数 target 。</p>
