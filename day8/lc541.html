@@ -197,6 +197,25 @@ impl Solution {
 <p>slice是实现<code>std::iter::DoubleEndedIterator</code>的，所以可以reverse，iter返回的不是不同的迭代器而是<code>std::slice::Iter</code></p>
 <p>Vec是实现<code>Extend</code> trait的，所以可以用slice的<code>copy_from_slice</code>实现extend</p>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn reverse_str(s: String, k: i32) -&gt; String {
+        let mut s: Vec&lt;u8&gt; = s.bytes().collect();
+        let mut i: usize = 0usize;
+        loop {
+            let start: usize = i * k as usize * 2usize;
+            if start &gt;= s.len() { break }
+            i += 1usize;
+            let end: usize = std::cmp::min(start + k as usize, s.len());
+            s[start .. end].reverse()
+        }
+        String::from_utf8(s).unwrap()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

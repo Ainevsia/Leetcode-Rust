@@ -1728,6 +1728,33 @@ impl Solution {
     }
 }
 <span class="boring">}</span></code></pre></pre>
+<p>地一下子还是没有想到要用hashmap做，感觉可能是双指针</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn four_sum_count(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;, nums3: Vec&lt;i32&gt;, nums4: Vec&lt;i32&gt;) -&gt; i32 {
+        use std::collections::HashMap;
+        let mut map: HashMap&lt;i32, usize&gt; = HashMap::new();
+        for a in nums1 {
+            for &amp;b in nums2.iter() {
+                map.entry(a + b)
+                    .and_modify(|x| *x += 1usize)
+                    .or_insert(1usize);
+            }
+        }
+        let mut res: usize = 0usize;
+        for c in nums3 {
+            for &amp;d in nums4.iter() {
+                map.entry(0i32 - c - d)
+                    .and_modify(|&amp;mut x| res += x);
+            }
+        }
+        res as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="383-赎金信-1"><a class="header" href="#383-赎金信-1">383. 赎金信</a></h1>
 <h2 id="题目描述-17"><a class="header" href="#题目描述-17">题目描述</a></h2>
 <p>给你两个字符串：ransomNote 和 magazine ，判断 ransomNote 能不能由 magazine 里面的字符构成。</p>
@@ -1757,6 +1784,7 @@ impl Solution {
 }
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-17"><a class="header" href="#学习感想-17">学习感想</a></h2>
+<p>普通hashmap 的使用</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="15-三数之和-1"><a class="header" href="#15-三数之和-1">15. 三数之和</a></h1>
 <h2 id="题目描述-18"><a class="header" href="#题目描述-18">题目描述</a></h2>
 <p>给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。请</p>
@@ -1802,6 +1830,42 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <p>双指针做法还是想不到</p>
 <h2 id="学习感想-18"><a class="header" href="#学习感想-18">学习感想</a></h2>
+<p>想不到用双指针</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn three_sum(mut nums: Vec&lt;i32&gt;) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        nums.sort();
+        let mut res: Vec&lt;Vec&lt;i32&gt;&gt; = Vec::new();
+        for i in 0..nums.len() - 2usize {
+            if i &gt; 0 &amp;&amp; nums[i] == nums[i-1usize] { continue }
+            let mut left: usize = i + 1usize;
+            let mut right: usize = nums.len() - 1usize;
+            use std::cmp::Ordering;
+            while left &lt; right {
+                let s: i32 = nums[i] + nums[left] + nums[right];
+                match s.cmp(&amp;0i32) {
+                    Ordering::Less =&gt; left += 1usize,
+                    Ordering::Greater =&gt; right -= 1usize,
+                    _ =&gt; {
+                        let to_push: Vec&lt;i32&gt; = vec![nums[i], nums[left], nums[right]];
+                        if res.is_empty() || Some(&amp;to_push) != res.last() {
+                            res.push(to_push);
+                        }
+                        left += 1usize;
+                        right -= 1usize;
+                    }
+                }
+            }
+        }
+        res
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="18-四数之和-1"><a class="header" href="#18-四数之和-1">18. 四数之和</a></h1>
 <h2 id="题目描述-19"><a class="header" href="#题目描述-19">题目描述</a></h2>
 <p>给你一个由 n 个整数组成的数组 nums ，和一个目标值 target 。请你找出并返回满足下述全部条件且不重复的四元组 [nums[a], nums[b], nums[c], nums[d]] （若两个四元组元素一一对应，则认为两个四元组重复）：</p>
@@ -1927,6 +1991,25 @@ impl Solution {
 <p>slice是实现<code>std::iter::DoubleEndedIterator</code>的，所以可以reverse，iter返回的不是不同的迭代器而是<code>std::slice::Iter</code></p>
 <p>Vec是实现<code>Extend</code> trait的，所以可以用slice的<code>copy_from_slice</code>实现extend</p>
 <h2 id="学习感想-21"><a class="header" href="#学习感想-21">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn reverse_str(s: String, k: i32) -&gt; String {
+        let mut s: Vec&lt;u8&gt; = s.bytes().collect();
+        let mut i: usize = 0usize;
+        loop {
+            let start: usize = i * k as usize * 2usize;
+            if start &gt;= s.len() { break }
+            i += 1usize;
+            let end: usize = std::cmp::min(start + k as usize, s.len());
+            s[start .. end].reverse()
+        }
+        String::from_utf8(s).unwrap()
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="剑指-offer-05-替换空格"><a class="header" href="#剑指-offer-05-替换空格">剑指 Offer 05. 替换空格</a></h1>
 <h2 id="题目描述-22"><a class="header" href="#题目描述-22">题目描述</a></h2>
 <p>请实现一个函数，把字符串 s 中的每个空格替换成&quot;%20&quot;。</p>
@@ -2008,6 +2091,18 @@ impl Solution {
 }
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-23"><a class="header" href="#学习感想-23">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn reverse_words(s: String) -&gt; String {
+        s.split_ascii_whitespace().rev().collect::&lt;Vec&lt;&amp;str&gt;&gt;().join(&quot; &quot;)
+        //  ^ String -&gt; &amp;str
+        //                   ^ iter  Target=&amp;str           ^ Vec&lt;&amp;str&gt;
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="剑指-offer-58---ii-左旋转字符串"><a class="header" href="#剑指-offer-58---ii-左旋转字符串">剑指 Offer 58 - II. 左旋转字符串</a></h1>
 <h2 id="题目描述-24"><a class="header" href="#题目描述-24">题目描述</a></h2>
 <p>字符串的左旋转操作是把字符串前面的若干个字符转移到字符串的尾部。请定义一个函数实现字符串左旋转操作的功能。比如，输入字符串&quot;abcdefg&quot;和数字2，该函数将返回左旋转两位得到的结果&quot;cdefgab&quot;。</p>
@@ -2138,6 +2233,20 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-25"><a class="header" href="#学习感想-25">学习感想</a></h2>
 <p>还得学习复习</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn str_str(haystack: String, needle: String) -&gt; i32 {
+        if let Some(x) = haystack.find(&amp;needle) {
+            x as i32
+        } else {
+            -1i32
+        }
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="459-重复的子字符串"><a class="header" href="#459-重复的子字符串">459. 重复的子字符串</a></h1>
 <h2 id="题目描述-26"><a class="header" href="#题目描述-26">题目描述</a></h2>
 <p>给定一个非空的字符串 s ，检查是否可以通过由它的一个子串重复多次构成。</p>
@@ -2154,6 +2263,9 @@ abacabacabac
 
 abac
 0010
+
+abcabc
+000123
 </code></pre>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span>
@@ -2186,6 +2298,40 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-26"><a class="header" href="#学习感想-26">学习感想</a></h2>
 <p>什么时候该用KMP很懵</p>
+<p>next 数组 -- 前缀表 内容是什么？？next[i] 记录下标i之前（包括i）的字符串中，有多大长度的相同前缀后缀</p>
+<p>前缀表是用来回退的，它记录了模式串P与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配。</p>
+<p>记录下标i之前（包括i）的字符串中，有多大长度的相同前缀后缀。</p>
+<p>记住例子</p>
+<pre><code class="language-plaintext">abcdabcd
+00001234
+</code></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn repeated_substring_pattern(s: String) -&gt; bool {
+        let s: Vec&lt;u8&gt; = s.bytes().collect();
+        // next[i] -&gt; max length of common prefix &amp; suffix of string s[0..=i]
+        let mut next: Vec&lt;usize&gt; = vec![0usize; s.len()];
+        let mut left: usize = 0usize;   // the current max length of common pre/suf-fix
+        for right in 1usize .. next.len() { // calculate each next[right]
+            while left &gt; 1usize &amp;&amp; s[right] != s[left] {
+                left = next[left - 1usize];
+            }
+            if s[right] == s[left] {
+                left += 1usize;
+            }
+            next[right] = left;
+        }
+        let x: usize = s.len() - *next.last().unwrap();
+        match s.len() % x {
+            0 =&gt; true,
+            _ =&gt; false,
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="第五章-栈与队列part01"><a class="header" href="#第五章-栈与队列part01">第五章 栈与队列part01</a></h1>
 <p>今日任务：
 ● 理论基础
@@ -2378,6 +2524,31 @@ impl Solution {
 }
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-29"><a class="header" href="#学习感想-29">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn is_valid(s: String) -&gt; bool {
+        let mut stack: Vec&lt;char&gt; = Vec::new();
+        for c in s.chars() {
+            if ['{', '(', '['].contains(&amp;c) {
+                stack.push(c);
+            } else {
+                if let Some(x) = stack.pop() {
+                    if x == '{' &amp;&amp; c != '}' { return false }
+                    else if x == '(' &amp;&amp; c != ')' { return false }
+                    else if x == '[' &amp;&amp; c != ']' { return false }
+                } else {
+                    return false
+                }
+            }
+        }
+        stack.is_empty()
+    }
+}
+
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="1047-删除字符串中的所有相邻重复项-1"><a class="header" href="#1047-删除字符串中的所有相邻重复项-1">1047. 删除字符串中的所有相邻重复项</a></h1>
 <h2 id="题目描述-30"><a class="header" href="#题目描述-30">题目描述</a></h2>
 <p>给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。</p>
@@ -2494,6 +2665,34 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-32"><a class="header" href="#学习感想-32">学习感想</a></h2>
 <p>一开始确实以为大顶堆就行了，其实要用单调栈，之前也有做过单调栈的题目</p>
+<p>单调队列是不能够删除一个指定的元素的，单调栈里维护需要的最大值</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn max_sliding_window(nums: Vec&lt;i32&gt;, k: i32) -&gt; Vec&lt;i32&gt; {
+        use std::collections::VecDeque;
+        let mut v: VecDeque&lt;i32&gt; = VecDeque::new();
+        let k: usize = k as usize;
+        let mut res: Vec&lt;i32&gt; = vec![];
+        for idx in 0 .. nums.len() {
+            if idx &gt;= k  {
+                let to_delete: i32 = nums[idx - k];
+                if to_delete == v[0] { v.pop_front(); }
+            }
+            let cur: i32 = nums[idx];
+            while let Some(&amp;bck) = v.back() {
+                if bck &lt; cur {
+                    v.pop_back();
+                } else { break }
+            }
+            v.push_back(cur);
+            if idx &gt;= k - 1 { res.push(v[0]); }
+        }
+        res
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="347-前-k-个高频元素"><a class="header" href="#347-前-k-个高频元素">347. 前 K 个高频元素</a></h1>
 <h2 id="题目描述-33"><a class="header" href="#题目描述-33">题目描述</a></h2>
 <p>给你一个整数数组 nums 和一个整数 k ，请你返回其中出现频率前 k 高的元素。你可以按 任意顺序 返回答案。</p>
@@ -2530,6 +2729,31 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想-33"><a class="header" href="#学习感想-33">学习感想</a></h2>
 <p>map+小顶堆</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn top_k_frequent(nums: Vec&lt;i32&gt;, k: i32) -&gt; Vec&lt;i32&gt; {
+        use std::collections::{HashMap, BinaryHeap};
+        let mut map: HashMap&lt;i32, usize&gt; = HashMap::new();
+        nums.iter().for_each(|&amp;i| {
+            map.entry(i).and_modify(|x| *x += 1usize).or_default();
+        });
+        let mut res: Vec&lt;i32&gt; = Vec::new();
+        let mut pq: BinaryHeap&lt;(usize, i32)&gt; = BinaryHeap::new();
+        for (k, v) in map {
+            pq.push((v, k));
+        }
+        (0i32 .. k) .for_each(|_| {
+            res.push(pq.pop().unwrap().1);
+        });
+        res
+    }
+}
+
+
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="第六章-二叉树part01"><a class="header" href="#第六章-二叉树part01">第六章 二叉树part01</a></h1>
 <p>今日内容： </p>
 <p>● 理论基础
@@ -2608,6 +2832,25 @@ public:
 };
 </code></pre>
 <h2 id="学习感想-34"><a class="header" href="#学习感想-34">学习感想</a></h2>
+<p>为什么当时没有用rust做呢</p>
+<pre><code class="language-js">use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    pub fn preorder_traversal(root: Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt;) -&gt; Vec&lt;i32&gt; {
+        if let Some(r) = root {
+            // use std::ops::DerefMut;
+            // let mut ref_node: std::cell::RefMut&lt;TreeNode&gt; = r.borrow_mut();
+            // let node: &amp;mut TreeNode = &amp;mut ref_node;
+            let mut res: Vec&lt;i32&gt; = vec![r.borrow().val];
+            res.append(&amp;mut Self::preorder_traversal(r.borrow_mut().left.take()));
+            res.append(&amp;mut Self::preorder_traversal(r.borrow_mut().right.take()));
+            res
+        } else {
+            vec![]
+        }
+    }
+}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="第六章--二叉树-part02"><a class="header" href="#第六章--二叉树-part02">第六章  二叉树 part02</a></h1>
 <p>今日内容： </p>
 <p>● 层序遍历  10 

@@ -214,6 +214,18 @@ impl Solution {
 }
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn reverse_words(s: String) -&gt; String {
+        s.split_ascii_whitespace().rev().collect::&lt;Vec&lt;&amp;str&gt;&gt;().join(&quot; &quot;)
+        //  ^ String -&gt; &amp;str
+        //                   ^ iter  Target=&amp;str           ^ Vec&lt;&amp;str&gt;
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

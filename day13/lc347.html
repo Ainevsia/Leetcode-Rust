@@ -202,6 +202,31 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
 <p>map+小顶堆</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn top_k_frequent(nums: Vec&lt;i32&gt;, k: i32) -&gt; Vec&lt;i32&gt; {
+        use std::collections::{HashMap, BinaryHeap};
+        let mut map: HashMap&lt;i32, usize&gt; = HashMap::new();
+        nums.iter().for_each(|&amp;i| {
+            map.entry(i).and_modify(|x| *x += 1usize).or_default();
+        });
+        let mut res: Vec&lt;i32&gt; = Vec::new();
+        let mut pq: BinaryHeap&lt;(usize, i32)&gt; = BinaryHeap::new();
+        for (k, v) in map {
+            pq.push((v, k));
+        }
+        (0i32 .. k) .for_each(|_| {
+            res.push(pq.pop().unwrap().1);
+        });
+        res
+    }
+}
+
+
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

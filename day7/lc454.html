@@ -236,6 +236,33 @@ impl Solution {
     }
 }
 <span class="boring">}</span></code></pre></pre>
+<p>地一下子还是没有想到要用hashmap做，感觉可能是双指针</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn four_sum_count(nums1: Vec&lt;i32&gt;, nums2: Vec&lt;i32&gt;, nums3: Vec&lt;i32&gt;, nums4: Vec&lt;i32&gt;) -&gt; i32 {
+        use std::collections::HashMap;
+        let mut map: HashMap&lt;i32, usize&gt; = HashMap::new();
+        for a in nums1 {
+            for &amp;b in nums2.iter() {
+                map.entry(a + b)
+                    .and_modify(|x| *x += 1usize)
+                    .or_insert(1usize);
+            }
+        }
+        let mut res: usize = 0usize;
+        for c in nums3 {
+            for &amp;d in nums4.iter() {
+                map.entry(0i32 - c - d)
+                    .and_modify(|&amp;mut x| res += x);
+            }
+        }
+        res as i32
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

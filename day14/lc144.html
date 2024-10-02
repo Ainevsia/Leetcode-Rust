@@ -226,6 +226,25 @@ public:
 };
 </code></pre>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
+<p>为什么当时没有用rust做呢</p>
+<pre><code class="language-js">use std::rc::Rc;
+use std::cell::RefCell;
+impl Solution {
+    pub fn preorder_traversal(root: Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt;) -&gt; Vec&lt;i32&gt; {
+        if let Some(r) = root {
+            // use std::ops::DerefMut;
+            // let mut ref_node: std::cell::RefMut&lt;TreeNode&gt; = r.borrow_mut();
+            // let node: &amp;mut TreeNode = &amp;mut ref_node;
+            let mut res: Vec&lt;i32&gt; = vec![r.borrow().val];
+            res.append(&amp;mut Self::preorder_traversal(r.borrow_mut().left.take()));
+            res.append(&amp;mut Self::preorder_traversal(r.borrow_mut().right.take()));
+            res
+        } else {
+            vec![]
+        }
+    }
+}
+</code></pre>
 
                     </main>
 

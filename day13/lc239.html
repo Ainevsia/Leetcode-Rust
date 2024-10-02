@@ -200,6 +200,34 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
 <p>一开始确实以为大顶堆就行了，其实要用单调栈，之前也有做过单调栈的题目</p>
+<p>单调队列是不能够删除一个指定的元素的，单调栈里维护需要的最大值</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn max_sliding_window(nums: Vec&lt;i32&gt;, k: i32) -&gt; Vec&lt;i32&gt; {
+        use std::collections::VecDeque;
+        let mut v: VecDeque&lt;i32&gt; = VecDeque::new();
+        let k: usize = k as usize;
+        let mut res: Vec&lt;i32&gt; = vec![];
+        for idx in 0 .. nums.len() {
+            if idx &gt;= k  {
+                let to_delete: i32 = nums[idx - k];
+                if to_delete == v[0] { v.pop_front(); }
+            }
+            let cur: i32 = nums[idx];
+            while let Some(&amp;bck) = v.back() {
+                if bck &lt; cur {
+                    v.pop_back();
+                } else { break }
+            }
+            v.push_back(cur);
+            if idx &gt;= k - 1 { res.push(v[0]); }
+        }
+        res
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

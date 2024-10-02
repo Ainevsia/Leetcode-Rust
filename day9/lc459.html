@@ -182,6 +182,9 @@ abacabacabac
 
 abac
 0010
+
+abcabc
+000123
 </code></pre>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span>
@@ -214,6 +217,40 @@ impl Solution {
 <span class="boring">}</span></code></pre></pre>
 <h2 id="学习感想"><a class="header" href="#学习感想">学习感想</a></h2>
 <p>什么时候该用KMP很懵</p>
+<p>next 数组 -- 前缀表 内容是什么？？next[i] 记录下标i之前（包括i）的字符串中，有多大长度的相同前缀后缀</p>
+<p>前缀表是用来回退的，它记录了模式串P与主串(文本串)不匹配的时候，模式串应该从哪里开始重新匹配。</p>
+<p>记录下标i之前（包括i）的字符串中，有多大长度的相同前缀后缀。</p>
+<p>记住例子</p>
+<pre><code class="language-plaintext">abcdabcd
+00001234
+</code></pre>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+
+impl Solution {
+    pub fn repeated_substring_pattern(s: String) -&gt; bool {
+        let s: Vec&lt;u8&gt; = s.bytes().collect();
+        // next[i] -&gt; max length of common prefix &amp; suffix of string s[0..=i]
+        let mut next: Vec&lt;usize&gt; = vec![0usize; s.len()];
+        let mut left: usize = 0usize;   // the current max length of common pre/suf-fix
+        for right in 1usize .. next.len() { // calculate each next[right]
+            while left &gt; 1usize &amp;&amp; s[right] != s[left] {
+                left = next[left - 1usize];
+            }
+            if s[right] == s[left] {
+                left += 1usize;
+            }
+            next[right] = left;
+        }
+        let x: usize = s.len() - *next.last().unwrap();
+        match s.len() % x {
+            0 =&gt; true,
+            _ =&gt; false,
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 
