@@ -190,6 +190,30 @@ public:
 };
 </code></pre>
 <p>这个 很直接</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn merge(mut intervals: Vec&lt;Vec&lt;i32&gt;&gt;) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        let mut res: Vec&lt;Vec&lt;i32&gt;&gt; = Vec::new();
+        intervals.sort_by_key(|v| v[0]);
+        let mut left: i32 = intervals[0][0];
+        let mut right: i32 = intervals[0][1];
+        intervals.iter().skip(1usize).for_each(|v| {
+            if v[0] &lt;= right {
+                right = std::cmp::max(v[1], right);
+            } else {
+                // non overlap
+                res.push(vec![left, right]);
+                left = v[0];
+                right = v[1];
+            }
+        });
+        res.push(vec![left, right]);
+        res
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 

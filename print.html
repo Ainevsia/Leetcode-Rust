@@ -3288,6 +3288,47 @@ public:
 };
 </code></pre>
 <h2 id="学习感想-46"><a class="header" href="#学习感想-46">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>// Definition for a binary tree node.
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeNode {
+  pub val: i32,
+  pub left: Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt;,
+  pub right: Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt;,
+}
+
+impl TreeNode {
+  #[inline]
+  pub fn new(val: i32) -&gt; Self {
+    TreeNode {
+      val,
+      left: None,
+      right: None
+    }
+  }
+}
+use std::rc::Rc;
+use std::cell::RefCell;
+struct Solution {}
+impl Solution {
+    pub fn build_tree(inorder: Vec&lt;i32&gt;, postorder: Vec&lt;i32&gt;) -&gt; Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt; {
+        Self::build_tree_ref(&amp;inorder, &amp;postorder)
+    }
+
+    pub fn build_tree_ref(inorder: &amp;[i32], postorder: &amp;[i32]) -&gt; Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt; {
+        if inorder.len() == 0usize { return None }
+        let n: usize = inorder.len();
+        let mut num = postorder[n - 1usize];
+        let pos: usize = inorder.iter().position(|&amp;x| x == num).unwrap();
+        let mut tn: TreeNode = TreeNode::new(num);
+        tn.left = Self::build_tree_ref(&amp;inorder[..pos], &amp;postorder[..pos]);
+        tn.right = Self::build_tree_ref(&amp;inorder[pos + 1usize .. ], &amp;postorder[pos .. n - 1usize]);
+        Some(Rc::new(RefCell::new(tn)))
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="休息日-2"><a class="header" href="#休息日-2">休息日</a></h1>
 <p>corctf 还是一题也做不出 我没用</p>
 <div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="654-最大二叉树"><a class="header" href="#654-最大二叉树">654. 最大二叉树</a></h1>
@@ -3312,6 +3353,41 @@ public:
 
 </code></pre>
 <h2 id="学习感想-47"><a class="header" href="#学习感想-47">学习感想</a></h2>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span>
+<span class="boring">fn main() {
+</span>// Definition for a binary tree node.
+#[derive(Debug, PartialEq, Eq)]
+pub struct TreeNode {
+  pub val: i32,
+  pub left: Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt;,
+  pub right: Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt;,
+}
+
+impl TreeNode {
+  #[inline]
+  pub fn new(val: i32) -&gt; Self {
+    TreeNode {
+      val,
+      left: None,
+      right: None
+    }
+  }
+}
+use std::rc::Rc;
+use std::cell::RefCell;
+struct Solution {}
+impl Solution {
+    pub fn construct_maximum_binary_tree(nums: Vec&lt;i32&gt;) -&gt; Option&lt;Rc&lt;RefCell&lt;TreeNode&gt;&gt;&gt; {
+        if nums.len() == 0 { return None }
+        let (pos, &amp;num): (usize, &amp;i32) = nums.iter().enumerate().max_by_key(|(_, &amp;x)| x).unwrap();
+        let mut tn: TreeNode = TreeNode::new(num);
+        tn.left = Self::construct_maximum_binary_tree(nums[.. pos].to_owned());
+        tn.right = Self::construct_maximum_binary_tree(nums[pos + 1usize .. ].to_owned());
+        Some(Rc::new(RefCell::new(tn)))
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="617-合并二叉树"><a class="header" href="#617-合并二叉树">617. 合并二叉树</a></h1>
 <h2 id="题目描述-49"><a class="header" href="#题目描述-49">题目描述</a></h2>
 <p>给你两棵二叉树： root1 和 root2 。</p>
@@ -4616,6 +4692,30 @@ public:
 };
 </code></pre>
 <p>这个 很直接</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Solution {}
+impl Solution {
+    pub fn merge(mut intervals: Vec&lt;Vec&lt;i32&gt;&gt;) -&gt; Vec&lt;Vec&lt;i32&gt;&gt; {
+        let mut res: Vec&lt;Vec&lt;i32&gt;&gt; = Vec::new();
+        intervals.sort_by_key(|v| v[0]);
+        let mut left: i32 = intervals[0][0];
+        let mut right: i32 = intervals[0][1];
+        intervals.iter().skip(1usize).for_each(|v| {
+            if v[0] &lt;= right {
+                right = std::cmp::max(v[1], right);
+            } else {
+                // non overlap
+                res.push(vec![left, right]);
+                left = v[0];
+                right = v[1];
+            }
+        });
+        res.push(vec![left, right]);
+        res
+    }
+}
+<span class="boring">}</span></code></pre></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="第八章-贪心算法-part06"><a class="header" href="#第八章-贪心算法-part06">第八章 贪心算法 part06</a></h1>
 <p>● 738.单调递增的数字 
 ● 968.监控二叉树 
